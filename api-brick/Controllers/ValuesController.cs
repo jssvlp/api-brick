@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using api_brick.Data;
+using api_brick.Models;
 
 namespace api_brick.Controllers
 {
@@ -14,13 +16,20 @@ namespace api_brick.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            
+            using (var db = new  BrickDbContext())
+            {
+               
+                return new string[] { "value1", "value2" };
+            }
+          
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
+          
             return "value";
         }
 
