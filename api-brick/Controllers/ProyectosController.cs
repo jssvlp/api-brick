@@ -25,7 +25,7 @@ namespace api_brick.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Proyecto>>> GetProyecto()
         {
-            return await _context.Proyecto.ToListAsync();
+            return await _context.Proyecto.Include(x => x.Ubicacion).Include(x => x.Inmuebles).ToListAsync();
         }
 
         // GET: api/Proyectos/5
