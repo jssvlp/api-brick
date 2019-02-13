@@ -14,6 +14,7 @@ namespace api_brick
     {
         public static void Main(string[] args)
         {
+            
             CreateWebHostBuilder(args).Build().Run();
         }
 

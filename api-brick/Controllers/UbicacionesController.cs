@@ -10,6 +10,7 @@ using api_brick.Models;
 
 namespace api_brick.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class UbicacionesController : ControllerBase
@@ -22,6 +23,7 @@ namespace api_brick.Controllers
         }
 
         // GET: api/Ubicaciones
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ubicacion>>> GetUbicacion()
         {
