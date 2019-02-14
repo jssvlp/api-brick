@@ -25,14 +25,14 @@ namespace api_brick.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Proyecto>>> GetProyecto()
         {
-            return await _context.Proyecto.Include(x => x.Ubicacion).Include(x => x.Inmuebles).ToListAsync();
+            return await _context.Proyecto.Include(x => x.Ubicacion).ToListAsync();
         }
 
         // GET: api/Proyectos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Proyecto>> GetProyecto(int id)
         {
-            var proyecto = await _context.Proyecto.FindAsync(id);
+            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).FirstOrDefaultAsync(x => x.ProyectoID ==id);
 
             if (proyecto == null)
             {
