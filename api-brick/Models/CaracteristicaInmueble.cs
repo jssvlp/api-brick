@@ -7,9 +7,10 @@ namespace api_brick.Models
 {
     public class CaracteristicaInmueble
     {
-        public int CaracteristicaInmuebleID { get; set; }
+        public int InmuebleID { get; set; }
+        public Inmueble Inmueble { get; set; }
 
-        public string CarNombre { get; set; }
-        public string CarDescripcion { get; set; }
+        public int CaracteristicaID { get; set; }
+        public Caracteristica Caracteristica { get; set; }
     }
 }

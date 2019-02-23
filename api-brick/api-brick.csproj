@@ -9,6 +9,22 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190220150551_CaracteristicasModel.cs" />
     <Compile Remove="Migrations\20190220150551_CaracteristicasModel.Designer.cs" />
+    <Compile Remove="Migrations\20190223201106_UnduMigrations.cs" />
+    <Compile Remove="Migrations\20190223201106_UnduMigrations.Designer.cs" />
+    <Compile Remove="Migrations\20190223201408_Caracteristica.cs" />
+    <Compile Remove="Migrations\20190223201408_Caracteristica.Designer.cs" />
+    <Compile Remove="Migrations\20190223201813_InmuebleCaracteristica.cs" />
+    <Compile Remove="Migrations\20190223201813_InmuebleCaracteristica.Designer.cs" />
+    <Compile Remove="Migrations\20190223202123_TestMigration.cs" />
+    <Compile Remove="Migrations\20190223202123_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\20190223202925_TestMigration.cs" />
+    <Compile Remove="Migrations\20190223202925_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\20190223203012_TestMigration.cs" />
+    <Compile Remove="Migrations\20190223203012_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\20190223203107_TestMigration.cs" />
+    <Compile Remove="Migrations\20190223203107_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\20190223203251_TestMigration.cs" />
+    <Compile Remove="Migrations\20190223203251_TestMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,25 +15,28 @@ namespace api_brick.Controllers
     public class CaracteristicasController : Controller
     {
         private readonly BrickDbContext _context;
-        public CaracteristicasController(BrickDbContext context) {
+        public CaracteristicasController(BrickDbContext context)
+        {
 
             _context = context;
         }
         // GET: api/Caracteristicas
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CaracteristicaInmueble>>> GetCaracteristica()
+        public async Task<ActionResult<IEnumerable<Caracteristica>>> GetCaracteristica()
         {
-            return await _context.CaracteristicaInmuebles.ToListAsync();
+            return await _context.Caracteristica.ToListAsync();
         }
 
         // GET: api/Caracteristicas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CaracteristicaInmueble>> GetCaracteristica(int id) {
+        public async Task<ActionResult<Caracteristica>> GetCaracteristica(int id)
+        {
 
-            var caracteristica = await _context.CaracteristicaInmuebles.FindAsync(id);
+            var caracteristica = await _context.Caracteristica.FindAsync(id);
 
-            if (caracteristica == null) {
+            if (caracteristica == null)
+            {
                 return NotFound();
             }
 
@@ -42,9 +45,9 @@ namespace api_brick.Controllers
 
         // PUT: api/Caracteristicas/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUbicacion(int id, CaracteristicaInmueble caracteristica)
+        public async Task<IActionResult> PutUbicacion(int id, Caracteristica caracteristica)
         {
-            if (id != caracteristica.CaracteristicaInmuebleID)
+            if (id != caracteristica.CaracteristicaID)
             {
                 return BadRequest();
             }
@@ -73,25 +76,25 @@ namespace api_brick.Controllers
 
         // POST: api/Caracteristicas
         [HttpPost]
-        public async Task<ActionResult<CaracteristicaInmueble>> PostUbicacion(CaracteristicaInmueble caracteristica)
+        public async Task<ActionResult<Caracteristica>> PostUbicacion(Caracteristica caracteristica)
         {
-            _context.CaracteristicaInmuebles.Add(caracteristica);
+            _context.Caracteristica.Add(caracteristica);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCaracteristica", new { id = caracteristica.CaracteristicaInmuebleID }, caracteristica);
+            return CreatedAtAction("GetCaracteristica", new { id = caracteristica.CaracteristicaID }, caracteristica);
         }
 
         // DELETE: api/Caracteristica/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<CaracteristicaInmueble>> DeleteCaracteristica(int id)
+        public async Task<ActionResult<Caracteristica>> DeleteCaracteristica(int id)
         {
-            var caracteristica = await _context.CaracteristicaInmuebles.FindAsync(id);
+            var caracteristica = await _context.Caracteristica.FindAsync(id);
             if (caracteristica == null)
             {
                 return NotFound();
             }
 
-            _context.CaracteristicaInmuebles.Remove(caracteristica);
+            _context.Caracteristica.Remove(caracteristica);
             await _context.SaveChangesAsync();
 
             return caracteristica;
@@ -100,7 +103,7 @@ namespace api_brick.Controllers
 
         private bool CaracteristicaExists(int id)
         {
-            return _context.CaracteristicaInmuebles.Any(e => e.CaracteristicaInmuebleID == id);
+            return _context.CaracteristicaInmuebles.Any(e => e.CaracteristicaID == id);
         }
     }
 }

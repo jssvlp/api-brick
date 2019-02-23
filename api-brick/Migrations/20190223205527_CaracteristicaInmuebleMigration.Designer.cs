@@ -9,50 +9,47 @@ using api_brick.Data;
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    [Migration("20190221014726_CarateristicasModel")]
-    partial class CarateristicasModel
+    [Migration("20190223205527_CaracteristicaInmuebleMigration")]
+    partial class CaracteristicaInmuebleMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("api_brick.Models.CaracteristicaInmueble", b =>
+            modelBuilder.Entity("api_brick.Models.Caracteristica", b =>
                 {
-                    b.Property<int>("CaracteristicaInmuebleID")
+                    b.Property<int>("CaracteristicaID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CarDescripcion");
 
                     b.Property<string>("CarNombre");
 
-                    b.Property<int?>("Caracteristica_InmuebleID");
+                    b.HasKey("CaracteristicaID");
 
-                    b.HasKey("CaracteristicaInmuebleID");
-
-                    b.HasIndex("Caracteristica_InmuebleID");
-
-                    b.ToTable("CaracteristicaInmuebles");
+                    b.ToTable("Caracteristica");
                 });
 
-            modelBuilder.Entity("api_brick.Models.Caracteristica_Inmueble", b =>
+            modelBuilder.Entity("api_brick.Models.CaracteristicaInmueble", b =>
                 {
-                    b.Property<int>("Caracteristica_InmuebleID")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("CaracteristicaID");
 
-                    b.HasKey("Caracteristica_InmuebleID");
+                    b.Property<int>("InmuebleID");
 
-                    b.ToTable("Caracteristica_Inmuebles");
+                    b.HasKey("CaracteristicaID", "InmuebleID");
+
+                    b.HasIndex("InmuebleID");
+
+                    b.ToTable("CaracteristicaInmuebles");
                 });
 
             modelBuilder.Entity("api_brick.Models.Inmueble", b =>
                 {
                     b.Property<int>("InmuebleID")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("Caracteristica_InmuebleID");
 
                     b.Property<string>("DescripcionInmueble");
 
@@ -61,8 +58,6 @@ namespace api_brick.Migrations
                     b.Property<int>("ProyectoID");
 
                     b.HasKey("InmuebleID");
-
-                    b.HasIndex("Caracteristica_InmuebleID");
 
                     b.HasIndex("ProyectoID");
 
@@ -107,17 +102,19 @@ namespace api_brick.Migrations
 
             modelBuilder.Entity("api_brick.Models.CaracteristicaInmueble", b =>
                 {
-                    b.HasOne("api_brick.Models.Caracteristica_Inmueble")
-                        .WithMany("CaracteristicaInmuebles")
-                        .HasForeignKey("Caracteristica_InmuebleID");
+                    b.HasOne("api_brick.Models.Caracteristica", "Caracteristica")
+                        .WithMany("CaracteristicasInmbles")
+                        .HasForeignKey("CaracteristicaID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("api_brick.Models.Inmueble", "Inmueble")
+                        .WithMany("CaracteristicasInmbles")
+                        .HasForeignKey("InmuebleID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("api_brick.Models.Inmueble", b =>
                 {
-                    b.HasOne("api_brick.Models.Caracteristica_Inmueble")
-                        .WithMany("Inmuebles")
-                        .HasForeignKey("Caracteristica_InmuebleID");
-
                     b.HasOne("api_brick.Models.Proyecto", "Proyecto")
                         .WithMany("Inmuebles")
                         .HasForeignKey("ProyectoID")

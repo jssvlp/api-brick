@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace api_brick.Models
 {
-    public class Inmueble
+    public  class Inmueble
     {
         public int InmuebleID { get; set; }
         public int Precio { get; set; }
@@ -14,5 +14,7 @@ namespace api_brick.Models
         //[ForeignKey("Proyecto")]
         public int ProyectoID { get; set; }
         public Proyecto Proyecto { get; set; }
+
+        public ICollection<CaracteristicaInmueble> CaracteristicasInmbles { get; set; }
     }
 }
