@@ -11,6 +11,6 @@ namespace api_brick.Models
         public SolicitudServicio SolicitudServicio { get; set; }
 
         public int ServicioID { get; set; }
-        public Servicios Servicio { get; set; }
+        public Servicio Servicio { get; set; }
     }
 }

@@ -14,6 +14,11 @@ namespace api_brick.Data
         public DbSet<Ubicacion> Ubicacion { get; set; }
         public DbSet<Caracteristica> Caracteristica { get; set;}
         public DbSet<CaracteristicaInmueble> CaracteristicaInmuebles { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Servicio> Servicios { get; set; }
+        public DbSet<ServicioSolicitud> ServicioSolicituds { get; set; }
+        public DbSet<SolicitudServicio> SolicitudServicios { get; set; }
+        public DbSet<VisitasAgendada> VisitasAgendadas { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
@@ -27,14 +32,23 @@ namespace api_brick.Data
             .HasKey(bc => new { bc.CaracteristicaID, bc.InmuebleID });
             modelBuilder.Entity<CaracteristicaInmueble>()
                 .HasOne(bc => bc.Inmueble)
-                .WithMany(b => b.CaracteristicasInmbles)
+                .WithMany(b => b.CaracteristicasInmuebles)
                 .HasForeignKey(bc => bc.InmuebleID);
             modelBuilder.Entity<CaracteristicaInmueble>()
                 .HasOne(bc => bc.Caracteristica)
-                .WithMany(c => c.CaracteristicasInmbles)
+                .WithMany(c => c.CaracteristicasInmuebles)
                 .HasForeignKey(bc => bc.CaracteristicaID);
 
-
+            modelBuilder.Entity<ServicioSolicitud>()
+            .HasKey(bc => new { bc.ServicioID, bc.SolicitudID });
+            modelBuilder.Entity<ServicioSolicitud>()
+                .HasOne(bc => bc.Servicio)
+                .WithMany(b => b.servicioSolicituds)
+                .HasForeignKey(bc => bc.ServicioID);
+            modelBuilder.Entity<ServicioSolicitud>()
+                .HasOne(bc => bc.SolicitudServicio)
+                .WithMany(c => c.servicioSolicituds)
+                .HasForeignKey(bc => bc.SolicitudID);
         }
     }
 }

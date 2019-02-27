@@ -19,12 +19,12 @@ namespace api_brick.Models
         public Ubicacion Ubicacion { get; set; }
 
         public ICollection<Inmueble> Inmuebles { get; set; }
-        public ICollection<VisitasAgendadas> VisitasAgendadas { get; set; }
+        public ICollection<VisitasAgendada> VisitasAgendadas { get; set; }
 
         public Proyecto()
         {
             Inmuebles = new Collection<Inmueble>();
-            VisitasAgendadas = new Collection<VisitasAgendadas>();
+            VisitasAgendadas = new Collection<VisitasAgendada>();
         }
     }
 }
