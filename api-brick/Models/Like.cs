@@ -7,7 +7,7 @@ namespace api_brick.Models
 {
     public class Like
     {
-        public int MeGustaID { get; set; }
+        public int LikeID { get; set; }
         public int PublicacionID { get; set; }
         public int UsuarioID { get; set; }
 

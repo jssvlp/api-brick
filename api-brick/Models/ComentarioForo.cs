@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace api_brick.Models
 {
-    public class CometarioForo
+    public class ComentarioForo
     {
+        [Key]
         public int ComentarioID { get; set; }
         public int PublicacionID { get; set; }
         public int UsuarioID { get; set; }

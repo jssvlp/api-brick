@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace api_brick.Models
 {
     public class TemasForo
     {
+        [Key]
         public int TemaID { get; set; }
         public string NombreTema { get; set; }
         public string DescripcionTema { get; set; }

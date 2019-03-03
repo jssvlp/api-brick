@@ -7,7 +7,7 @@ namespace api_brick.Models
 {
     public class Blog
     {
-        public int BlogEntryID { get; set; }
+        public int BlogID { get; set; }
         public string TituloEntrada { get; set; }
         public string TextoEntrada { get; set; }
         public int UsuarioID { get; set; }

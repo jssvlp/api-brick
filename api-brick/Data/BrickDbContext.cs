@@ -19,6 +19,11 @@ namespace api_brick.Data
         public DbSet<ServicioSolicitud> ServicioSolicituds { get; set; }
         public DbSet<SolicitudServicio> SolicitudServicios { get; set; }
         public DbSet<VisitasAgendada> VisitasAgendadas { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet <ComentarioForo> CometarioForos { get; set; }
+        public DbSet<Like> Likes { get; set; }
+        public DbSet<PublicacionDelForo> PublicacionDelForos { get; set; }
+        public DbSet<TemasForo> TemasForos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
