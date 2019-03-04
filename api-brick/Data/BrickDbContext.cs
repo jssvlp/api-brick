@@ -17,7 +17,7 @@ namespace api_brick.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Servicio> Servicios { get; set; }
         public DbSet<ServicioSolicitud> ServicioSolicituds { get; set; }
-        public DbSet<SolicitudServicio> SolicitudServicios { get; set; }
+        public DbSet<Solicitud> SolicitudServicios { get; set; }
         public DbSet<VisitasAgendada> VisitasAgendadas { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet <ComentarioForo> CometarioForos { get; set; }

@@ -64,7 +64,7 @@ namespace api_brick.Migrations
                     b.ToTable("CaracteristicaInmuebles");
                 });
 
-            modelBuilder.Entity("api_brick.Models.CometarioForo", b =>
+            modelBuilder.Entity("api_brick.Models.ComentarioForo", b =>
                 {
                     b.Property<int>("ComentarioID")
                         .ValueGeneratedOnAdd();
@@ -310,7 +310,7 @@ namespace api_brick.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("api_brick.Models.CometarioForo", b =>
+            modelBuilder.Entity("api_brick.Models.ComentarioForo", b =>
                 {
                     b.HasOne("api_brick.Models.PublicacionDelForo", "publicacion")
                         .WithMany("cometarioForos")

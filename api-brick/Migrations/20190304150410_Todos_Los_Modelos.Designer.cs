@@ -9,7 +9,7 @@ using api_brick.Data;
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    [Migration("20190303205805_Todos_Los_Modelos")]
+    [Migration("20190304150410_Todos_Los_Modelos")]
     partial class Todos_Los_Modelos
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,7 +66,7 @@ namespace api_brick.Migrations
                     b.ToTable("CaracteristicaInmuebles");
                 });
 
-            modelBuilder.Entity("api_brick.Models.CometarioForo", b =>
+            modelBuilder.Entity("api_brick.Models.ComentarioForo", b =>
                 {
                     b.Property<int>("ComentarioID")
                         .ValueGeneratedOnAdd();
@@ -312,7 +312,7 @@ namespace api_brick.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("api_brick.Models.CometarioForo", b =>
+            modelBuilder.Entity("api_brick.Models.ComentarioForo", b =>
                 {
                     b.HasOne("api_brick.Models.PublicacionDelForo", "publicacion")
                         .WithMany("cometarioForos")

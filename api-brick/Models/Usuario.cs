@@ -15,10 +15,10 @@ namespace api_brick.Models
         public string Contraseña { get; set; }
         public bool AdminAccess { get; set; }
 
-        public ICollection<SolicitudServicio> Solicitud{ get; set; }
+        public ICollection<Solicitud> Solicitud{ get; set; }
 
         public Usuario() {
-            Solicitud = new Collection<SolicitudServicio>();
+            Solicitud = new Collection<Solicitud>();
         }
     }
 }

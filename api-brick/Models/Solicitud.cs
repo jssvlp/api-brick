@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace api_brick.Models
 {
-    public class SolicitudServicio
+    public class Solicitud
     {
         [Key]
         public int SolicitudID { get; set; }
@@ -21,7 +21,7 @@ namespace api_brick.Models
 
         public ICollection<ServicioSolicitud> servicioSolicituds { get; set; }
 
-        public SolicitudServicio()
+        public Solicitud()
         {
             servicioSolicituds = new Collection<ServicioSolicitud>();
         }

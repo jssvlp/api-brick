@@ -25,6 +25,8 @@
     <Compile Remove="Migrations\20190223203107_TestMigration.Designer.cs" />
     <Compile Remove="Migrations\20190223203251_TestMigration.cs" />
     <Compile Remove="Migrations\20190223203251_TestMigration.Designer.cs" />
+    <Compile Remove="Migrations\20190303205805_Todos_Los_Modelos.cs" />
+    <Compile Remove="Migrations\20190303205805_Todos_Los_Modelos.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
