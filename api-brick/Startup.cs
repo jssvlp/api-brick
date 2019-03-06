@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api_brick.Data;
+using api_brick.Tools;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,8 @@ namespace api_brick
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            EmailSender es = new EmailSender();
+          // es.SendEmailAsync("j.velazquez@concentra.com.do","Email for test","");
         }
 
         public IConfiguration Configuration { get; }
@@ -29,6 +33,13 @@ namespace api_brick
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(ConfigureJson);
            
             services.AddDbContext<BrickDbContext>();
+            services.AddCors(o => o.AddPolicy("api-policy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+
             //container = services.BuildServiceProvider(); //container is a global variable。
         }
 
@@ -52,7 +63,9 @@ namespace api_brick
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("api-policy");
             app.UseMvc();
+            
         }
     }
 }

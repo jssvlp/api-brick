@@ -10,6 +10,7 @@ namespace api_brick.Models
     {
         public int UsuarioID { get; set; }
         public string NombreUsuario { get; set; }
+        public string ApellidosUsuario { get; set; }
         public string CorreoUsuario { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public string Contraseña { get; set; }
