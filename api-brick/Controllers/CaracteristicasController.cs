@@ -45,7 +45,7 @@ namespace api_brick.Controllers
 
         // PUT: api/Caracteristicas/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUbicacion(int id, Caracteristica caracteristica)
+        public async Task<IActionResult> PutCaracteristica(int id, Caracteristica caracteristica)
         {
             if (id != caracteristica.CaracteristicaID)
             {
@@ -76,7 +76,7 @@ namespace api_brick.Controllers
 
         // POST: api/Caracteristicas
         [HttpPost]
-        public async Task<ActionResult<Caracteristica>> PostUbicacion(Caracteristica caracteristica)
+        public async Task<ActionResult<Caracteristica>> PostCaracteristica(Caracteristica caracteristica)
         {
             _context.Caracteristica.Add(caracteristica);
             await _context.SaveChangesAsync();
