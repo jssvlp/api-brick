@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>api_brick</RootNamespace>
+    <StartupObject>api_brick.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
