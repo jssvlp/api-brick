@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using api_brick.Data;
 using api_brick.Models;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.IO;
 
 namespace api_brick.Controllers
 {
