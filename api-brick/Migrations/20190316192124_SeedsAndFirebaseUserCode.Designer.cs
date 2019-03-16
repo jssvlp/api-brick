@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api_brick.Data;
 
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    partial class BrickDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190316192124_SeedsAndFirebaseUserCode")]
+    partial class SeedsAndFirebaseUserCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,7 +235,7 @@ namespace api_brick.Migrations
                     b.ToTable("PublicacionDelForos");
                 });
 
-            modelBuilder.Entity("api_brick.Models.Rol", b =>
+            modelBuilder.Entity("api_brick.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd();
@@ -244,7 +246,7 @@ namespace api_brick.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Role");
 
                     b.HasData(
                         new
@@ -339,6 +341,8 @@ namespace api_brick.Migrations
                     b.Property<int>("UsuarioID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("AdminAccess");
+
                     b.Property<string>("ApellidosUsuario");
 
                     b.Property<string>("Contraseña");
@@ -363,6 +367,7 @@ namespace api_brick.Migrations
                         new
                         {
                             UsuarioID = 1,
+                            AdminAccess = false,
                             ApellidosUsuario = "Admin",
                             Contraseña = "1234567",
                             CorreoUsuario = "admin@admin.com",
@@ -454,7 +459,7 @@ namespace api_brick.Migrations
                         .HasForeignKey("PermisoId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("api_brick.Models.Rol", "Role")
+                    b.HasOne("api_brick.Models.Role", "Role")
                         .WithMany("Permisos")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -504,7 +509,7 @@ namespace api_brick.Migrations
 
             modelBuilder.Entity("api_brick.Models.Usuario", b =>
                 {
-                    b.HasOne("api_brick.Models.Rol", "Role")
+                    b.HasOne("api_brick.Models.Role", "Role")
                         .WithMany("Usuarios")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
