@@ -32,11 +32,11 @@ namespace api_brick.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Inmueble>> GetInmueble(int id)
         {
-           var inmueble = await _context.Inmueble.FindAsync(id);
+            var inmueble = await _context.Inmueble.FindAsync(id);
 
             if (inmueble == null)
             {
-                return NotFound();
+                 return NotFound();
             }
 
             return inmueble;
@@ -48,7 +48,7 @@ namespace api_brick.Controllers
         {
             if (id != inmueble.InmuebleID)
             {
-               return BadRequest();
+                return BadRequest();
             }
 
             _context.Entry(inmueble).State = EntityState.Modified;
@@ -62,9 +62,9 @@ namespace api_brick.Controllers
                 if (!InmuebleExists(id))
                 {
                     return NotFound();
-               }
+                }
                 else
-                {
+               {
                     throw;
                 }
             }
@@ -79,7 +79,7 @@ namespace api_brick.Controllers
             _context.Inmueble.Add(inmueble);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetInmueble", new { id = inmueble.InmuebleID }, inmueble);
+           return CreatedAtAction("GetInmueble", new { id = inmueble.InmuebleID }, inmueble);
         }
 
         // DELETE: api/Inmuebles/5
@@ -88,7 +88,7 @@ namespace api_brick.Controllers
         {
             var inmueble = await _context.Inmueble.FindAsync(id);
             if (inmueble == null)
-            {
+           {
                 return NotFound();
             }
 

@@ -14,6 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "api/ubicaciones",
       "environmentVariables": {
+        "ProjectPath": "C:\\Users\\pjms_\\OneDrive\\Documentos\\Proyecto\\api-brick\\api-brick",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
