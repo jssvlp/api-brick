@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api_brick.Data;
 
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    partial class BrickDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190316193313_RenameRolTable")]
+    partial class RenameRolTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,8 +131,6 @@ namespace api_brick.Migrations
 
                     b.Property<string>("DescripcionInmueble");
 
-                    b.Property<string>("NombreInmueble");
-
                     b.Property<int>("Precio");
 
                     b.Property<int>("ProyectoID");
@@ -246,7 +246,7 @@ namespace api_brick.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Rol");
 
                     b.HasData(
                         new

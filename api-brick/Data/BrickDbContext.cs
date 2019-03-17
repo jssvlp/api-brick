@@ -33,6 +33,7 @@ namespace api_brick.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            //much to much relationship for caracteristicas and imbuebles
             modelBuilder.Entity<CaracteristicaInmueble>()
             .HasKey(bc => new { bc.CaracteristicaID, bc.InmuebleID });
             modelBuilder.Entity<CaracteristicaInmueble>()
@@ -44,6 +45,26 @@ namespace api_brick.Data
                 .WithMany(c => c.CaracteristicasInmuebles)
                 .HasForeignKey(bc => bc.CaracteristicaID);
 
+
+            //Much to much relationship for Roles and Permisos
+            modelBuilder.Entity<PermisosRoles>()
+            .HasKey(pr => new { pr.PermisoId, pr.RoleId });
+            modelBuilder.Entity<PermisosRoles>()
+               .HasOne(r => r.Role)
+               .WithMany(p => p.Permisos)
+               .HasForeignKey(bc => bc.RoleId);
+            modelBuilder.Entity<PermisosRoles>()
+                .HasOne(bc => bc.Permiso)
+                .WithMany(c => c.PermisosRol)
+                .HasForeignKey(bc => bc.PermisoId);
+
+
+            //SEEDS
+            modelBuilder.Entity<Estado>().HasData(new Estado {EstadoId = 1, EstadoNombre = "Activo" },new Estado {EstadoId = 2, EstadoNombre = "Pendiente" }, new Estado { EstadoId= 3, EstadoNombre = "Finalizado"}, new Estado {EstadoId = 4, EstadoNombre = "Inactivo" });
+            modelBuilder.Entity<Rol>().HasData(new Rol {RoleId = 1, RoleNombre = "Admin" }, new Rol { RoleId = 2, RoleNombre = "Usuarios" });
+            modelBuilder.Entity<Usuario>().HasData(new Usuario {UsuarioID =1, NombreUsuario = "Admin", ApellidosUsuario = "Admin", CorreoUsuario = "admin@admin.com", RoleId = 1 , FechaNacimiento = DateTime.Today, Contraseña = "1234567"});
+
+            //Much to much relationship for servicios and solicitudes
             modelBuilder.Entity<ServicioSolicitud>()
             .HasKey(bc => new { bc.ServicioID, bc.SolicitudID });
             modelBuilder.Entity<ServicioSolicitud>()

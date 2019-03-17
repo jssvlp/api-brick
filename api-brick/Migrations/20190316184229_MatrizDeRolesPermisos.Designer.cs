@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api_brick.Data;
 
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    partial class BrickDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190316184229_MatrizDeRolesPermisos")]
+    partial class MatrizDeRolesPermisos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,48 +90,12 @@ namespace api_brick.Migrations
                     b.ToTable("CometarioForos");
                 });
 
-            modelBuilder.Entity("api_brick.Models.Estado", b =>
-                {
-                    b.Property<int>("EstadoId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("EstadoNombre");
-
-                    b.HasKey("EstadoId");
-
-                    b.ToTable("Estado");
-
-                    b.HasData(
-                        new
-                        {
-                            EstadoId = 1,
-                            EstadoNombre = "Activo"
-                        },
-                        new
-                        {
-                            EstadoId = 2,
-                            EstadoNombre = "Pendiente"
-                        },
-                        new
-                        {
-                            EstadoId = 3,
-                            EstadoNombre = "Finalizado"
-                        },
-                        new
-                        {
-                            EstadoId = 4,
-                            EstadoNombre = "Inactivo"
-                        });
-                });
-
             modelBuilder.Entity("api_brick.Models.Inmueble", b =>
                 {
                     b.Property<int>("InmuebleID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("DescripcionInmueble");
-
-                    b.Property<string>("NombreInmueble");
 
                     b.Property<int>("Precio");
 
@@ -235,7 +201,7 @@ namespace api_brick.Migrations
                     b.ToTable("PublicacionDelForos");
                 });
 
-            modelBuilder.Entity("api_brick.Models.Rol", b =>
+            modelBuilder.Entity("api_brick.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd();
@@ -246,19 +212,7 @@ namespace api_brick.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            RoleId = 1,
-                            RoleNombre = "Admin"
-                        },
-                        new
-                        {
-                            RoleId = 2,
-                            RoleNombre = "Usuarios"
-                        });
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("api_brick.Models.Servicio", b =>
@@ -341,6 +295,8 @@ namespace api_brick.Migrations
                     b.Property<int>("UsuarioID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("AdminAccess");
+
                     b.Property<string>("ApellidosUsuario");
 
                     b.Property<string>("Contraseña");
@@ -348,8 +304,6 @@ namespace api_brick.Migrations
                     b.Property<string>("CorreoUsuario");
 
                     b.Property<DateTime>("FechaNacimiento");
-
-                    b.Property<string>("FirebaseCode");
 
                     b.Property<string>("NombreUsuario");
 
@@ -360,18 +314,6 @@ namespace api_brick.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Usuarios");
-
-                    b.HasData(
-                        new
-                        {
-                            UsuarioID = 1,
-                            ApellidosUsuario = "Admin",
-                            Contraseña = "1234567",
-                            CorreoUsuario = "admin@admin.com",
-                            FechaNacimiento = new DateTime(2019, 3, 16, 0, 0, 0, 0, DateTimeKind.Local),
-                            NombreUsuario = "Admin",
-                            RoleId = 1
-                        });
                 });
 
             modelBuilder.Entity("api_brick.Models.VisitasAgendada", b =>
@@ -456,7 +398,7 @@ namespace api_brick.Migrations
                         .HasForeignKey("PermisoId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("api_brick.Models.Rol", "Role")
+                    b.HasOne("api_brick.Models.Role", "Role")
                         .WithMany("Permisos")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -506,7 +448,7 @@ namespace api_brick.Migrations
 
             modelBuilder.Entity("api_brick.Models.Usuario", b =>
                 {
-                    b.HasOne("api_brick.Models.Rol", "Role")
+                    b.HasOne("api_brick.Models.Role", "Role")
                         .WithMany("Usuarios")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
