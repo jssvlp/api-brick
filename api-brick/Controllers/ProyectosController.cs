@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using api_brick.Data;
 using api_brick.Models;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.IO;
 
 namespace api_brick.Controllers
 {
@@ -32,7 +35,7 @@ namespace api_brick.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Proyecto>> GetProyecto(int id)
         {
-            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).FirstOrDefaultAsync(x => x.ProyectoID ==id);
+            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).FirstOrDefaultAsync(x => x.ProyectoID == id);
 
             if (proyecto == null)
             {
@@ -72,10 +75,54 @@ namespace api_brick.Controllers
             return NoContent();
         }
 
+        [Route("SaveFile")]
+        [HttpPost()]
+        public async Task<IActionResult> SaveFile(string fileName)
+        {
+            try
+            {
+
+                foreach (var file2 in Request.Form.Files.ToList())
+                {
+
+                    if (!string.IsNullOrEmpty(file2?.FileName))
+                    {
+                        var dir = Path.Combine(Directory.GetCurrentDirectory(), "Recursos/");
+
+                        if (!Directory.Exists(dir))
+                        {
+                            Directory.CreateDirectory(dir);
+                        }
+
+                        var path = Path.Combine(dir, file2.FileName);
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await file2.CopyToAsync(fileStream);
+                        }
+
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return Ok();
+
+        }
         // POST: api/Proyectos
         [HttpPost]
         public async Task<ActionResult<Proyecto>> PostProyecto(Proyecto proyecto)
         {
+<<<<<<< HEAD
+=======
+
+
+            _context.Proyecto.Add(proyecto);
+            await _context.SaveChangesAsync();
+>>>>>>> fd3f66f8eef29933af0da3dd55ee46f3291ecf4b
 
             var _proyect = _context.Proyecto.Where( p => p.NombreProyecto == proyecto.NombreProyecto);
 

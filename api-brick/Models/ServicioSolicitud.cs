@@ -7,6 +7,7 @@ namespace api_brick.Models
 {
     public class ServicioSolicitud
     {
+        public string StatusSolicitud { get; set; }
         public int SolicitudID { get; set; }
         public Solicitud SolicitudServicio { get; set; }
 

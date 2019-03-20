@@ -64,7 +64,7 @@ namespace api_brick.Controllers
                     return NotFound();
                 }
                 else
-                {
+               {
                     throw;
                 }
             }
