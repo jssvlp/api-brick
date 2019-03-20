@@ -64,7 +64,12 @@ namespace api_brick
 
             app.UseHttpsRedirection();
             app.UseCors("api-policy");
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action=Index}/{id?}");
+            });
             
         }
     }
