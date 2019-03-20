@@ -35,7 +35,7 @@ namespace api_brick.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Proyecto>> GetProyecto(int id)
         {
-            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).FirstOrDefaultAsync(x => x.ProyectoID == id);
+            var proyecto = await _context.Proyecto.FirstOrDefaultAsync(x => x.ProyectoID == id);
 
             if (proyecto == null)
             {
@@ -116,15 +116,9 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Proyecto>> PostProyecto(Proyecto proyecto)
         {
-<<<<<<< HEAD
-=======
 
 
-            _context.Proyecto.Add(proyecto);
-            await _context.SaveChangesAsync();
->>>>>>> fd3f66f8eef29933af0da3dd55ee46f3291ecf4b
-
-            var _proyect = _context.Proyecto.Where( p => p.NombreProyecto == proyecto.NombreProyecto);
+            var _proyect = _context.Proyecto.FirstOrDefault( p => p.NombreProyecto == proyecto.NombreProyecto);
 
             if (_proyect == null)
             {

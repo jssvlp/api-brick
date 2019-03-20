@@ -146,7 +146,7 @@ namespace api_brick.Controllers
             return caracteristica;
         }
 
-        [HttpDelete("DeleteCaracteristicaInmueble/{InmuebleID}/{CaracteristicaID}")]
+        [HttpDelete("CaracteristicaInmueble/{InmuebleID}/{CaracteristicaID}")]
         public async Task<ActionResult<Caracteristica>> DeleteCaracteristicaInmueble(int InmuebleID, int CaracteristicaID)
         {
             var _caracInm = _context.CaracteristicaInmuebles.FirstOrDefault( ci => ci.InmuebleID == InmuebleID && ci.CaracteristicaID == CaracteristicaID);

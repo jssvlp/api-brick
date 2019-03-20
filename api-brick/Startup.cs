@@ -69,22 +69,12 @@ namespace api_brick
 
             app.UseHttpsRedirection();
             app.UseCors("api-policy");
-<<<<<<< HEAD
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-=======
-            app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-                RequestPath = new PathString("/Resources")
-            });
-            app.UseMvc();
->>>>>>> fd3f66f8eef29933af0da3dd55ee46f3291ecf4b
             
         }
     }
