@@ -70,11 +70,6 @@ namespace api_brick
             app.UseHttpsRedirection();
             app.UseCors("api-policy");
             app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-                RequestPath = new PathString("/Resources")
-            });
             app.UseMvc();
             
         }

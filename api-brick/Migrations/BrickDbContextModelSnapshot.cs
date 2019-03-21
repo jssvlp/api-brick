@@ -129,8 +129,6 @@ namespace api_brick.Migrations
 
                     b.Property<string>("DescripcionInmueble");
 
-                    b.Property<string>("NombreInmueble");
-
                     b.Property<int>("Precio");
 
                     b.Property<int>("ProyectoID");

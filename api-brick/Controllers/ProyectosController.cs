@@ -53,7 +53,10 @@ namespace api_brick.Controllers
             {
                 return BadRequest();
             }
-
+            string URL = proyecto.ImgURL.Substring(12);
+            var file = Path.Combine(Directory.GetCurrentDirectory(), "Recursos/" + URL);
+            if (System.IO.File.Exists(file))
+                System.IO.File.Delete(file);
             _context.Entry(proyecto).State = EntityState.Modified;
 
             try
@@ -133,7 +136,10 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-
+            string URL = proyecto.ImgURL.Substring(12);
+            var file = Path.Combine(Directory.GetCurrentDirectory(), "Recursos/" + URL);
+            if (System.IO.File.Exists(file))
+                System.IO.File.Delete(file);
             _context.Proyecto.Remove(proyecto);
             await _context.SaveChangesAsync();
 
