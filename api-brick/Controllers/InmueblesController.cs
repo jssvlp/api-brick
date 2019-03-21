@@ -12,7 +12,7 @@ namespace api_brick.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class InmueblesController : ControllerBase
+    public class InmueblesController : Controller
     {
         private readonly BrickDbContext _context;
 
@@ -36,7 +36,7 @@ namespace api_brick.Controllers
 
             if (inmueble == null)
             {
-                 return NotFound();
+                return NotFound();
             }
 
             return inmueble;
@@ -76,10 +76,17 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Inmueble>> PostInmueble(Inmueble inmueble)
         {
-            _context.Inmueble.Add(inmueble);
-            await _context.SaveChangesAsync();
+            var _inmueble = _context.Inmueble.FirstOrDefault( i => i.DescripcionInmueble == inmueble.DescripcionInmueble && i.ProyectoID == inmueble.ProyectoID);
+            if (_inmueble == null)
+            {
+                _context.Inmueble.Add(inmueble);
+                await _context.SaveChangesAsync();
 
-           return CreatedAtAction("GetInmueble", new { id = inmueble.InmuebleID }, inmueble);
+                return CreatedAtAction("GetInmueble", new { id = inmueble.InmuebleID }, inmueble);
+            }
+            return Json(new { isSuccess = false, message = "Ya existe un inmueble con este nombre en el mismo proyecto. Intente con otro." });
+
+
         }
 
         // DELETE: api/Inmuebles/5
@@ -88,7 +95,7 @@ namespace api_brick.Controllers
         {
             var inmueble = await _context.Inmueble.FindAsync(id);
             if (inmueble == null)
-           {
+            {
                 return NotFound();
             }
 
