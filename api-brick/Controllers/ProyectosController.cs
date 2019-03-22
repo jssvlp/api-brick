@@ -47,16 +47,15 @@ namespace api_brick.Controllers
 
         // PUT: api/Proyectos/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProyecto(int id, Proyecto proyecto)
+        public async Task<IActionResult> PutProyecto(int id, Proyecto proyecto, string img)
         {
             if (id != proyecto.ProyectoID)
             {
                 return BadRequest();
             }
+
             string URL = proyecto.ImgURL.Substring(12);
-            var file = Path.Combine(Directory.GetCurrentDirectory(), "Recursos/" + URL);
-            if (System.IO.File.Exists(file))
-                System.IO.File.Delete(file);
+            proyecto.ImgURL = URL;
             _context.Entry(proyecto).State = EntityState.Modified;
 
             try
@@ -90,7 +89,7 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dir = Path.Combine(Directory.GetCurrentDirectory(), "Recursos/");
+                        var dir = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Recursos/");
 
                         if (!Directory.Exists(dir))
                         {
@@ -119,7 +118,8 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Proyecto>> PostProyecto(Proyecto proyecto)
         {
-
+            string URL = proyecto.ImgURL.Substring(12);
+            proyecto.ImgURL = URL;
 
             _context.Proyecto.Add(proyecto);
             await _context.SaveChangesAsync();
@@ -136,8 +136,7 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-            string URL = proyecto.ImgURL.Substring(12);
-            var file = Path.Combine(Directory.GetCurrentDirectory(), "Recursos/" + URL);
+            var file = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Recursos/" + proyecto.ImgURL);
             if (System.IO.File.Exists(file))
                 System.IO.File.Delete(file);
             _context.Proyecto.Remove(proyecto);
@@ -146,6 +145,12 @@ namespace api_brick.Controllers
             return proyecto;
         }
 
+        private async void eliminarImg(int id) {
+            var proyecto = await _context.Proyecto.FindAsync(id);
+            var file = Path.Combine(Directory.GetCurrentDirectory(), "Recursos/" + proyecto.ImgURL);
+            if (System.IO.File.Exists(file))
+                System.IO.File.Delete(file);
+        }
         private bool ProyectoExists(int id)
         {
             return _context.Proyecto.Any(e => e.ProyectoID == id);
