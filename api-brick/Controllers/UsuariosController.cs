@@ -13,7 +13,7 @@ namespace api_brick.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuariosController : ControllerBase
+    public class UsuariosController : Controller
     {
         private readonly BrickDbContext _context;
 
@@ -74,11 +74,80 @@ namespace api_brick.Controllers
             return NoContent();
         }
 
+        [HttpPost("logout/{accesToken}")]
+        public async Task<ActionResult> Logout(string accesToken)
+        {
+            var _userLogged = await _context.Usuarios.FirstOrDefaultAsync(u => u.AuthToken == accesToken);
+            if (_userLogged != null)
+            {
+                _userLogged.DestroyAccesToken();
+                _context.Entry(_userLogged).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return Json(new { isSuccess = true, message = "User logout sussesfully." });
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+
+                }
+
+            }
+            else {
+                return Json(new { isSuccess = false, message = "This User is not logged" });
+            }
+           
+
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<Usuario>> Login(Usuario usuario)
+        {
+            var _user = ValidateCredentials(usuario.CorreoUsuario, usuario.Contraseña);
+            if(_user!= null)
+            {
+                _user.SetAccessToken();
+                _context.Entry(_user).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+
+                }
+                return _user;
+                //return Json(
+                //  new
+                //  {
+                //      Name = _user.NombreUsuario,
+                //      Mail = _user.CorreoUsuario,
+                //      Role = _user.Role.RoleNombre,
+                //      BirthDate = _user.FechaNacimiento,
+                //      FireBaseCore = _user.FirebaseCode,
+                //      Token = _user.AuthToken
+                //  });
+            }
+              
+            else
+                return Json(new { isSuccess = false, message = "Ya existe una proyecto con este nombre. Intente con otro." });
+
+
+
+        }
         // POST: api/Usuarios
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
             usuario.Contraseña = HashPassword(usuario.Contraseña);
+            usuario.RoleId = 1;
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
@@ -103,7 +172,7 @@ namespace api_brick.Controllers
 
         public Usuario ValidateCredentials(string correo, string password)
         {
-            Usuario _usuario = (Usuario) _context.Usuarios.Where(x => x.CorreoUsuario == correo);
+            Usuario _usuario = (Usuario) _context.Usuarios.FirstOrDefault(x => x.CorreoUsuario == correo);
 
             if (VerifyPassword(_usuario.Contraseña, password))
             {

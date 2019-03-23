@@ -1,4 +1,5 @@
-﻿using System;
+﻿using api_brick.Tools;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace api_brick.Models
 {
-   
+
     public class Usuario
     {
         public int UsuarioID { get; set; }
@@ -16,8 +17,9 @@ namespace api_brick.Models
         public string CorreoUsuario { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public string Contraseña { get; set; }
-     
+
         public string FirebaseCode { get; set; }
+        public string AuthToken { get; set; }
 
         [ForeignKey("Role")]
         public int RoleId { get; set; }
@@ -27,6 +29,15 @@ namespace api_brick.Models
 
         public Usuario() {
             Solicitud = new Collection<Solicitud>();
+        }
+
+        public void SetAccessToken()
+        {
+            string token = TokenGenerator.Generate(50);
+            this.AuthToken = token;
+        }
+        public void DestroyAccesToken() {
+            this.AuthToken = string.Empty;
         }
     }
 }

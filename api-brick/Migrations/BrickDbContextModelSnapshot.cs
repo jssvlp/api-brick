@@ -281,6 +281,8 @@ namespace api_brick.Migrations
 
                     b.Property<int>("SolicitudID");
 
+                    b.Property<string>("StatusSolicitud");
+
                     b.HasKey("ServicioID", "SolicitudID");
 
                     b.HasIndex("SolicitudID");
@@ -343,6 +345,8 @@ namespace api_brick.Migrations
 
                     b.Property<string>("ApellidosUsuario");
 
+                    b.Property<string>("AuthToken");
+
                     b.Property<string>("Contraseña");
 
                     b.Property<string>("CorreoUsuario");
@@ -368,7 +372,7 @@ namespace api_brick.Migrations
                             ApellidosUsuario = "Admin",
                             Contraseña = "1234567",
                             CorreoUsuario = "admin@admin.com",
-                            FechaNacimiento = new DateTime(2019, 3, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaNacimiento = new DateTime(2019, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             NombreUsuario = "Admin",
                             RoleId = 1
                         });
