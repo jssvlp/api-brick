@@ -28,6 +28,8 @@
     <Compile Remove="Migrations\20190223203251_TestMigration.Designer.cs" />
     <Compile Remove="Migrations\20190303205805_Todos_Los_Modelos.cs" />
     <Compile Remove="Migrations\20190303205805_Todos_Los_Modelos.Designer.cs" />
+    <Compile Remove="Migrations\20190318185744_merge.cs" />
+    <Compile Remove="Migrations\20190318185744_merge.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,10 +39,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\Images\" />
   </ItemGroup>
 
 </Project>

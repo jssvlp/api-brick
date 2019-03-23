@@ -15,7 +15,7 @@ namespace api_brick.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProyectosController : Controller
+    public class ProyectosController : ControllerBase
     {
         private readonly BrickDbContext _context;
 
@@ -35,7 +35,7 @@ namespace api_brick.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Proyecto>> GetProyecto(int id)
         {
-            var proyecto = await _context.Proyecto.FirstOrDefaultAsync(x => x.ProyectoID == id);
+            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).FirstOrDefaultAsync(x => x.ProyectoID == id);
 
             if (proyecto == null)
             {
@@ -47,13 +47,15 @@ namespace api_brick.Controllers
 
         // PUT: api/Proyectos/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProyecto(int id, Proyecto proyecto)
+        public async Task<IActionResult> PutProyecto(int id, Proyecto proyecto, string img)
         {
             if (id != proyecto.ProyectoID)
             {
                 return BadRequest();
             }
 
+            string URL = proyecto.ImgURL.Substring(12);
+            proyecto.ImgURL = URL;
             _context.Entry(proyecto).State = EntityState.Modified;
 
             try
@@ -87,7 +89,7 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dir = Path.Combine(Directory.GetCurrentDirectory(), "Recursos/");
+                        var dir = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Recursos/");
 
                         if (!Directory.Exists(dir))
                         {
@@ -116,21 +118,13 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Proyecto>> PostProyecto(Proyecto proyecto)
         {
+            string URL = proyecto.ImgURL.Substring(12);
+            proyecto.ImgURL = URL;
 
+            _context.Proyecto.Add(proyecto);
+            await _context.SaveChangesAsync();
 
-            var _proyect = _context.Proyecto.FirstOrDefault( p => p.NombreProyecto == proyecto.NombreProyecto);
-
-            if (_proyect == null)
-            {
-                _context.Proyecto.Add(proyecto);
-                await _context.SaveChangesAsync();
-
-                return CreatedAtAction("GetProyecto", new { id = proyecto.ProyectoID }, proyecto);
-            }
-            return Json(new { isSuccess = false, message = "Ya existe una proyecto con este nombre. Intente con otro." });
-
-
-
+            return CreatedAtAction("GetProyecto", new { id = proyecto.ProyectoID }, proyecto);
         }
 
         // DELETE: api/Proyectos/5
@@ -142,13 +136,21 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-
+            var file = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Recursos/" + proyecto.ImgURL);
+            if (System.IO.File.Exists(file))
+                System.IO.File.Delete(file);
             _context.Proyecto.Remove(proyecto);
             await _context.SaveChangesAsync();
 
             return proyecto;
         }
 
+        private async void eliminarImg(int id) {
+            var proyecto = await _context.Proyecto.FindAsync(id);
+            var file = Path.Combine(Directory.GetCurrentDirectory(), "Recursos/" + proyecto.ImgURL);
+            if (System.IO.File.Exists(file))
+                System.IO.File.Delete(file);
+        }
         private bool ProyectoExists(int id)
         {
             return _context.Proyecto.Any(e => e.ProyectoID == id);

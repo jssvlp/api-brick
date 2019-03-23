@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api_brick.Data;
 
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    partial class BrickDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190323023843_Agregando-FK-de-estados")]
+    partial class AgregandoFKdeestados
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -346,8 +348,6 @@ namespace api_brick.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ApellidosUsuario");
-
-                    b.Property<string>("AuthToken");
 
                     b.Property<string>("Contraseña");
 
