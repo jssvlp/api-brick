@@ -7,16 +7,7 @@ namespace api_brick.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "EstadoID",
-                table: "ServicioSolicituds",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<string>(
-                name: "NombreInmueble",
-                table: "Inmueble",
-                nullable: true);
+          
 
             migrationBuilder.UpdateData(
                 table: "Usuarios",
