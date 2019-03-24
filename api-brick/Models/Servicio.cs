@@ -11,6 +11,7 @@ namespace api_brick.Models
         public int ServicioID { get; set; }
         public string NombreServicio { get; set; }
         public string DescripcionServicio { get; set; }
+        public string ImgURL { get; set; }
 
         public ICollection<ServicioSolicitud> servicioSolicituds { get; set; }
 
