@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 
 namespace api_brick.Models
 {
-    [Table("Estado")]
+    [Table("estados")]
     public class Estado
     {
         [Key]
         public int EstadoId { get; set; }
         public string EstadoNombre { get; set; }
+
+        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; set; }
+
+        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime UpdateAt { get; set; }
     }
 }

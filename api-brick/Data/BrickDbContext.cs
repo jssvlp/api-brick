@@ -18,11 +18,11 @@ namespace api_brick.Data
         public DbSet<Servicio> Servicios { get; set; }
         public DbSet<ServicioSolicitud> ServicioSolicituds { get; set; }
         public DbSet<Solicitud> SolicitudServicios { get; set; }
-        public DbSet<VisitasAgendada> VisitasAgendadas { get; set; }
+        public DbSet<VisitaAgendada> VisitasAgendadas { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet <ComentarioForo> CometarioForos { get; set; }
         public DbSet<Like> Likes { get; set; }
-        public DbSet<PublicacionDelForo> PublicacionDelForos { get; set; }
+        public DbSet<PublicacionForo> PublicacionesForos { get; set; }
         public DbSet<TemasForo> TemasForos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -44,19 +44,6 @@ namespace api_brick.Data
                 .HasOne(bc => bc.Caracteristica)
                 .WithMany(c => c.CaracteristicasInmuebles)
                 .HasForeignKey(bc => bc.CaracteristicaID);
-
-
-            //Much to much relationship for Roles and Permisos
-            modelBuilder.Entity<PermisosRoles>()
-            .HasKey(pr => new { pr.PermisoId, pr.RoleId });
-            modelBuilder.Entity<PermisosRoles>()
-               .HasOne(r => r.Role)
-               .WithMany(p => p.Permisos)
-               .HasForeignKey(bc => bc.RoleId);
-            modelBuilder.Entity<PermisosRoles>()
-                .HasOne(bc => bc.Permiso)
-                .WithMany(c => c.PermisosRol)
-                .HasForeignKey(bc => bc.PermisoId);
 
 
             //SEEDS

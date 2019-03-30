@@ -23,17 +23,17 @@ namespace api_brick.Controllers
         // GET: api/PublicacionForo
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PublicacionDelForo>>> GetPublicacion()
+        public async Task<ActionResult<IEnumerable<PublicacionForo>>> GetPublicacion()
         {
-            return await _context.PublicacionDelForos.ToListAsync();
+            return await _context.PublicacionesForos.ToListAsync();
         }
 
         // GET: api/PublicacionForo/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PublicacionDelForo>> GetPublicacion(int id)
+        public async Task<ActionResult<PublicacionForo>> GetPublicacion(int id)
         {
 
-            var publicacion = await _context.PublicacionDelForos.FindAsync(id);
+            var publicacion = await _context.PublicacionesForos.FindAsync(id);
 
             if (publicacion == null)
             {
@@ -45,7 +45,7 @@ namespace api_brick.Controllers
 
         // PUT: api/PublicacionForo/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPublicacion(int id, PublicacionDelForo publicacion)
+        public async Task<IActionResult> PutPublicacion(int id, PublicacionForo publicacion)
         {
             if (id != publicacion.PublicacionID)
             {
@@ -75,9 +75,9 @@ namespace api_brick.Controllers
 
         // POST: api/PublicacionForo
         [HttpPost]
-        public async Task<ActionResult<PublicacionDelForo>> PostPublicacion(PublicacionDelForo publicacion)
+        public async Task<ActionResult<PublicacionForo>> PostPublicacion(PublicacionForo publicacion)
         {
-            _context.PublicacionDelForos.Add(publicacion);
+            _context.PublicacionesForos.Add(publicacion);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPublicacion", new { id = publicacion.PublicacionID }, publicacion);
@@ -85,15 +85,15 @@ namespace api_brick.Controllers
 
         // DELETE: api/PublicacionForo/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<PublicacionDelForo>> DeletePublicacion(int id)
+        public async Task<ActionResult<PublicacionForo>> DeletePublicacion(int id)
         {
-            var publicacion = await _context.PublicacionDelForos.FindAsync(id);
+            var publicacion = await _context.PublicacionesForos.FindAsync(id);
             if (publicacion == null)
             {
                 return NotFound();
             }
 
-            _context.PublicacionDelForos.Remove(publicacion);
+            _context.PublicacionesForos.Remove(publicacion);
             await _context.SaveChangesAsync();
 
             return publicacion;
@@ -101,7 +101,7 @@ namespace api_brick.Controllers
 
         private bool PublicacionExists(int id)
         {
-            return _context.PublicacionDelForos.Any(e => e.PublicacionID == id);
+            return _context.PublicacionesForos.Any(e => e.PublicacionID == id);
         }
 
     }

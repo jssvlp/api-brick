@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace api_brick.Models
 {
+    [Table("proyectos")]
     public class Proyecto
     {
         public int ProyectoID { get; set; }
@@ -13,18 +16,26 @@ namespace api_brick.Models
         public DateTime FechaTerminacion { get; set; }
         public string Direccion { get; set; }
         public string ImgURL { get; set; }
+        public int Estado { get; set; }
 
 
         public int UbicacionID { get; set; }
         public Ubicacion Ubicacion { get; set; }
 
+
+        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; set; }
+
+        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime UpdateAt { get; set; }
+
         public ICollection<Inmueble> Inmuebles { get; set; }
-        public ICollection<VisitasAgendada> VisitasAgendadas { get; set; }
+        public ICollection<VisitaAgendada> VisitasAgendadas { get; set; }
 
         public Proyecto()
         {
             Inmuebles = new Collection<Inmueble>();
-            VisitasAgendadas = new Collection<VisitasAgendada>();
+            VisitasAgendadas = new Collection<VisitaAgendada>();
         }
     }
 }

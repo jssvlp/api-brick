@@ -22,14 +22,14 @@ namespace api_brick.Controllers
 
         // GET: api/Visita
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<VisitasAgendada>>> GetVisita()
+        public async Task<ActionResult<IEnumerable<VisitaAgendada>>> GetVisita()
         {
             return await _context.VisitasAgendadas.ToListAsync();
         }
 
         // GET: api/Visita/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<VisitasAgendada>> GetVisita(int id)
+        public async Task<ActionResult<VisitaAgendada>> GetVisita(int id)
         {
 
             var visita = await _context.VisitasAgendadas.FindAsync(id);
@@ -44,7 +44,7 @@ namespace api_brick.Controllers
 
         // PUT: api/Visita/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutVisita(int id, VisitasAgendada visita)
+        public async Task<IActionResult> PutVisita(int id, VisitaAgendada visita)
         {
             if (id != visita.VisitaID)
             {
@@ -74,7 +74,7 @@ namespace api_brick.Controllers
 
         // POST: api/Visita
         [HttpPost]
-        public async Task<ActionResult<VisitasAgendada>> PostVisita(VisitasAgendada visita)
+        public async Task<ActionResult<VisitaAgendada>> PostVisita(VisitaAgendada visita)
         {
             _context.VisitasAgendadas.Add(visita);
             await _context.SaveChangesAsync();
@@ -84,7 +84,7 @@ namespace api_brick.Controllers
 
         // DELETE: api/Visita/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<VisitasAgendada>> DeleteVisita(int id)
+        public async Task<ActionResult<VisitaAgendada>> DeleteVisita(int id)
         {
             var visita = await _context.VisitasAgendadas.FindAsync(id);
             if (visita == null)

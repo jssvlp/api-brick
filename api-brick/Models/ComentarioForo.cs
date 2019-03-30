@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace api_brick.Models
 {
+    [Table("comentarios")]
     public class ComentarioForo
     {
         [Key]
@@ -17,6 +19,6 @@ namespace api_brick.Models
         public string URLImagen { get; set; }
 
         public Usuario Usuario { get; set; }
-        public PublicacionDelForo publicacion { get; set; }
+        public PublicacionForo Publicacion { get; set; }
     }
 }

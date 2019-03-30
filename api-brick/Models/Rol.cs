@@ -8,15 +8,13 @@ using System.Threading.Tasks;
 namespace api_brick.Models
 {
 
-    [Table("Roles")]
+    [Table("roles")]
     public class Rol
     {
         [Key]
         public int RoleId { get; set; }
         public string RoleNombre { get; set; }
         public string Descripcion { get; set; }
-
-        public ICollection<PermisosRoles> Permisos { get; set; }
 
         public ICollection<Usuario> Usuarios { get; set; }
     }

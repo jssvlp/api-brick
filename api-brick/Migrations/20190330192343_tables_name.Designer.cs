@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api_brick.Data;
 
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    partial class BrickDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190330192343_tables_name")]
+    partial class tables_name
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -199,6 +201,43 @@ namespace api_brick.Migrations
                     b.HasIndex("UsuarioID");
 
                     b.ToTable("likes");
+                });
+
+            modelBuilder.Entity("api_brick.Models.Permiso", b =>
+                {
+                    b.Property<int>("PermisoId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("Modulo");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("PermisoId");
+
+                    b.ToTable("permisos");
+                });
+
+            modelBuilder.Entity("api_brick.Models.PermisosRoles", b =>
+                {
+                    b.Property<int>("PermisoId");
+
+                    b.Property<int>("RoleId");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime>("UpdateAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("PermisoId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("permisos_roles");
                 });
 
             modelBuilder.Entity("api_brick.Models.Proyecto", b =>
@@ -455,9 +494,9 @@ namespace api_brick.Migrations
 
                     b.Property<DateTime>("HorarioProgramado");
 
-                    b.Property<int?>("ProyectoID");
+                    b.Property<int>("ProyectoID");
 
-                    b.Property<int?>("SolicitudID");
+                    b.Property<int>("SolicitudID");
 
                     b.Property<DateTime>("UpdateAt")
                         .ValueGeneratedOnAddOrUpdate();
@@ -526,6 +565,19 @@ namespace api_brick.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("api_brick.Models.PermisosRoles", b =>
+                {
+                    b.HasOne("api_brick.Models.Permiso", "Permiso")
+                        .WithMany("PermisosRol")
+                        .HasForeignKey("PermisoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("api_brick.Models.Rol", "Role")
+                        .WithMany("Permisos")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("api_brick.Models.Proyecto", b =>
                 {
                     b.HasOne("api_brick.Models.Ubicacion", "Ubicacion")
@@ -585,11 +637,13 @@ namespace api_brick.Migrations
                 {
                     b.HasOne("api_brick.Models.Proyecto", "Proyecto")
                         .WithMany("VisitasAgendadas")
-                        .HasForeignKey("ProyectoID");
+                        .HasForeignKey("ProyectoID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("api_brick.Models.Solicitud", "Solicitud")
                         .WithMany()
-                        .HasForeignKey("SolicitudID");
+                        .HasForeignKey("SolicitudID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
