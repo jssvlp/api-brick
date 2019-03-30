@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using api_brick.Data;
 using api_brick.Models;
+using System.IO;
 
 namespace api_brick.Controllers
 {
@@ -50,7 +51,9 @@ namespace api_brick.Controllers
             {
                 return BadRequest();
             }
-
+            string URL = servicio.ImgURL.Substring(12);
+            servicio.ImgURL = URL;
+            _context.Entry(servicio).State = EntityState.Modified;
             _context.Entry(servicio).State = EntityState.Modified;
 
             try
@@ -72,10 +75,50 @@ namespace api_brick.Controllers
             return NoContent();
         }
 
+        [Route("SaveFile")]
+        [HttpPost()]
+        public async Task<IActionResult> SaveFile(string fileName)
+        {
+            try
+            {
+
+                foreach (var file2 in Request.Form.Files.ToList())
+                {
+
+                    if (!string.IsNullOrEmpty(file2?.FileName))
+                    {
+                        var dir = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Servicio/");
+
+                        if (!Directory.Exists(dir))
+                        {
+                            Directory.CreateDirectory(dir);
+                        }
+
+                        var path = Path.Combine(dir, file2.FileName);
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await file2.CopyToAsync(fileStream);
+                        }
+
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return Ok();
+
+        }
+
         // POST: api/Servicios
         [HttpPost]
         public async Task<ActionResult<Servicio>> PostServicio(Servicio servicio)
         {
+            string URL = servicio.ImgURL.Substring(12);
+            servicio.ImgURL = URL;
             _context.Servicios.Add(servicio);
             await _context.SaveChangesAsync();
 
@@ -91,7 +134,9 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-
+            var file = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Servicio/" + servicio.ImgURL);
+            if (System.IO.File.Exists(file))
+                System.IO.File.Delete(file);
             _context.Servicios.Remove(servicio);
             await _context.SaveChangesAsync();
 
