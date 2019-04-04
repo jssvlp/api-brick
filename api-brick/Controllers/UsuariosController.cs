@@ -109,8 +109,9 @@ namespace api_brick.Controllers
 
         }
 
+
         [HttpPost("login")]
-        public async Task<ActionResult<Usuario>> Login(Usuario usuario)
+        protected async Task<ActionResult<Usuario>> PostLogin(Usuario usuario)
         {
             var _user = ValidateCredentials(usuario.CorreoUsuario, usuario.Contraseña);
             if(_user!= null)
@@ -176,6 +177,7 @@ namespace api_brick.Controllers
             return usuario;
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         public Usuario ValidateCredentials(string correo, string password)
         {
             Usuario _usuario = (Usuario) _context.Usuarios.FirstOrDefault(x => x.CorreoUsuario == correo);
@@ -189,17 +191,20 @@ namespace api_brick.Controllers
         }
 
         // Method for hashing the password
+        [ApiExplorerSettings(IgnoreApi = true)]
         public string HashPassword(string password)
         {
             return Crypto.HashPassword(password);
         }
 
         // Method to verify the password hash against the given password
+        [ApiExplorerSettings(IgnoreApi = true)]
         public bool VerifyPassword(string hash, string password)
         {
             return Crypto.VerifyHashedPassword(hash, password);
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         private bool UsuarioExists(int id)
         {
             return _context.Usuarios.Any(e => e.UsuarioID == id);

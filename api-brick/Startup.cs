@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace api_brick
 {
@@ -24,7 +25,7 @@ namespace api_brick
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            EmailSender es = new EmailSender();
+            //EmailSender es = new EmailSender();
           // es.SendEmailAsync("j.velazquez@concentra.com.do","Email for test","");
         }
 
@@ -43,6 +44,14 @@ namespace api_brick
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "Test API",
+                    Description = "ASP.NET Core Web API"
+                });
+            });
 
             //container = services.BuildServiceProvider(); //container is a global variable。
         }
@@ -75,7 +84,11 @@ namespace api_brick
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-            
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Test API V1");
+            });
+
         }
     }
 }

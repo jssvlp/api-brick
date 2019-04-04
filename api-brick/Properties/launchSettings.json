@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/ubicaciones",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ProjectPath": "C:\\Users\\pjms_\\OneDrive\\Documentos\\Proyecto\\api-brick\\api-brick",
         "ASPNETCORE_ENVIRONMENT": "Development"

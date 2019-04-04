@@ -42,7 +42,7 @@ namespace api_brick.Controllers
 
         }
 
-        [HttpGet("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutTemasForo(int id, TemasForo temasForo)
         {
             if (id != temasForo.TemaID)
