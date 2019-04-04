@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -11,13 +12,13 @@ namespace api_brick.Models
     public class ServicioSolicitud
     {
         public int EstadoID { get; set; }
-        public Estado Estado { get; set; }
+        public virtual Estado Estado { get; set; }
         
         public int SolicitudID { get; set; }
-        public Solicitud SolicitudServicio { get; set; }
+        public virtual Solicitud Solicitud { get; set; }
 
         public int ServicioID { get; set; }
-        public Servicio Servicio { get; set; }
+        public virtual Servicio Servicio { get; set; }
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
@@ -25,5 +26,6 @@ namespace api_brick.Models
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateAt { get; set; }
 
+    
     }
 }

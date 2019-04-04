@@ -13,7 +13,12 @@ namespace api_brick.Models
         [Key]
         public int VisitaID { get; set; }
       
-        public DateTime HorarioProgramado { get; set; }
+        public DateTime Fecha_Visita { get; set; }
+
+        public DateTime Hora_Inicio { get; set; }
+        public DateTime Hora_Fin { get; set; }
+        public string Motivo { get; set; }
+        public string Descripcion { get; set; }
 
         public int? ProyectoID { get; set; }
         public Proyecto Proyecto { get; set; }

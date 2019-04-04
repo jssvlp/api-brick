@@ -15,6 +15,7 @@ namespace api_brick.Models
         public string TextoEntrada { get; set; }
         public int UsuarioID { get; set; }
         public DateTime TimeStampBlog { get; set; }
+        public string ImgURL { get; set; }
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateAt { get; set; }

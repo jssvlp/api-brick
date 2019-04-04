@@ -25,7 +25,7 @@ namespace api_brick.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Solicitud>>> GetSolicitud()
         {
-            return await _context.SolicitudServicios.ToListAsync();
+            return await _context.Solicitud.Include(x => x.ServicioSolicituds).Include(y => y.Usuario).ToListAsync();
         }
 
         // GET: api/Solicitud/5
@@ -33,7 +33,7 @@ namespace api_brick.Controllers
         public async Task<ActionResult<Solicitud>> GetSolicitud(int id)
         {
 
-            var Solicitud = await _context.SolicitudServicios.FindAsync(id);
+            var Solicitud = await _context.Solicitud.FindAsync(id);
 
             if (Solicitud == null)
             {
@@ -41,6 +41,29 @@ namespace api_brick.Controllers
             }
 
             return Solicitud;
+        }
+
+        [Route("ServicioSolicitud")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ServicioSolicitud>>> GetServs()
+        {
+            return await _context.ServicioSolicituds.Include(x => x.Solicitud).Include(y => y.Servicio).Include(z => z.Estado).ToListAsync();
+        }
+
+        // GET: api/ServicioSolicitud/5
+        [Route("ServicioSolicitud/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<ServicioSolicitud>> GetServ(int id)
+        {
+
+            var Serv = await _context.ServicioSolicituds.Include(x => x.Estado).Include(y => y.Servicio).Include(z => z.Solicitud).ThenInclude(z => z.Usuario).FirstOrDefaultAsync(x => x.SolicitudID == id);
+
+            if (Serv == null)
+            {
+                return NotFound();
+            }
+
+            return Serv;
         }
 
         // PUT: api/Solicitud/5
@@ -73,11 +96,34 @@ namespace api_brick.Controllers
             return NoContent();
         }
 
+        //POST: for Entidad asociativa ServicioSolicitud
+        [Route("ServicioSolicitud")]
+        [HttpPost()]
+        public async Task<ActionResult<Solicitud>> PostCaracteristicaInmuelbe(ServicioSolicitud serv)
+        {
+            
+            var solicitud = _context.Solicitud.Find(serv.SolicitudID);
+            var servicio = _context.Servicios.Find(serv.ServicioID);
+            var estado = _context.Estados.Find(serv.EstadoID);
+
+            if (solicitud != null && servicio != null && estado !=null)
+            {
+                var _serviciosolicitud = new ServicioSolicitud { ServicioID = serv.ServicioID, SolicitudID = serv.SolicitudID, EstadoID = serv.EstadoID};
+                _context.ServicioSolicituds.Add(_serviciosolicitud);
+                await _context.SaveChangesAsync();
+
+                return Json(new { isSuccess = true, message = "Registro insertado correctamente" });
+
+            }
+            return Json(new { isSuccess = false, message = "La solicitud o el servicio enviado no existe, por favor proceda a insertarlos." });
+
+        }
+
         // POST: api/Solicitud
         [HttpPost]
         public async Task<ActionResult<Solicitud>> PostSolicitud(Solicitud solicitud)
         {
-            _context.SolicitudServicios.Add(solicitud);
+            _context.Solicitud.Add(solicitud);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetSolicitud", new { id = solicitud.SolicitudID }, solicitud);
@@ -87,13 +133,13 @@ namespace api_brick.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Solicitud>> DeleteSolicitud(int id)
         {
-            var Solicitud = await _context.SolicitudServicios.FindAsync(id);
+            var Solicitud = await _context.Solicitud.FindAsync(id);
             if (Solicitud == null)
             {
                 return NotFound();
             }
 
-            _context.SolicitudServicios.Remove(Solicitud);
+            _context.Solicitud.Remove(Solicitud);
             await _context.SaveChangesAsync();
 
             return Solicitud;
@@ -101,7 +147,7 @@ namespace api_brick.Controllers
 
         private bool SolicitudExists(int id)
         {
-            return _context.SolicitudServicios.Any(e => e.SolicitudID == id);
+            return _context.Solicitud.Any(e => e.SolicitudID == id);
         }
 
 

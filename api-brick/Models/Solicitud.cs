@@ -19,7 +19,7 @@ namespace api_brick.Models
         public DateTime FechaServSol { get; set; }
         public string Comentario { get; set; }
 
-        public Usuario usuario { get; set; }
+        public Usuario Usuario { get; set; }
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
@@ -27,11 +27,13 @@ namespace api_brick.Models
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateAt { get; set; }
 
-        public ICollection<ServicioSolicitud> servicioSolicituds { get; set; }
+       
+
+        public virtual ICollection<ServicioSolicitud> ServicioSolicituds { get; set; }
 
         public Solicitud()
         {
-            servicioSolicituds = new Collection<ServicioSolicitud>();
+            ServicioSolicituds = new Collection<ServicioSolicitud>();
         }
     }
 }

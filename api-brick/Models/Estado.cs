@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -19,5 +20,13 @@ namespace api_brick.Models
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateAt { get; set; }
+
+
+        public virtual ICollection<ServicioSolicitud> ServicioSolicituds { get; set; }
+
+         public Estado()
+         {
+             ServicioSolicituds = new Collection<ServicioSolicitud>();
+         }
     }
 }

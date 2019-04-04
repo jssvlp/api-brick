@@ -22,6 +22,8 @@ namespace api_brick.Migrations
                     b.Property<int>("BlogID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ImgURL");
+
                     b.Property<string>("TextoEntrada");
 
                     b.Property<DateTime>("TimeStampBlog");
@@ -439,7 +441,8 @@ namespace api_brick.Migrations
                             ApellidosUsuario = "Admin",
                             Contraseña = "1234567",
                             CorreoUsuario = "admin@admin.com",
-                            FechaNacimiento = new DateTime(2019, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaNacimiento = new DateTime(2019, 4, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             NombreUsuario = "Admin",
                             RoleId = 1,
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -454,7 +457,15 @@ namespace api_brick.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.Property<DateTime>("HorarioProgramado");
+                    b.Property<string>("Descripcion");
+
+                    b.Property<DateTime>("Fecha_Visita");
+
+                    b.Property<DateTime>("Hora_Fin");
+
+                    b.Property<DateTime>("Hora_Inicio");
+
+                    b.Property<string>("Motivo");
 
                     b.Property<int?>("ProyectoID");
 
@@ -551,24 +562,24 @@ namespace api_brick.Migrations
             modelBuilder.Entity("api_brick.Models.ServicioSolicitud", b =>
                 {
                     b.HasOne("api_brick.Models.Estado", "Estado")
-                        .WithMany()
+                        .WithMany("ServicioSolicituds")
                         .HasForeignKey("EstadoID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("api_brick.Models.Servicio", "Servicio")
-                        .WithMany("servicioSolicituds")
+                        .WithMany("ServicioSolicituds")
                         .HasForeignKey("ServicioID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("api_brick.Models.Solicitud", "SolicitudServicio")
-                        .WithMany("servicioSolicituds")
+                    b.HasOne("api_brick.Models.Solicitud", "Solicitud")
+                        .WithMany("ServicioSolicituds")
                         .HasForeignKey("SolicitudID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("api_brick.Models.Solicitud", b =>
                 {
-                    b.HasOne("api_brick.Models.Usuario", "usuario")
+                    b.HasOne("api_brick.Models.Usuario", "Usuario")
                         .WithMany("Solicitud")
                         .HasForeignKey("UsuarioID")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -17,13 +17,14 @@ namespace api_brick.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Servicio> Servicios { get; set; }
         public DbSet<ServicioSolicitud> ServicioSolicituds { get; set; }
-        public DbSet<Solicitud> SolicitudServicios { get; set; }
+        public DbSet<Solicitud> Solicitud { get; set; }
         public DbSet<VisitaAgendada> VisitasAgendadas { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet <ComentarioForo> CometarioForos { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<PublicacionForo> PublicacionesForos { get; set; }
         public DbSet<TemasForo> TemasForos { get; set; }
+        public DbSet<Estado> Estados { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
@@ -56,11 +57,11 @@ namespace api_brick.Data
             .HasKey(bc => new { bc.ServicioID, bc.SolicitudID });
             modelBuilder.Entity<ServicioSolicitud>()
                 .HasOne(bc => bc.Servicio)
-                .WithMany(b => b.servicioSolicituds)
+                .WithMany(b => b.ServicioSolicituds)
                 .HasForeignKey(bc => bc.ServicioID);
             modelBuilder.Entity<ServicioSolicitud>()
-                .HasOne(bc => bc.SolicitudServicio)
-                .WithMany(c => c.servicioSolicituds)
+                .HasOne(bc => bc.Solicitud)
+                .WithMany(c => c.ServicioSolicituds)
                 .HasForeignKey(bc => bc.SolicitudID);
         }
     }
