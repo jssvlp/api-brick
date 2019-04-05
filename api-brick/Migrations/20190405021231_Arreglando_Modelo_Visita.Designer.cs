@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api_brick.Data;
 
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    partial class BrickDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190405021231_Arreglando_Modelo_Visita")]
+    partial class Arreglando_Modelo_Visita
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -45,9 +45,16 @@ namespace api_brick.Controllers
 
         [Route("ServicioSolicitud")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ServicioSolicitud>>> GetServs()
+        public async Task<ActionResult<IEnumerable<ServicioSolicitud>>> GetServsPendientes()
         {
-            return await _context.ServicioSolicituds.Include(x => x.Solicitud).Include(y => y.Servicio).Include(z => z.Estado).ToListAsync();
+            return await _context.ServicioSolicituds.Where(i => i.EstadoID == 2).Include(x => x.Solicitud).Include(y => y.Servicio).Include(z => z.Estado).ToListAsync();
+        }
+
+        [Route("ServicioSolicitudA")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ServicioSolicitud>>> GetServsOtras()
+        {
+            return await _context.ServicioSolicituds.Where(i => i.EstadoID != 2).Include(x => x.Solicitud).Include(y => y.Servicio).Include(z => z.Estado).ToListAsync();
         }
 
         // GET: api/ServicioSolicitud/5
@@ -65,6 +72,38 @@ namespace api_brick.Controllers
 
             return Serv;
         }
+
+        // PUT: api/ServicioSolicitud/5
+        [Route("ServicioSolicitud/{id}")]
+        [HttpPut]
+        public async Task<IActionResult> PutServSol(int id, ServicioSolicitud serv)
+        {
+            if (id != serv.SolicitudID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(serv).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SolicitudExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
 
         // PUT: api/Solicitud/5
         [HttpPut("{id}")]
