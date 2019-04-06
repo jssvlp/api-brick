@@ -9,6 +9,7 @@ namespace api_brick.Data
 {
     public class BrickDbContext : DbContext
     {
+
         public DbSet<Proyecto> Proyecto { get; set; }
         public DbSet<Inmueble> Inmueble { get; set; }
         public DbSet<Ubicacion> Ubicacion { get; set; }
@@ -25,6 +26,8 @@ namespace api_brick.Data
         public DbSet<PublicacionForo> PublicacionesForos { get; set; }
         public DbSet<TemasForo> TemasForos { get; set; }
 
+      
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
             .UseMySql(@"Server=localhost;database=brick;user=root;pwd=;");
@@ -32,6 +35,7 @@ namespace api_brick.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
 
             //much to much relationship for caracteristicas and imbuebles
             modelBuilder.Entity<CaracteristicaInmueble>()

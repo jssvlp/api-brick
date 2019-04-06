@@ -20,6 +20,7 @@ namespace api_brick.Controllers
 
         public BlogController(BrickDbContext context) {
             _context = context;
+            
         }
 
         // GET: api/Blog

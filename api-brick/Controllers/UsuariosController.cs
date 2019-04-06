@@ -105,7 +105,7 @@ namespace api_brick.Controllers
 
 
         [HttpPost("login")]
-        protected async Task<ActionResult<Usuario>> PostLogin(Usuario usuario)
+        public async Task<ActionResult<Usuario>> Login(Usuario usuario)
         {
             var _user = ValidateCredentials(usuario.CorreoUsuario, usuario.Contraseña);
             if(_user!= null)
@@ -125,20 +125,9 @@ namespace api_brick.Controllers
 
                 }
                 return _user;
-                //return Json(
-                //  new
-                //  {
-                //      Name = _user.NombreUsuario,
-                //      Mail = _user.CorreoUsuario,
-                //      Role = _user.Role.RoleNombre,
-                //      BirthDate = _user.FechaNacimiento,
-                //      FireBaseCore = _user.FirebaseCode,
-                //      Token = _user.AuthToken
-                //  });
-            }
-              
+            }        
             else
-                return Json(new { isSuccess = false, message = "Ya existe una proyecto con este nombre. Intente con otro." });
+                return Json(new { isSuccess = false, message = "Revise sus credenciales e intente nuevamente." });
 
 
 
