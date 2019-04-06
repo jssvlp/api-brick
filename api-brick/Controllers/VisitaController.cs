@@ -24,7 +24,15 @@ namespace api_brick.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<VisitaAgendada>>> GetVisita()
         {
-            return await _context.VisitasAgendadas.ToListAsync();
+            return await _context.VisitasAgendadas.Include(t => t.Solicitud)
+                                                    .ThenInclude(t => t.ServicioSolicituds)
+                                                        .ThenInclude(z => z.Estado)
+                                                    .ThenInclude(t => t.ServicioSolicituds)
+                                                        .ThenInclude(z => z.Servicio)
+                                                  .Include(t => t.Proyecto).
+                                                  Include(t => t.Solicitud).
+                                                    ThenInclude(t => t.Usuario)
+                                                                           .ToListAsync();
         }
 
         // GET: api/Visita/5

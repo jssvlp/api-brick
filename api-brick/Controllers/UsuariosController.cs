@@ -39,6 +39,8 @@ namespace api_brick.Controllers
                         ThenInclude(t => t.Servicio).
                             ThenInclude(t => t.ServicioSolicituds).
                                 ThenInclude(t => t.Estado).
+                Include(x => x.Solicitud).
+                    ThenInclude(t => t.VisitaAgendadas).
                         FirstOrDefaultAsync(x => x.UsuarioID == id);
 
             if (usuario == null)
