@@ -442,11 +442,7 @@ namespace api_brick.Migrations
                             Contraseña = "1234567",
                             CorreoUsuario = "admin@admin.com",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-<<<<<<< HEAD
-                            FechaNacimiento = new DateTime(2019, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
-=======
                             FechaNacimiento = new DateTime(2019, 4, 5, 0, 0, 0, 0, DateTimeKind.Local),
->>>>>>> 17f477ecee317f3c5f34097855153da4f2686599
                             NombreUsuario = "Admin",
                             RoleId = 1,
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)

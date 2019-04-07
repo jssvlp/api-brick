@@ -25,12 +25,9 @@ namespace api_brick.Data
         public DbSet<Like> Likes { get; set; }
         public DbSet<PublicacionForo> PublicacionesForos { get; set; }
         public DbSet<TemasForo> TemasForos { get; set; }
-<<<<<<< HEAD
         public DbSet<Rol> Roles { get; set; }
-
-=======
         public DbSet<Estado> Estados { get; set; }
->>>>>>> 17f477ecee317f3c5f34097855153da4f2686599
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
