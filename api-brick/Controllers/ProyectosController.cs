@@ -144,13 +144,6 @@ namespace api_brick.Controllers
 
             return proyecto;
         }
-
-        private async void eliminarImg(int id) {
-            var proyecto = await _context.Proyecto.FindAsync(id);
-            var file = Path.Combine(Directory.GetCurrentDirectory(), "Recursos/" + proyecto.ImgURL);
-            if (System.IO.File.Exists(file))
-                System.IO.File.Delete(file);
-        }
         private bool ProyectoExists(int id)
         {
             return _context.Proyecto.Any(e => e.ProyectoID == id);

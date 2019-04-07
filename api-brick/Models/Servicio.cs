@@ -22,10 +22,11 @@ namespace api_brick.Models
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateAt { get; set; }
 
-        public ICollection<ServicioSolicitud> servicioSolicituds { get; set; }
+
+        public virtual ICollection<ServicioSolicitud> ServicioSolicituds { get; set; }
 
         public Servicio() {
-            servicioSolicituds = new Collection<ServicioSolicitud>();
+            ServicioSolicituds = new Collection<ServicioSolicitud>();
         }
     }
 }

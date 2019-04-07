@@ -30,6 +30,8 @@
     <Compile Remove="Migrations\20190303205805_Todos_Los_Modelos.Designer.cs" />
     <Compile Remove="Migrations\20190318185744_merge.cs" />
     <Compile Remove="Migrations\20190318185744_merge.Designer.cs" />
+    <Compile Remove="Migrations\20190404023559_virtual.cs" />
+    <Compile Remove="Migrations\20190404023559_virtual.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

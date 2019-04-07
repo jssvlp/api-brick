@@ -33,7 +33,15 @@ namespace api_brick.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var usuario = await _context.Usuarios.
+                Include(x => x.Solicitud).
+                    ThenInclude(t => t.ServicioSolicituds).
+                        ThenInclude(t => t.Servicio).
+                            ThenInclude(t => t.ServicioSolicituds).
+                                ThenInclude(t => t.Estado).
+                Include(x => x.Solicitud).
+                    ThenInclude(t => t.VisitaAgendadas).
+                        FirstOrDefaultAsync(x => x.UsuarioID == id);
 
             if (usuario == null)
             {

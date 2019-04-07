@@ -32,7 +32,7 @@ namespace api_brick.Models
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateAt { get; set; }
 
-        public ICollection<Solicitud> Solicitud{ get; set; }
+        public virtual ICollection<Solicitud> Solicitud{ get; set; }
 
         public Usuario() {
             Solicitud = new Collection<Solicitud>();

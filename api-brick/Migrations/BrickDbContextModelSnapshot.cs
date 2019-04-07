@@ -22,6 +22,8 @@ namespace api_brick.Migrations
                     b.Property<int>("BlogID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ImgURL");
+
                     b.Property<string>("TextoEntrada");
 
                     b.Property<DateTime>("TimeStampBlog");
@@ -440,7 +442,11 @@ namespace api_brick.Migrations
                             Contraseña = "1234567",
                             CorreoUsuario = "admin@admin.com",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+<<<<<<< HEAD
                             FechaNacimiento = new DateTime(2019, 4, 1, 0, 0, 0, 0, DateTimeKind.Local),
+=======
+                            FechaNacimiento = new DateTime(2019, 4, 5, 0, 0, 0, 0, DateTimeKind.Local),
+>>>>>>> 17f477ecee317f3c5f34097855153da4f2686599
                             NombreUsuario = "Admin",
                             RoleId = 1,
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -455,7 +461,13 @@ namespace api_brick.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.Property<DateTime>("HorarioProgramado");
+                    b.Property<string>("Descripcion");
+
+                    b.Property<DateTime>("Hora_Fin");
+
+                    b.Property<DateTime>("Hora_Inicio");
+
+                    b.Property<string>("Motivo");
 
                     b.Property<int?>("ProyectoID");
 
@@ -552,24 +564,24 @@ namespace api_brick.Migrations
             modelBuilder.Entity("api_brick.Models.ServicioSolicitud", b =>
                 {
                     b.HasOne("api_brick.Models.Estado", "Estado")
-                        .WithMany()
+                        .WithMany("ServicioSolicituds")
                         .HasForeignKey("EstadoID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("api_brick.Models.Servicio", "Servicio")
-                        .WithMany("servicioSolicituds")
+                        .WithMany("ServicioSolicituds")
                         .HasForeignKey("ServicioID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("api_brick.Models.Solicitud", "SolicitudServicio")
-                        .WithMany("servicioSolicituds")
+                    b.HasOne("api_brick.Models.Solicitud", "Solicitud")
+                        .WithMany("ServicioSolicituds")
                         .HasForeignKey("SolicitudID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("api_brick.Models.Solicitud", b =>
                 {
-                    b.HasOne("api_brick.Models.Usuario", "usuario")
+                    b.HasOne("api_brick.Models.Usuario", "Usuario")
                         .WithMany("Solicitud")
                         .HasForeignKey("UsuarioID")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -590,7 +602,7 @@ namespace api_brick.Migrations
                         .HasForeignKey("ProyectoID");
 
                     b.HasOne("api_brick.Models.Solicitud", "Solicitud")
-                        .WithMany()
+                        .WithMany("VisitaAgendadas")
                         .HasForeignKey("SolicitudID");
                 });
 #pragma warning restore 612, 618
