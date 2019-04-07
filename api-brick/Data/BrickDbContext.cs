@@ -9,6 +9,7 @@ namespace api_brick.Data
 {
     public class BrickDbContext : DbContext
     {
+
         public DbSet<Proyecto> Proyecto { get; set; }
         public DbSet<Inmueble> Inmueble { get; set; }
         public DbSet<Ubicacion> Ubicacion { get; set; }
@@ -24,7 +25,12 @@ namespace api_brick.Data
         public DbSet<Like> Likes { get; set; }
         public DbSet<PublicacionForo> PublicacionesForos { get; set; }
         public DbSet<TemasForo> TemasForos { get; set; }
+<<<<<<< HEAD
+        public DbSet<Rol> Roles { get; set; }
+
+=======
         public DbSet<Estado> Estados { get; set; }
+>>>>>>> 17f477ecee317f3c5f34097855153da4f2686599
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
@@ -33,6 +39,7 @@ namespace api_brick.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
 
             //much to much relationship for caracteristicas and imbuebles
             modelBuilder.Entity<CaracteristicaInmueble>()

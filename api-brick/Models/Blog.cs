@@ -20,6 +20,7 @@ namespace api_brick.Models
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateAt { get; set; }
 
-        public Usuario Usuario { get; set; }
+        
+        public  Usuario Usuario { get; set; }
     }
 }

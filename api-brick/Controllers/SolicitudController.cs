@@ -28,6 +28,14 @@ namespace api_brick.Controllers
             return await _context.Solicitud.Include(x => x.ServicioSolicituds).Include(y => y.Usuario).Include(z => z.VisitaAgendadas).ToListAsync();
         }
 
+
+        [HttpGet("solicitudes/user/{UserID}")]
+        public async Task<ActionResult<IEnumerable<Solicitud>>> GetSolicitudesByUser(int UserID)
+        {
+            var solicitudes = _context.SolicitudServicios.Include(a => a.servicioSolicituds).Where(u => u.UsuarioID == UserID).ToList();
+
+            return solicitudes;
+        }
         // GET: api/Solicitud/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Solicitud>> GetSolicitud(int id)
