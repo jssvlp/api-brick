@@ -32,6 +32,12 @@
     <Compile Remove="Migrations\20190318185744_merge.Designer.cs" />
     <Compile Remove="Migrations\20190404023559_virtual.cs" />
     <Compile Remove="Migrations\20190404023559_virtual.Designer.cs" />
+    <Compile Remove="Migrations\20190407155816_Visita_estado.cs" />
+    <Compile Remove="Migrations\20190407155816_Visita_estado.Designer.cs" />
+    <Compile Remove="Migrations\20190407160250_Visita_estado.cs" />
+    <Compile Remove="Migrations\20190407160250_Visita_estado.Designer.cs" />
+    <Compile Remove="Migrations\20190407194412_nuevoEstado.cs" />
+    <Compile Remove="Migrations\20190407194412_nuevoEstado.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
