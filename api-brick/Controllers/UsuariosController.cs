@@ -136,8 +136,11 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
+            var userRole = _context.Roles.FirstOrDefault(r => r.RoleNombre == "Usuarios");
+
+
             usuario.Contraseña = HashPassword(usuario.Contraseña);
-            usuario.RoleId = 1;
+            usuario.RoleId = userRole.RoleId;
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
