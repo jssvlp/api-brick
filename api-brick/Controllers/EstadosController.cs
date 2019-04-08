@@ -24,7 +24,8 @@ namespace api_brick.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Estado>>> GetSolicitud()
         {
-            return await _context.Estados.ToListAsync();
+            return await _context.Estados.Where(i => i.EstadoId != 6).ToListAsync();
         }
+
     }
 }
