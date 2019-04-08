@@ -25,14 +25,14 @@ namespace api_brick.Controllers
         public async Task<ActionResult<IEnumerable<VisitaAgendada>>> GetVisita()
         {
             return await _context.VisitasAgendadas.Include(t => t.Solicitud)
-                                                    .ThenInclude(t => t.ServicioSolicituds)
-                                                        .ThenInclude(z => z.Estado)
-                                                    .ThenInclude(t => t.ServicioSolicituds)
-                                                        .ThenInclude(z => z.Servicio)
-                                                  .Include(t => t.Proyecto).
-                                                  Include(t => t.Solicitud).
-                                                    ThenInclude(t => t.Usuario)
-                                                                           .ToListAsync();
+                                                  .ThenInclude(t => t.ServicioSolicituds)
+                                                  .ThenInclude(z => z.Estado)
+                                                  .ThenInclude(t => t.ServicioSolicituds)
+                                                  .ThenInclude(z => z.Servicio)
+                                                  .Include(t => t.Proyecto)
+                                                  .Include(t => t.Solicitud)
+                                                  .ThenInclude(t => t.Usuario)
+                                                  .ToListAsync();
         }
 
         // GET: api/Visita/5
@@ -84,6 +84,7 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<VisitaAgendada>> PostVisita(VisitaAgendada visita)
         {
+            visita.Estado = "Pendiente";
             _context.VisitasAgendadas.Add(visita);
             await _context.SaveChangesAsync();
 

@@ -20,7 +20,8 @@ namespace api_brick.Models
         public Proyecto Proyecto { get; set; }
         public int? SolicitudID { get; set; }
         public Solicitud Solicitud { get; set; }
-        
+        public string Estado { get; set; }
+
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
