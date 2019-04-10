@@ -146,6 +146,14 @@ namespace api_brick.Controllers
             return caracteristica;
         }
 
+        [HttpDelete("DeleteCaracterisiticaByInmueble/{InmuebleId}")]
+        public async Task<ActionResult<Caracteristica>> DeletaCaracteristicaByInmueble(int InmuebleId) {
+
+            _context.RemoveRange(_context.CaracteristicaInmuebles.Where(c => c.InmuebleID == InmuebleId));
+
+            return Json(new { isSuccess = true, message = "Registros borrado satisfactoriamente." });
+        }
+
         [HttpDelete("CaracteristicaInmueble/{InmuebleID}/{CaracteristicaID}")]
         public async Task<ActionResult<Caracteristica>> DeleteCaracteristicaInmueble(int InmuebleID, int CaracteristicaID)
         {
