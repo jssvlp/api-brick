@@ -12,7 +12,7 @@ namespace api_brick.Models
     public class Estado
     {
         [Key]
-        public int EstadoId { get; set; }
+        public int EstadoID { get; set; }
         public string EstadoNombre { get; set; }
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]

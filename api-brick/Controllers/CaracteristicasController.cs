@@ -92,15 +92,15 @@ namespace api_brick.Controllers
 
 
         //POST: for Entidad asociativa caracteristicasinmuebles
-        [HttpPost("CaracteristicaInmueble/{InmuebleID}/{CaracteristicaID}")]
-        public async Task<ActionResult<Caracteristica>> PostCaracteristicaInmuelbe(int InmuebleID, int CaracteristicaID)
+        [HttpPost("CaracteristicaInmueble")]
+        public async Task<ActionResult<Caracteristica>> PostCaracteristicaInmuelbe(CaracteristicaInmueble caracteristicaInmueble)
         {
-            var caracteristica = _context.Caracteristica.Find(CaracteristicaID);
-            var immueble = _context.Inmueble.Find(InmuebleID);
+            var caracteristica = _context.Caracteristica.Find(caracteristicaInmueble.CaracteristicaID);
+            var immueble = _context.Inmueble.Find(caracteristicaInmueble.InmuebleID);
 
             if(caracteristica != null && immueble != null)
             {
-                var _caracInmueble = new CaracteristicaInmueble { InmuebleID = InmuebleID, CaracteristicaID = CaracteristicaID };
+                var _caracInmueble = new CaracteristicaInmueble { InmuebleID = caracteristicaInmueble.InmuebleID, CaracteristicaID = caracteristicaInmueble.CaracteristicaID };
                 _context.CaracteristicaInmuebles.Add(_caracInmueble);
                 await _context.SaveChangesAsync();
 
@@ -116,7 +116,7 @@ namespace api_brick.Controllers
         public async Task<ActionResult<Caracteristica>> PostCaracteristica(Caracteristica caracteristica)
         {
             //Valida si existe una caracteristica con ese nombre
-            var _caracterisitica = _context.Caracteristica.Where( c => c.CarNombre == caracteristica.CarNombre);
+            var _caracterisitica = _context.Caracteristica.FirstOrDefault( c => c.CarNombre == caracteristica.CarNombre);
 
             if (_caracterisitica == null)
             {
