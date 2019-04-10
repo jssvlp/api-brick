@@ -15,7 +15,7 @@ namespace api_brick.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProyectosController : ControllerBase
+    public class ProyectosController : Controller
     {
         private readonly BrickDbContext _context;
 
@@ -118,13 +118,19 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Proyecto>> PostProyecto(Proyecto proyecto)
         {
-            string URL = proyecto.ImgURL.Substring(12);
-            proyecto.ImgURL = URL;
+            var _proyecto = _context.Proyecto.FirstOrDefault(c => c.NombreProyecto == proyecto.NombreProyecto);
 
-            _context.Proyecto.Add(proyecto);
-            await _context.SaveChangesAsync();
+            if (_proyecto == null)
+            {
+                string URL = proyecto.ImgURL.Substring(12);
+                proyecto.ImgURL = URL;
 
-            return CreatedAtAction("GetProyecto", new { id = proyecto.ProyectoID }, proyecto);
+                _context.Proyecto.Add(proyecto);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetProyecto", new { id = proyecto.ProyectoID }, proyecto);
+            }
+            return Json(new { isSuccess = false, message = "Ya existe un proyecto con este nombre. Intente con otro." });
         }
 
         // DELETE: api/Proyectos/5
