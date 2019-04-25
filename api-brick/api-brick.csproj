@@ -38,6 +38,26 @@
     <Compile Remove="Migrations\20190407160250_Visita_estado.Designer.cs" />
     <Compile Remove="Migrations\20190407194412_nuevoEstado.cs" />
     <Compile Remove="Migrations\20190407194412_nuevoEstado.Designer.cs" />
+    <Compile Remove="Migrations\20190416212007_Peticion.cs" />
+    <Compile Remove="Migrations\20190416212007_Peticion.Designer.cs" />
+    <Compile Remove="Migrations\20190416212202_Peticion.cs" />
+    <Compile Remove="Migrations\20190416212202_Peticion.Designer.cs" />
+    <Compile Remove="Migrations\20190416212425_Peticion.cs" />
+    <Compile Remove="Migrations\20190416212425_Peticion.Designer.cs" />
+    <Compile Remove="Migrations\20190416212525_Peticion.cs" />
+    <Compile Remove="Migrations\20190416212525_Peticion.Designer.cs" />
+    <Compile Remove="Migrations\20190416212651_Peticiones.cs" />
+    <Compile Remove="Migrations\20190416212651_Peticiones.Designer.cs" />
+    <Compile Remove="Migrations\20190416212734_Peticion.cs" />
+    <Compile Remove="Migrations\20190416212734_Peticion.Designer.cs" />
+    <Compile Remove="Migrations\20190416213451_Peticion.cs" />
+    <Compile Remove="Migrations\20190416213451_Peticion.Designer.cs" />
+    <Compile Remove="Migrations\20190416214302_Peticion.cs" />
+    <Compile Remove="Migrations\20190416214302_Peticion.Designer.cs" />
+    <Compile Remove="Migrations\20190416214404_Peticion.cs" />
+    <Compile Remove="Migrations\20190416214404_Peticion.Designer.cs" />
+    <Compile Remove="Migrations\20190416221806_Peticion.cs" />
+    <Compile Remove="Migrations\20190416221806_Peticion.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

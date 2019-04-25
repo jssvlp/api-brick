@@ -27,6 +27,7 @@ namespace api_brick.Data
         public DbSet<TemasForo> TemasForos { get; set; }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Estado> Estados { get; set; }
+        public DbSet<Peticion> Peticiones { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -53,7 +54,7 @@ namespace api_brick.Data
 
             //SEEDS
             modelBuilder.Entity<Estado>().HasData(new Estado {EstadoID = 1, EstadoNombre = "Activo" },new Estado {EstadoID = 2, EstadoNombre = "Pendiente" }, new Estado { EstadoID = 3, EstadoNombre = "Finalizado"}, new Estado {EstadoID = 4, EstadoNombre = "Inactivo" }, new Estado {EstadoID = 5, EstadoNombre = "Aprobada" },
-                 new Estado { EstadoID = 6, EstadoNombre = "Rechazada" });
+                 new Estado { EstadoID = 6, EstadoNombre = "Rechazada" }, new Estado { EstadoID = 7, EstadoNombre = "Cancelado" });
             modelBuilder.Entity<Rol>().HasData(new Rol {RoleId = 1, RoleNombre = "Admin" }, new Rol { RoleId = 2, RoleNombre = "Usuarios" });
             modelBuilder.Entity<Usuario>().HasData(new Usuario {UsuarioID =1, NombreUsuario = "Admin", ApellidosUsuario = "Admin", CorreoUsuario = "admin@admin.com", RoleId = 1 , FechaNacimiento = DateTime.Today, Contraseña = "1234567"});
 

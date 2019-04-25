@@ -35,7 +35,7 @@ namespace api_brick.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Proyecto>> GetProyecto(int id)
         {
-            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).FirstOrDefaultAsync(x => x.ProyectoID == id);
+            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).ThenInclude(x => x.CaracteristicasInmuebles).ThenInclude(x => x.Caracteristica).Include(x => x.Ubicacion).FirstOrDefaultAsync(x => x.ProyectoID == id);
 
             if (proyecto == null)
             {
@@ -130,7 +130,7 @@ namespace api_brick.Controllers
 
                 return CreatedAtAction("GetProyecto", new { id = proyecto.ProyectoID }, proyecto);
             }
-            return Json(new { isSuccess = false, message = "Ya existe un proyecto con este nombre. Intente con otro." });
+            return null;
         }
 
         // DELETE: api/Proyectos/5

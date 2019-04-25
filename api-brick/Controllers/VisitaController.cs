@@ -99,6 +99,10 @@ namespace api_brick.Controllers
             return NoContent();
         }
 
+
+        
+
+
         // POST: api/Visita
         [HttpPost]
         public async Task<ActionResult<VisitaAgendada>> PostVisita(VisitaAgendada visita)
