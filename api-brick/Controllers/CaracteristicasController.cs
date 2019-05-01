@@ -125,7 +125,7 @@ namespace api_brick.Controllers
 
                 return CreatedAtAction("GetCaracteristica", new { id = caracteristica.CaracteristicaID }, caracteristica);
             }
-            return Json(new { isSuccess = false, message = "Ya existe una caracterisita con este nombre. Intente con otro."});
+            return null;
 
 
         }

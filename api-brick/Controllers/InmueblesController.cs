@@ -84,7 +84,7 @@ namespace api_brick.Controllers
 
                 return CreatedAtAction("GetInmueble", new { id = inmueble.InmuebleID }, inmueble);
             }
-            return Json(new { isSuccess = false, message = "Ya existe un inmueble con este nombre en el mismo proyecto. Intente con otro." });
+            return null;
 
 
         }
