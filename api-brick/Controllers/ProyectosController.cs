@@ -45,6 +45,22 @@ namespace api_brick.Controllers
             return proyecto;
         }
 
+        // GET: api/Proyectos/5
+        [HttpGet("GetCaracteristicaProyecto/{id}")]
+        public async Task<ActionResult<Proyecto>> GetCaracteristicaProyecto(int id)
+        {
+            var distribucion = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "Distribucion").Include(i => i.Caracteristica).ToListAsync();
+            var amenidades = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "Amenidades").Include(i => i.Caracteristica).ToListAsync();
+            var seguridad = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "Seguridad").Include(i => i.Caracteristica).ToListAsync();
+            var descripcionG = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "DescripcionG").Include(i => i.Caracteristica).ToListAsync();
+            var descripcionA = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "DescripcionA").Include(i => i.Caracteristica).ToListAsync();
+            var otros = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "Otros").Include(i => i.Caracteristica).ToListAsync();
+
+
+            return Json(new { distribucion, amenidades, seguridad, descripcionG, descripcionA, otros }); 
+        }
+
+
         // PUT: api/Proyectos/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProyecto(int id, Proyecto proyecto, string img)
