@@ -14,14 +14,11 @@ namespace api_brick.Models
         public int ProyectoID { get; set; }
         public string NombreProyecto { get; set; }
         public DateTime FechaTerminacion { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
         public string Direccion { get; set; }
         public string ImgURL { get; set; }
         public int Estado { get; set; }
-
-
-        public int UbicacionID { get; set; }
-        public Ubicacion Ubicacion { get; set; }
-
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }

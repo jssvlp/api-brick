@@ -12,7 +12,7 @@ namespace api_brick.Data
 
         public DbSet<Proyecto> Proyecto { get; set; }
         public DbSet<Inmueble> Inmueble { get; set; }
-        public DbSet<Ubicacion> Ubicacion { get; set; }
+       
         public DbSet<Caracteristica> Caracteristica { get; set;}
         public DbSet<CaracteristicaInmueble> CaracteristicaInmuebles { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }

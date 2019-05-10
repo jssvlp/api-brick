@@ -15,7 +15,10 @@ namespace api_brick.Models
         public int Precio { get; set; }
         public string NombreInmueble { get; set; }
         public string DescripcionInmueble { get; set; }
-        
+        public int CantidadHabitaciones { get; set; }
+        public decimal CantidadBanos { get; set; }
+        public int CantidadParqueos { get; set; }
+
         //[ForeignKey("Proyecto")]
         public int ProyectoID { get; set; }
         public Proyecto Proyecto { get; set; }
