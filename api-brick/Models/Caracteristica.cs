@@ -12,8 +12,12 @@ namespace api_brick.Models
     public class Caracteristica
     {
         public int CaracteristicaID { get; set; }
+        public string TipoCar { get; set; }
         public string CarNombre { get; set; }
         public string CarDescripcion { get; set; }
+        public string TipoCarProyecto { get; set; }
+        //public string TipoCarInmueble { get; set; }
+
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
@@ -22,10 +26,12 @@ namespace api_brick.Models
         public DateTime UpdateAt { get; set; }
 
         public ICollection<CaracteristicaInmueble> CaracteristicasInmuebles { get; set; }
+        public ICollection<CaracteristicaProyecto> CaracteristicasProyectos { get; set; }
 
         public Caracteristica()
         {
             CaracteristicasInmuebles = new Collection<CaracteristicaInmueble>();
+            CaracteristicasProyectos = new Collection<CaracteristicaProyecto>();
         }
     }
 }

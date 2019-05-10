@@ -116,7 +116,7 @@ namespace api_brick.Controllers
         public async Task<ActionResult<Usuario>> Login(Usuario usuario)
         {
             var _user = ValidateCredentials(usuario.CorreoUsuario, usuario.Contraseña);
-            if(_user!= null)
+            if (_user != null)
             {
                 _user.SetAccessToken();
                 _context.Entry(_user).State = EntityState.Modified;
@@ -124,7 +124,7 @@ namespace api_brick.Controllers
                 try
                 {
                     await _context.SaveChangesAsync();
-                    
+
 
                 }
                 catch (DbUpdateConcurrencyException)
@@ -133,9 +133,10 @@ namespace api_brick.Controllers
 
                 }
                 return _user;
-            }        
+            }
             else
-                return Json(new { isSuccess = false, message = "Revise sus credenciales e intente nuevamente." });
+                //return Json(new { isSuccess = false, message = "Revise sus credenciales e intente nuevamente." });
+                return null;    
 
 
 
@@ -144,15 +145,19 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
-            var userRole = _context.Roles.FirstOrDefault(r => r.RoleNombre == "Usuarios");
+            var _usuario = _context.Usuarios.FirstOrDefault(c => c.CorreoUsuario == usuario.CorreoUsuario);
+            if (_usuario == null) {
+                var userRole = _context.Roles.FirstOrDefault(r => r.RoleNombre == "Usuarios");
+                usuario.Contraseña = HashPassword(usuario.Contraseña);
+                usuario.RoleId = userRole.RoleId;
+                _context.Usuarios.Add(usuario);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetUsuario", new { id = usuario.UsuarioID }, usuario);
+            }
 
+            return null;
 
-            usuario.Contraseña = HashPassword(usuario.Contraseña);
-            usuario.RoleId = userRole.RoleId;
-            _context.Usuarios.Add(usuario);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUsuario", new { id = usuario.UsuarioID }, usuario);
+            
         }
 
         // DELETE: api/Usuarios/5

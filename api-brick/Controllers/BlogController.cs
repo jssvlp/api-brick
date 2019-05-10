@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using api_brick.Data;
@@ -27,7 +28,7 @@ namespace api_brick.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Blog>>> GetBlog()
         {
-            return await _context.Blogs.ToListAsync();
+            return await _context.Blogs.Include(x => x.Usuario).ToListAsync();
         }
 
         //GET: api/Blog/5
@@ -35,7 +36,7 @@ namespace api_brick.Controllers
         public async Task<ActionResult<Blog>> GetBlog(int id)
         {
 
-            var blog = await _context.Blogs.FindAsync(id);
+            var blog = await _context.Blogs.Include(x => x.Usuario).FirstOrDefaultAsync(x => x.BlogID == id);
 
             if (blog == null)
             {
@@ -53,7 +54,8 @@ namespace api_brick.Controllers
             {
                 return BadRequest();
             }
-
+            string URL = blog.ImgURL.Substring(12);
+            blog.ImgURL = URL;
             _context.Entry(blog).State = EntityState.Modified;
 
             try
@@ -79,10 +81,50 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Blog>> PostBlog(Blog blog)
         {
+            string URL = blog.ImgURL.Substring(12);
+            blog.ImgURL = URL;
             _context.Blogs.Add(blog);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetBlog", new { id = blog.BlogID }, blog);
+        }
+
+        [Route("SaveFile")]
+        [HttpPost()]
+        public async Task<IActionResult> SaveFile(string fileName)
+        {
+            try
+            {
+
+                foreach (var file2 in Request.Form.Files.ToList())
+                {
+
+                    if (!string.IsNullOrEmpty(file2?.FileName))
+                    {
+                        var dir = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Blog/");
+
+                        if (!Directory.Exists(dir))
+                        {
+                            Directory.CreateDirectory(dir);
+                        }
+
+                        var path = Path.Combine(dir, file2.FileName);
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await file2.CopyToAsync(fileStream);
+                        }
+
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return Ok();
+
         }
 
         // DELETE: api/Blog/5
@@ -94,7 +136,9 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-
+            var file = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Blog/" + Blog.ImgURL);
+            if (System.IO.File.Exists(file))
+                System.IO.File.Delete(file);
             _context.Blogs.Remove(Blog);
             await _context.SaveChangesAsync();
 

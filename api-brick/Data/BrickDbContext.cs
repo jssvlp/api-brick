@@ -15,6 +15,7 @@ namespace api_brick.Data
        
         public DbSet<Caracteristica> Caracteristica { get; set;}
         public DbSet<CaracteristicaInmueble> CaracteristicaInmuebles { get; set; }
+        public DbSet<CaracteristicaProyecto> CaracteristicaProyectos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Servicio> Servicios { get; set; }
         public DbSet<ServicioSolicitud> ServicioSolicituds { get; set; }
@@ -27,6 +28,7 @@ namespace api_brick.Data
         public DbSet<TemasForo> TemasForos { get; set; }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Estado> Estados { get; set; }
+        public DbSet<Peticion> Peticiones { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -52,8 +54,8 @@ namespace api_brick.Data
 
 
             //SEEDS
-            modelBuilder.Entity<Estado>().HasData(new Estado {EstadoId = 1, EstadoNombre = "Activo" },new Estado {EstadoId = 2, EstadoNombre = "Pendiente" }, new Estado { EstadoId= 3, EstadoNombre = "Finalizado"}, new Estado {EstadoId = 4, EstadoNombre = "Inactivo" }, new Estado {EstadoId = 5, EstadoNombre = "Aprobada" },
-                 new Estado { EstadoId = 6, EstadoNombre = "Rechazada" });
+            modelBuilder.Entity<Estado>().HasData(new Estado {EstadoID = 1, EstadoNombre = "Activo" },new Estado {EstadoID = 2, EstadoNombre = "Pendiente" }, new Estado { EstadoID = 3, EstadoNombre = "Finalizado"}, new Estado {EstadoID = 4, EstadoNombre = "Inactivo" }, new Estado {EstadoID = 5, EstadoNombre = "Aprobada" },
+                 new Estado { EstadoID = 6, EstadoNombre = "Rechazada" }, new Estado { EstadoID = 7, EstadoNombre = "Cancelado" });
             modelBuilder.Entity<Rol>().HasData(new Rol {RoleId = 1, RoleNombre = "Admin" }, new Rol { RoleId = 2, RoleNombre = "Usuarios" });
             modelBuilder.Entity<Usuario>().HasData(new Usuario {UsuarioID =1, NombreUsuario = "Admin", ApellidosUsuario = "Admin", CorreoUsuario = "admin@admin.com", RoleId = 1 , FechaNacimiento = DateTime.Today, Contraseña = "1234567"});
 
@@ -68,6 +70,19 @@ namespace api_brick.Data
                 .HasOne(bc => bc.Solicitud)
                 .WithMany(c => c.ServicioSolicituds)
                 .HasForeignKey(bc => bc.SolicitudID);
+
+
+            //much to much relationship for caracteristicas and projects
+            modelBuilder.Entity<CaracteristicaProyecto>()
+            .HasKey(bc => new { bc.CaracteristicaID, bc.ProyectoID });
+            modelBuilder.Entity<CaracteristicaProyecto>()
+                .HasOne(bc => bc.Proyecto)
+                .WithMany(b => b.CaracteristicasProyectos)
+                .HasForeignKey(bc => bc.ProyectoID);
+            modelBuilder.Entity<CaracteristicaInmueble>()
+                .HasOne(bc => bc.Caracteristica)
+                .WithMany(c => c.CaracteristicasInmuebles)
+                .HasForeignKey(bc => bc.CaracteristicaID);
         }
     }
 }

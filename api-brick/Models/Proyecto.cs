@@ -28,11 +28,13 @@ namespace api_brick.Models
 
         public ICollection<Inmueble> Inmuebles { get; set; }
         public ICollection<VisitaAgendada> VisitasAgendadas { get; set; }
+        public ICollection<CaracteristicaProyecto> CaracteristicasProyectos { get; set; }
 
         public Proyecto()
         {
             Inmuebles = new Collection<Inmueble>();
             VisitasAgendadas = new Collection<VisitaAgendada>();
+            CaracteristicasProyectos = new Collection<CaracteristicaProyecto>();
         }
     }
 }
