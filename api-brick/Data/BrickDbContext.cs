@@ -12,9 +12,6 @@ namespace api_brick.Data
 
         public DbSet<Proyecto> Proyecto { get; set; }
         public DbSet<Inmueble> Inmueble { get; set; }
-       
-        public DbSet<Caracteristica> Caracteristica { get; set;}
-        public DbSet<CaracteristicaInmueble> CaracteristicaInmuebles { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Servicio> Servicios { get; set; }
         public DbSet<ServicioSolicitud> ServicioSolicituds { get; set; }
@@ -36,21 +33,6 @@ namespace api_brick.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-
-            //much to much relationship for caracteristicas and imbuebles
-            modelBuilder.Entity<CaracteristicaInmueble>()
-            .HasKey(bc => new { bc.CaracteristicaID, bc.InmuebleID });
-            modelBuilder.Entity<CaracteristicaInmueble>()
-                .HasOne(bc => bc.Inmueble)
-                .WithMany(b => b.CaracteristicasInmuebles)
-                .HasForeignKey(bc => bc.InmuebleID);
-            modelBuilder.Entity<CaracteristicaInmueble>()
-                .HasOne(bc => bc.Caracteristica)
-                .WithMany(c => c.CaracteristicasInmuebles)
-                .HasForeignKey(bc => bc.CaracteristicaID);
-
-
             //SEEDS
             modelBuilder.Entity<Estado>().HasData(new Estado {EstadoId = 1, EstadoNombre = "Activo" },new Estado {EstadoId = 2, EstadoNombre = "Pendiente" }, new Estado { EstadoId= 3, EstadoNombre = "Finalizado"}, new Estado {EstadoId = 4, EstadoNombre = "Inactivo" }, new Estado {EstadoId = 5, EstadoNombre = "Aprobada" },
                  new Estado { EstadoId = 6, EstadoNombre = "Rechazada" });
