@@ -51,6 +51,7 @@ namespace api_brick.Controllers
             {
                 return BadRequest();
             }
+
             string URL = servicio.ImgURL.Substring(12);
             servicio.ImgURL = URL;
             _context.Entry(servicio).State = EntityState.Modified;
@@ -117,12 +118,17 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Servicio>> PostServicio(Servicio servicio)
         {
-            string URL = servicio.ImgURL.Substring(12);
-            servicio.ImgURL = URL;
-            _context.Servicios.Add(servicio);
-            await _context.SaveChangesAsync();
+            var _servicio = _context.Servicios.FirstOrDefault(c => c.NombreServicio == servicio.NombreServicio);
+            if (_servicio == null)
+            {
+                string URL = servicio.ImgURL.Substring(12);
+                servicio.ImgURL = URL;
+                _context.Servicios.Add(servicio);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetServicio", new { id = servicio.ServicioID }, servicio);
+                return CreatedAtAction("GetServicio", new { id = servicio.ServicioID }, servicio);
+            }
+            return null;
         }
 
         // DELETE: api/Servicios/5

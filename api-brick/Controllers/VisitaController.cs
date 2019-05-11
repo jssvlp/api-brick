@@ -24,7 +24,21 @@ namespace api_brick.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<VisitaAgendada>>> GetVisita()
         {
-            return await _context.VisitasAgendadas.Include(t => t.Solicitud)
+            return await _context.VisitasAgendadas.Where(y => y.Estado != "Finalizado").Include(t => t.Solicitud)
+                                                  .ThenInclude(t => t.ServicioSolicituds)
+                                                  .ThenInclude(z => z.Estado)
+                                                  .ThenInclude(t => t.ServicioSolicituds)
+                                                  .ThenInclude(z => z.Servicio)
+                                                  .Include(t => t.Proyecto)
+                                                  .Include(t => t.Solicitud)
+                                                  .ThenInclude(t => t.Usuario)
+                                                  .ToListAsync();
+        }
+        [Route("GetVisitaF")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<VisitaAgendada>>> GetVisitaF()
+        {
+            return await _context.VisitasAgendadas.Where(y => y.Estado == "Finalizado").Include(t => t.Solicitud)
                                                   .ThenInclude(t => t.ServicioSolicituds)
                                                   .ThenInclude(z => z.Estado)
                                                   .ThenInclude(t => t.ServicioSolicituds)
@@ -40,7 +54,12 @@ namespace api_brick.Controllers
         public async Task<ActionResult<VisitaAgendada>> GetVisita(int id)
         {
 
-            var visita = await _context.VisitasAgendadas.FindAsync(id);
+            var visita = await _context.VisitasAgendadas.Include(t => t.Proyecto).Include(t => t.Solicitud)
+                                                                                    .ThenInclude(t => t.ServicioSolicituds)
+                                                                                        .ThenInclude(z => z.Estado)
+                                                                                    .ThenInclude(t => t.ServicioSolicituds)
+                                                                                         .ThenInclude(z => z.Servicio)
+                                                          .FirstOrDefaultAsync(x => x.VisitaID == id);
 
             if (visita == null)
             {
@@ -80,11 +99,15 @@ namespace api_brick.Controllers
             return NoContent();
         }
 
+
+        
+
+
         // POST: api/Visita
         [HttpPost]
         public async Task<ActionResult<VisitaAgendada>> PostVisita(VisitaAgendada visita)
         {
-            visita.Estado = "Pendiente";
+            //visita.Estado = "Pendiente";
             _context.VisitasAgendadas.Add(visita);
             await _context.SaveChangesAsync();
 

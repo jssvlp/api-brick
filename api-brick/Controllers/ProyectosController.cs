@@ -15,7 +15,7 @@ namespace api_brick.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProyectosController : ControllerBase
+    public class ProyectosController : Controller
     {
         private readonly BrickDbContext _context;
 
@@ -35,7 +35,7 @@ namespace api_brick.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Proyecto>> GetProyecto(int id)
         {
-            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).FirstOrDefaultAsync(x => x.ProyectoID == id);
+            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).ThenInclude(x => x.CaracteristicasInmuebles).ThenInclude(x => x.Caracteristica).FirstOrDefaultAsync(x => x.ProyectoID == id);
 
             if (proyecto == null)
             {
@@ -44,6 +44,22 @@ namespace api_brick.Controllers
 
             return proyecto;
         }
+
+        // GET: api/Proyectos/5
+        [HttpGet("GetCaracteristicaProyecto/{id}")]
+        public async Task<ActionResult<Proyecto>> GetCaracteristicaProyecto(int id)
+        {
+            var distribucion = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "Distribucion").Include(i => i.Caracteristica).ToListAsync();
+            var amenidades = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "Amenidades").Include(i => i.Caracteristica).ToListAsync();
+            var seguridad = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "Seguridad").Include(i => i.Caracteristica).ToListAsync();
+            var descripcionG = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "DescripcionG").Include(i => i.Caracteristica).ToListAsync();
+            var descripcionA = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "DescripcionA").Include(i => i.Caracteristica).ToListAsync();
+            var otros = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "Otros").Include(i => i.Caracteristica).ToListAsync();
+
+
+            return Json(new { distribucion, amenidades, seguridad, descripcionG, descripcionA, otros }); 
+        }
+
 
         // PUT: api/Proyectos/5
         [HttpPut("{id}")]
@@ -118,13 +134,19 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Proyecto>> PostProyecto(Proyecto proyecto)
         {
-            string URL = proyecto.ImgURL.Substring(12);
-            proyecto.ImgURL = URL;
+            var _proyecto = _context.Proyecto.FirstOrDefault(c => c.NombreProyecto == proyecto.NombreProyecto);
 
-            _context.Proyecto.Add(proyecto);
-            await _context.SaveChangesAsync();
+            if (_proyecto == null)
+            {
+                string URL = proyecto.ImgURL.Substring(12);
+                proyecto.ImgURL = URL;
 
-            return CreatedAtAction("GetProyecto", new { id = proyecto.ProyectoID }, proyecto);
+                _context.Proyecto.Add(proyecto);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetProyecto", new { id = proyecto.ProyectoID }, proyecto);
+            }
+            return null;
         }
 
         // DELETE: api/Proyectos/5

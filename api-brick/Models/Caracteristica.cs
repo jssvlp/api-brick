@@ -8,17 +8,16 @@ using System.Threading.Tasks;
 
 namespace api_brick.Models
 {
-    [Table("proyectos")]
-    public class Proyecto
+    [Table("caracteristicas")]
+    public class Caracteristica
     {
-        public int ProyectoID { get; set; }
-        public string NombreProyecto { get; set; }
-        public DateTime FechaTerminacion { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
-        public string Direccion { get; set; }
-        public string ImgURL { get; set; }
-        public int Estado { get; set; }
+        public int CaracteristicaID { get; set; }
+        public string TipoCar { get; set; }
+        public string CarNombre { get; set; }
+        public string CarDescripcion { get; set; }
+        public string TipoCarProyecto { get; set; }
+        //public string TipoCarInmueble { get; set; }
+
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
@@ -26,14 +25,12 @@ namespace api_brick.Models
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateAt { get; set; }
 
-        public ICollection<Inmueble> Inmuebles { get; set; }
-        public ICollection<VisitaAgendada> VisitasAgendadas { get; set; }
+        public ICollection<CaracteristicaInmueble> CaracteristicasInmuebles { get; set; }
         public ICollection<CaracteristicaProyecto> CaracteristicasProyectos { get; set; }
 
-        public Proyecto()
+        public Caracteristica()
         {
-            Inmuebles = new Collection<Inmueble>();
-            VisitasAgendadas = new Collection<VisitaAgendada>();
+            CaracteristicasInmuebles = new Collection<CaracteristicaInmueble>();
             CaracteristicasProyectos = new Collection<CaracteristicaProyecto>();
         }
     }

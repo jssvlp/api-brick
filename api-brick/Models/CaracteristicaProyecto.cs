@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -8,25 +7,19 @@ using System.Threading.Tasks;
 
 namespace api_brick.Models
 {
-    [Table("estados")]
-    public class Estado
+    [Table("caracteristicas_proyectos")]
+    public class CaracteristicaProyecto
     {
-        [Key]
-        public int EstadoID { get; set; }
-        public string EstadoNombre { get; set; }
+        public int ProyectoID { get; set; }
+        public Proyecto Proyecto { get; set; }
+
+        public int CaracteristicaID { get; set; }
+        public Caracteristica Caracteristica { get; set; }
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateAt { get; set; }
-
-
-        public virtual ICollection<ServicioSolicitud> ServicioSolicituds { get; set; }
-
-         public Estado()
-         {
-             ServicioSolicituds = new Collection<ServicioSolicitud>();
-         }
     }
 }

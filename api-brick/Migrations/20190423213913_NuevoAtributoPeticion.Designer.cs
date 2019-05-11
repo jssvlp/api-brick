@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api_brick.Data;
 
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    partial class BrickDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190423213913_NuevoAtributoPeticion")]
+    partial class NuevoAtributoPeticion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,6 +42,45 @@ namespace api_brick.Migrations
                     b.HasIndex("UsuarioID");
 
                     b.ToTable("blogs");
+                });
+
+            modelBuilder.Entity("api_brick.Models.Caracteristica", b =>
+                {
+                    b.Property<int>("CaracteristicaID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CarDescripcion");
+
+                    b.Property<string>("CarNombre");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime>("UpdateAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("CaracteristicaID");
+
+                    b.ToTable("caracteristicas");
+                });
+
+            modelBuilder.Entity("api_brick.Models.CaracteristicaInmueble", b =>
+                {
+                    b.Property<int>("CaracteristicaID");
+
+                    b.Property<int>("InmuebleID");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime>("UpdateAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("CaracteristicaID", "InmuebleID");
+
+                    b.HasIndex("InmuebleID");
+
+                    b.ToTable("caracteristicas_inmuebles");
                 });
 
             modelBuilder.Entity("api_brick.Models.ComentarioForo", b =>
@@ -140,18 +181,10 @@ namespace api_brick.Migrations
                     b.Property<int>("InmuebleID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("CantidadBanos");
-
-                    b.Property<int>("CantidadHabitaciones");
-
-                    b.Property<int>("CantidadParqueos");
-
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("DescripcionInmueble");
-
-                    b.Property<string>("Moneda");
 
                     b.Property<string>("NombreInmueble");
 
@@ -161,8 +194,6 @@ namespace api_brick.Migrations
 
                     b.Property<DateTime>("UpdateAt")
                         .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<decimal>("mts");
 
                     b.HasKey("InmuebleID");
 
@@ -243,16 +274,16 @@ namespace api_brick.Migrations
 
                     b.Property<string>("ImgURL");
 
-                    b.Property<string>("Latitude");
-
-                    b.Property<string>("Longitude");
-
                     b.Property<string>("NombreProyecto");
+
+                    b.Property<int>("UbicacionID");
 
                     b.Property<DateTime>("UpdateAt")
                         .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("ProyectoID");
+
+                    b.HasIndex("UbicacionID");
 
                     b.ToTable("proyectos");
                 });
@@ -405,6 +436,26 @@ namespace api_brick.Migrations
                     b.ToTable("temas_foros");
                 });
 
+            modelBuilder.Entity("api_brick.Models.Ubicacion", b =>
+                {
+                    b.Property<int>("UbicacionID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Ciudad");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("NombreUbicacion");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("UbicacionID");
+
+                    b.ToTable("ubicaciones");
+                });
+
             modelBuilder.Entity("api_brick.Models.Usuario", b =>
                 {
                     b.Property<int>("UsuarioID")
@@ -446,7 +497,7 @@ namespace api_brick.Migrations
                             Contraseña = "1234567",
                             CorreoUsuario = "admin@admin.com",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNacimiento = new DateTime(2019, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaNacimiento = new DateTime(2019, 4, 23, 0, 0, 0, 0, DateTimeKind.Local),
                             NombreUsuario = "Admin",
                             RoleId = 1,
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -492,6 +543,19 @@ namespace api_brick.Migrations
                     b.HasOne("api_brick.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("api_brick.Models.CaracteristicaInmueble", b =>
+                {
+                    b.HasOne("api_brick.Models.Caracteristica", "Caracteristica")
+                        .WithMany("CaracteristicasInmuebles")
+                        .HasForeignKey("CaracteristicaID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("api_brick.Models.Inmueble", "Inmueble")
+                        .WithMany("CaracteristicasInmuebles")
+                        .HasForeignKey("InmuebleID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
