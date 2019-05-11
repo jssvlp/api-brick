@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api_brick.Data;
 
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    partial class BrickDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190510133845_NEW_PROPS_IN_UBICACION")]
+    partial class NEW_PROPS_IN_UBICACION
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,10 +56,6 @@ namespace api_brick.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.Property<string>("TipoCar");
-
-                    b.Property<string>("TipoCarProyecto");
-
                     b.Property<DateTime>("UpdateAt")
                         .ValueGeneratedOnAddOrUpdate();
 
@@ -83,25 +81,6 @@ namespace api_brick.Migrations
                     b.HasIndex("InmuebleID");
 
                     b.ToTable("caracteristicas_inmuebles");
-                });
-
-            modelBuilder.Entity("api_brick.Models.CaracteristicaProyecto", b =>
-                {
-                    b.Property<int>("CaracteristicaID");
-
-                    b.Property<int>("ProyectoID");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<DateTime>("UpdateAt")
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("CaracteristicaID", "ProyectoID");
-
-                    b.HasIndex("ProyectoID");
-
-                    b.ToTable("caracteristicas_proyectos");
                 });
 
             modelBuilder.Entity("api_brick.Models.ComentarioForo", b =>
@@ -130,7 +109,7 @@ namespace api_brick.Migrations
 
             modelBuilder.Entity("api_brick.Models.Estado", b =>
                 {
-                    b.Property<int>("EstadoID")
+                    b.Property<int>("EstadoId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedAt")
@@ -141,58 +120,51 @@ namespace api_brick.Migrations
                     b.Property<DateTime>("UpdateAt")
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.HasKey("EstadoID");
+                    b.HasKey("EstadoId");
 
                     b.ToTable("estados");
 
                     b.HasData(
                         new
                         {
-                            EstadoID = 1,
+                            EstadoId = 1,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EstadoNombre = "Activo",
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            EstadoID = 2,
+                            EstadoId = 2,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EstadoNombre = "Pendiente",
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            EstadoID = 3,
+                            EstadoId = 3,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EstadoNombre = "Finalizado",
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            EstadoID = 4,
+                            EstadoId = 4,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EstadoNombre = "Inactivo",
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            EstadoID = 5,
+                            EstadoId = 5,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EstadoNombre = "Aprobada",
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            EstadoID = 6,
+                            EstadoId = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EstadoNombre = "Rechazada",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            EstadoID = 7,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstadoNombre = "Cancelado",
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -251,38 +223,6 @@ namespace api_brick.Migrations
                     b.HasIndex("UsuarioID");
 
                     b.ToTable("likes");
-                });
-
-            modelBuilder.Entity("api_brick.Models.Peticion", b =>
-                {
-                    b.Property<int>("PeticionID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Comentario");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<string>("Estado");
-
-                    b.Property<DateTime?>("FechaCancelacion");
-
-                    b.Property<DateTime?>("FechaSolicitada");
-
-                    b.Property<string>("Motivo");
-
-                    b.Property<int>("SolicitudID");
-
-                    b.Property<string>("Tipo");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("PeticionID");
-
-                    b.HasIndex("SolicitudID");
-
-                    b.ToTable("Peticiones");
                 });
 
             modelBuilder.Entity("api_brick.Models.Proyecto", b =>
@@ -504,7 +444,7 @@ namespace api_brick.Migrations
                             Contraseña = "1234567",
                             CorreoUsuario = "admin@admin.com",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNacimiento = new DateTime(2019, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaNacimiento = new DateTime(2019, 5, 10, 0, 0, 0, 0, DateTimeKind.Local),
                             NombreUsuario = "Admin",
                             RoleId = 1,
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -566,19 +506,6 @@ namespace api_brick.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("api_brick.Models.CaracteristicaProyecto", b =>
-                {
-                    b.HasOne("api_brick.Models.Caracteristica", "Caracteristica")
-                        .WithMany("CaracteristicasProyectos")
-                        .HasForeignKey("CaracteristicaID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("api_brick.Models.Proyecto", "Proyecto")
-                        .WithMany("CaracteristicasProyectos")
-                        .HasForeignKey("ProyectoID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("api_brick.Models.ComentarioForo", b =>
                 {
                     b.HasOne("api_brick.Models.PublicacionForo", "Publicacion")
@@ -610,22 +537,6 @@ namespace api_brick.Migrations
                     b.HasOne("api_brick.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("api_brick.Models.Peticion", b =>
-                {
-                    b.HasOne("api_brick.Models.Solicitud", "Solicitud")
-                        .WithMany()
-                        .HasForeignKey("SolicitudID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("api_brick.Models.Proyecto", b =>
-                {
-                    b.HasOne("api_brick.Models.Ubicacion", "Ubicacion")
-                        .WithMany()
-                        .HasForeignKey("UbicacionID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -12,9 +12,10 @@ namespace api_brick.Data
 
         public DbSet<Proyecto> Proyecto { get; set; }
         public DbSet<Inmueble> Inmueble { get; set; }
-        public DbSet<Ubicacion> Ubicacion { get; set; }
+       
         public DbSet<Caracteristica> Caracteristica { get; set;}
         public DbSet<CaracteristicaInmueble> CaracteristicaInmuebles { get; set; }
+        public DbSet<CaracteristicaProyecto> CaracteristicaProyectos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Servicio> Servicios { get; set; }
         public DbSet<ServicioSolicitud> ServicioSolicituds { get; set; }
@@ -69,6 +70,19 @@ namespace api_brick.Data
                 .HasOne(bc => bc.Solicitud)
                 .WithMany(c => c.ServicioSolicituds)
                 .HasForeignKey(bc => bc.SolicitudID);
+
+
+            //much to much relationship for caracteristicas and projects
+            modelBuilder.Entity<CaracteristicaProyecto>()
+            .HasKey(bc => new { bc.CaracteristicaID, bc.ProyectoID });
+            modelBuilder.Entity<CaracteristicaProyecto>()
+                .HasOne(bc => bc.Proyecto)
+                .WithMany(b => b.CaracteristicasProyectos)
+                .HasForeignKey(bc => bc.ProyectoID);
+            modelBuilder.Entity<CaracteristicaInmueble>()
+                .HasOne(bc => bc.Caracteristica)
+                .WithMany(c => c.CaracteristicasInmuebles)
+                .HasForeignKey(bc => bc.CaracteristicaID);
         }
     }
 }

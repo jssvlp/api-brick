@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api_brick.Data;
 
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    partial class BrickDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190507170349_CaracteristicasProyecto")]
+    partial class CaracteristicasProyecto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,12 +204,6 @@ namespace api_brick.Migrations
                     b.Property<int>("InmuebleID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("CantidadBanos");
-
-                    b.Property<int>("CantidadHabitaciones");
-
-                    b.Property<int>("CantidadParqueos");
-
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate();
 
@@ -301,16 +297,16 @@ namespace api_brick.Migrations
 
                     b.Property<string>("ImgURL");
 
-                    b.Property<string>("Latitude");
-
-                    b.Property<string>("Longitude");
-
                     b.Property<string>("NombreProyecto");
+
+                    b.Property<int>("UbicacionID");
 
                     b.Property<DateTime>("UpdateAt")
                         .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("ProyectoID");
+
+                    b.HasIndex("UbicacionID");
 
                     b.ToTable("proyectos");
                 });
@@ -461,6 +457,26 @@ namespace api_brick.Migrations
                     b.HasKey("TemaID");
 
                     b.ToTable("temas_foros");
+                });
+
+            modelBuilder.Entity("api_brick.Models.Ubicacion", b =>
+                {
+                    b.Property<int>("UbicacionID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Ciudad");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("NombreUbicacion");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("UbicacionID");
+
+                    b.ToTable("ubicaciones");
                 });
 
             modelBuilder.Entity("api_brick.Models.Usuario", b =>
