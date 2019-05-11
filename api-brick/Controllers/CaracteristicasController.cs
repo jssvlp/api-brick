@@ -31,30 +31,16 @@ namespace api_brick.Controllers
         [HttpGet("GetCaracteristicaProyecto")]
         public async Task<ActionResult<IEnumerable<Caracteristica>>> GetCaracteristicaProyecto()
         {
-            var distribucion = await _context.Caracteristica.Where(i => i.TipoCar == "Proyectos" && i.TipoCarProyecto == "Distribucion").ToListAsync();
-            var amenidades = await _context.Caracteristica.Where(i => i.TipoCar == "Proyectos" && i.TipoCarProyecto == "Amenidades").ToListAsync();
-            var seguridad = await _context.Caracteristica.Where(i => i.TipoCar == "Proyectos" && i.TipoCarProyecto == "Seguridad").ToListAsync();
-            var descripcionG = await _context.Caracteristica.Where(i => i.TipoCar == "Proyectos" && i.TipoCarProyecto == "DescripcionG").ToListAsync();
-            var descripcionA = await _context.Caracteristica.Where(i => i.TipoCar == "Proyectos" && i.TipoCarProyecto == "DescripcionA").ToListAsync();
-            var otros = await _context.Caracteristica.Where(i => i.TipoCar == "Proyectos" && i.TipoCarProyecto == "Otros").ToListAsync();
+            var distribucion = await _context.Caracteristica.Where(i => i.TipoCarProyecto == "Distribucion").ToListAsync();
+            var amenidades = await _context.Caracteristica.Where(i => i.TipoCarProyecto == "Amenidades").ToListAsync();
+            var seguridad = await _context.Caracteristica.Where(i => i.TipoCarProyecto == "Seguridad").ToListAsync();
+            var descripcionG = await _context.Caracteristica.Where(i => i.TipoCarProyecto == "DescripcionG").ToListAsync();
+            var descripcionA = await _context.Caracteristica.Where(i => i.TipoCarProyecto == "DescripcionA").ToListAsync();
+            var otros = await _context.Caracteristica.Where(i => i.TipoCarProyecto == "Otros").ToListAsync();
 
             return Json(new { distribucion, amenidades, seguridad, descripcionG, descripcionA, otros });
         }
 
-
-        //GET: api/Caracteristica/byInmueble/2
-        [HttpGet("GetByInmueble/{InmuebleID}", Name = "GetByInmueble")]
-        public ActionResult<IEnumerable<Caracteristica>> GetCaracterisitcasByInmueble(int InmuebleID)
-        {
-            var inmuebles = _context.CaracteristicaInmuebles.Where(i => i.InmuebleID == InmuebleID).Select(c => c.Caracteristica);
-            //var inmuebles = (from c in _context.Caracteristica
-            //                 from i in _context.CaracteristicaInmuebles
-            //                 where i.InmuebleID == InmuebleID
-            //                 select c);
-
-            return Ok(inmuebles);
-           
-        }
 
         //GET: api/Caracteristica/byProyecto/2
         [HttpGet("GetByProyecto/{id}", Name = "GetByProyecto")]
@@ -121,25 +107,6 @@ namespace api_brick.Controllers
 
 
         //POST: for Entidad asociativa caracteristicasinmuebles
-        [HttpPost("CaracteristicaInmueble")]
-        public async Task<ActionResult<Caracteristica>> PostCaracteristicaInmuelbe(CaracteristicaInmueble caracteristicaInmueble)
-        {
-            var caracteristica = _context.Caracteristica.Find(caracteristicaInmueble.CaracteristicaID);
-            var immueble = _context.Inmueble.Find(caracteristicaInmueble.InmuebleID);
-
-            if(caracteristica != null && immueble != null)
-            {
-                var _caracInmueble = new CaracteristicaInmueble { InmuebleID = caracteristicaInmueble.InmuebleID, CaracteristicaID = caracteristicaInmueble.CaracteristicaID };
-                _context.CaracteristicaInmuebles.Add(_caracInmueble);
-                await _context.SaveChangesAsync();
-
-                return Json(new { isSuccess = true, message = "Registro insertado correctamente" });
-
-            }
-            return Json(new { isSuccess = false, message = "La caracteristica o el inmueble enviado no existe, por favor proceda a insertarlos." });
-        }
-
-        //POST: for Entidad asociativa caracteristicasinmuebles
         [HttpPost("CaracteristicaProyecto")]
         public async Task<ActionResult<Caracteristica>> PostCaracteristicaProyecto(CaracteristicaProyecto caracteristicaproyecto)
         {
@@ -194,14 +161,6 @@ namespace api_brick.Controllers
             return caracteristica;
         }
 
-        [HttpDelete("DeleteCaracterisiticaByInmueble/{InmuebleId}")]
-        public async Task<ActionResult<Caracteristica>> DeletaCaracteristicaByInmueble(int InmuebleId) {
-
-           _context.CaracteristicaInmuebles.Where(p => p.InmuebleID == InmuebleId)
-                .ToList().ForEach(p => _context.CaracteristicaInmuebles.Remove(p));
-            _context.SaveChanges();
-            return Json(new { isSuccess = true, message = "Registros borrado satisfactoriamente." });
-        }
 
         [HttpDelete("DeleteCaracterisiticaByProyecto/{ProyectoId}")]
         public async Task<ActionResult<Caracteristica>> DeletaCaracteristicaByProyecto(int ProyectoId)
@@ -213,26 +172,11 @@ namespace api_brick.Controllers
             return Json(new { isSuccess = true, message = "Registros borrado satisfactoriamente." });
         }
 
-        [HttpDelete("CaracteristicaInmueble/{InmuebleID}/{CaracteristicaID}")]
-        public async Task<ActionResult<Caracteristica>> DeleteCaracteristicaInmueble(int InmuebleID, int CaracteristicaID)
-        {
-            var _caracInm = _context.CaracteristicaInmuebles.FirstOrDefault( ci => ci.InmuebleID == InmuebleID && ci.CaracteristicaID == CaracteristicaID);
-
-            if (_caracInm == null)
-            {
-                return NotFound();
-
-            }
-            _context.CaracteristicaInmuebles.Remove(_caracInm);
-            await _context.SaveChangesAsync();
-            return Json(new { isSuccess = true, message = "Registro borrado satisfactoriamente." });
-
-        }
-
+       
 
         private bool CaracteristicaExists(int id)
         {
-            return _context.CaracteristicaInmuebles.Any(e => e.CaracteristicaID == id);
+            return _context.Caracteristica.Any(e => e.CaracteristicaID == id);
         }
     }
 }

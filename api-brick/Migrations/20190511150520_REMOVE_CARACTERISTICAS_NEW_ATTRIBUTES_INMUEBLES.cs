@@ -11,9 +11,6 @@ namespace api_brick.Migrations
             migrationBuilder.DropTable(
                 name: "caracteristicas_inmuebles");
 
-            migrationBuilder.DropTable(
-                name: "caracteristicas");
-
             migrationBuilder.AddColumn<string>(
                 name: "Moneda",
                 table: "inmuebles",
@@ -42,24 +39,6 @@ namespace api_brick.Migrations
             migrationBuilder.DropColumn(
                 name: "mts",
                 table: "inmuebles");
-
-            migrationBuilder.CreateTable(
-                name: "caracteristicas",
-                columns: table => new
-                {
-                    CaracteristicaID = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CarDescripcion = table.Column<string>(nullable: true),
-                    CarNombre = table.Column<string>(nullable: true),
-                    CreatedAt = table.Column<DateTime>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn),
-                    UpdateAt = table.Column<DateTime>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_caracteristicas", x => x.CaracteristicaID);
-                });
 
             migrationBuilder.CreateTable(
                 name: "caracteristicas_inmuebles",
