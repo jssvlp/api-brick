@@ -13,11 +13,13 @@ namespace api_brick.Models
     {
         public int InmuebleID { get; set; }
         public int Precio { get; set; }
+        public string Moneda { get; set; }
         public string NombreInmueble { get; set; }
         public string DescripcionInmueble { get; set; }
         public int CantidadHabitaciones { get; set; }
         public decimal CantidadBanos { get; set; }
         public int CantidadParqueos { get; set; }
+        public decimal mts { get; set; }
 
         //[ForeignKey("Proyecto")]
         public int ProyectoID { get; set; }
@@ -29,10 +31,5 @@ namespace api_brick.Models
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateAt { get; set; }
 
-        public ICollection<CaracteristicaInmueble> CaracteristicasInmuebles { get; set; }
-
-        public Inmueble() {
-            CaracteristicasInmuebles = new Collection<CaracteristicaInmueble>();
-        }
     }
 }
