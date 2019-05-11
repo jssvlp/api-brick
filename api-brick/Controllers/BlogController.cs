@@ -54,7 +54,16 @@ namespace api_brick.Controllers
             {
                 return BadRequest();
             }
-            string URL = blog.ImgURL.Substring(12);
+            string URL = "";
+            var url = blog.ImgURL.Split("\\");
+            if (url != null)
+            {
+                URL = url[url.Length - 1];
+            }
+            else
+            {
+                URL = blog.ImgURL;
+            }
             blog.ImgURL = URL;
             _context.Entry(blog).State = EntityState.Modified;
 
@@ -81,7 +90,8 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Blog>> PostBlog(Blog blog)
         {
-            string URL = blog.ImgURL.Substring(12);
+            var url = blog.ImgURL.Split("\\");
+            string URL = url[url.Length - 1];
             blog.ImgURL = URL;
             _context.Blogs.Add(blog);
             await _context.SaveChangesAsync();

@@ -51,10 +51,18 @@ namespace api_brick.Controllers
             {
                 return BadRequest();
             }
-
-            string URL = servicio.ImgURL.Substring(12);
+            string URL = "";
+            var url = servicio.ImgURL.Split("\\");
+            if (url != null)
+            {
+                URL = url[url.Length - 1];
+            }
+            else
+            {
+                URL = servicio.ImgURL;
+            }
+           
             servicio.ImgURL = URL;
-            _context.Entry(servicio).State = EntityState.Modified;
             _context.Entry(servicio).State = EntityState.Modified;
 
             try
@@ -121,7 +129,8 @@ namespace api_brick.Controllers
             var _servicio = _context.Servicios.FirstOrDefault(c => c.NombreServicio == servicio.NombreServicio);
             if (_servicio == null)
             {
-                string URL = servicio.ImgURL.Substring(12);
+                var url = servicio.ImgURL.Split("\\");
+                string URL = url[url.Length - 1];
                 servicio.ImgURL = URL;
                 _context.Servicios.Add(servicio);
                 await _context.SaveChangesAsync();
