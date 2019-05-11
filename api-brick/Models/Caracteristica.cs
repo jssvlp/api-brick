@@ -25,12 +25,11 @@ namespace api_brick.Models
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateAt { get; set; }
 
-        public ICollection<CaracteristicaInmueble> CaracteristicasInmuebles { get; set; }
+        
         public ICollection<CaracteristicaProyecto> CaracteristicasProyectos { get; set; }
 
         public Caracteristica()
         {
-            CaracteristicasInmuebles = new Collection<CaracteristicaInmueble>();
             CaracteristicasProyectos = new Collection<CaracteristicaProyecto>();
         }
     }
