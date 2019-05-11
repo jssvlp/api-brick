@@ -54,7 +54,16 @@ namespace api_brick.Controllers
             {
                 return BadRequest();
             }
-            string URL = blog.ImgURL.Substring(12);
+            string URL = "";
+            var url = blog.ImgURL.Split("\\");
+            if (url != null)
+            {
+                URL = url[url.Length - 1];
+            }
+            else
+            {
+                URL = blog.ImgURL;
+            }
             blog.ImgURL = URL;
             _context.Entry(blog).State = EntityState.Modified;
 
@@ -81,7 +90,8 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Blog>> PostBlog(Blog blog)
         {
-            string URL = blog.ImgURL.Substring(12);
+            var url = blog.ImgURL.Split("\\");
+            string URL = url[url.Length - 1];
             blog.ImgURL = URL;
             _context.Blogs.Add(blog);
             await _context.SaveChangesAsync();
@@ -101,7 +111,7 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dir = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Blog/");
+                        var dir = Path.Combine("C:/Users/Acer/Desktop/UserBRICKFrontend/src/assets", "Blog/");
 
                         if (!Directory.Exists(dir))
                         {
@@ -136,7 +146,7 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-            var file = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Blog/" + Blog.ImgURL);
+            var file = Path.Combine("C:/Users/Acer/Desktop/UserBRICKFrontend/src/assets", "Blog/" + Blog.ImgURL);
             if (System.IO.File.Exists(file))
                 System.IO.File.Delete(file);
             _context.Blogs.Remove(Blog);

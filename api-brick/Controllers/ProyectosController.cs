@@ -70,7 +70,16 @@ namespace api_brick.Controllers
                 return BadRequest();
             }
 
-            string URL = proyecto.ImgURL.Substring(12);
+            string URL = "";
+            var url = proyecto.ImgURL.Split("\\");
+            if (url != null)
+            {
+                URL = url[url.Length - 1];
+            }
+            else
+            {
+                URL = proyecto.ImgURL;
+            }
             proyecto.ImgURL = URL;
             _context.Entry(proyecto).State = EntityState.Modified;
 
@@ -105,7 +114,7 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dir = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Recursos/");
+                        var dir = Path.Combine("C:/Users/Acer/Desktop/UserBRICKFrontend/src/assets", "Recursos/");
 
                         if (!Directory.Exists(dir))
                         {
@@ -138,7 +147,8 @@ namespace api_brick.Controllers
 
             if (_proyecto == null)
             {
-                string URL = proyecto.ImgURL.Substring(12);
+                var url = proyecto.ImgURL.Split("\\");
+                string URL = url[url.Length - 1];
                 proyecto.ImgURL = URL;
 
                 _context.Proyecto.Add(proyecto);
@@ -158,7 +168,7 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-            var file = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Recursos/" + proyecto.ImgURL);
+            var file = Path.Combine("C:/Users/Acer/Desktop/UserBRICKFrontend/src/assets", "Recursos/" + proyecto.ImgURL);
             if (System.IO.File.Exists(file))
                 System.IO.File.Delete(file);
             _context.Proyecto.Remove(proyecto);
