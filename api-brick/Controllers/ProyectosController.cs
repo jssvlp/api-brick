@@ -35,7 +35,7 @@ namespace api_brick.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Proyecto>> GetProyecto(int id)
         {
-            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).ThenInclude(x => x.CaracteristicasInmuebles).ThenInclude(x => x.Caracteristica).FirstOrDefaultAsync(x => x.ProyectoID == id);
+            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).Include(x => x.CaracteristicasProyectos).ThenInclude(x => x.Caracteristica).FirstOrDefaultAsync(x => x.ProyectoID == id);
 
             if (proyecto == null)
             {

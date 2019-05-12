@@ -24,6 +24,9 @@ namespace api_brick.Data
         public DbSet<TemasForo> TemasForos { get; set; }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Estado> Estados { get; set; }
+        public DbSet<Caracteristica> Caracteristica { get; set; }
+        public DbSet<CaracteristicaProyecto> CaracteristicaProyectos { get; set; }
+        public DbSet<Peticion> Peticiones { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

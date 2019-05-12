@@ -12,7 +12,7 @@ namespace api_brick.Models
     public class Caracteristica
     {
         public int CaracteristicaID { get; set; }
-        public string TipoCar { get; set; }
+      
         public string CarNombre { get; set; }
         public string CarDescripcion { get; set; }
         public string TipoCarProyecto { get; set; }
