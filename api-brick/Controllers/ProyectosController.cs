@@ -35,7 +35,7 @@ namespace api_brick.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Proyecto>> GetProyecto(int id)
         {
-            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).Include(x => x.CaracteristicasProyectos).ThenInclude(x => x.Caracteristica).FirstOrDefaultAsync(x => x.ProyectoID == id);
+            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).FirstOrDefaultAsync(x => x.ProyectoID == id);
 
             if (proyecto == null)
             {
@@ -44,22 +44,6 @@ namespace api_brick.Controllers
 
             return proyecto;
         }
-
-        // GET: api/Proyectos/5
-        [HttpGet("GetCaracteristicaProyecto/{id}")]
-        public async Task<ActionResult<Proyecto>> GetCaracteristicaProyecto(int id)
-        {
-            var distribucion = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "Distribucion").Include(i => i.Caracteristica).ToListAsync();
-            var amenidades = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "Amenidades").Include(i => i.Caracteristica).ToListAsync();
-            var seguridad = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "Seguridad").Include(i => i.Caracteristica).ToListAsync();
-            var descripcionG = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "DescripcionG").Include(i => i.Caracteristica).ToListAsync();
-            var descripcionA = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "DescripcionA").Include(i => i.Caracteristica).ToListAsync();
-            var otros = await _context.CaracteristicaProyectos.Where(i => i.ProyectoID == id && i.Caracteristica.TipoCarProyecto == "Otros").Include(i => i.Caracteristica).ToListAsync();
-
-
-            return Json(new { distribucion, amenidades, seguridad, descripcionG, descripcionA, otros }); 
-        }
-
 
         // PUT: api/Proyectos/5
         [HttpPut("{id}")]
@@ -70,7 +54,16 @@ namespace api_brick.Controllers
                 return BadRequest();
             }
 
-            string URL = proyecto.ImgURL.Substring(12);
+            string URL = "";
+            var url = proyecto.ImgURL.Split("\\");
+            if (url != null)
+            {
+                URL = url[url.Length - 1];
+            }
+            else
+            {
+                URL = proyecto.ImgURL;
+            }
             proyecto.ImgURL = URL;
             _context.Entry(proyecto).State = EntityState.Modified;
 
@@ -105,7 +98,7 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dir = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Recursos/");
+                        var dir = Path.Combine("C:/Users/Acer/Desktop/UserBRICKFrontend/src/assets", "Recursos/");
 
                         if (!Directory.Exists(dir))
                         {
@@ -138,7 +131,8 @@ namespace api_brick.Controllers
 
             if (_proyecto == null)
             {
-                string URL = proyecto.ImgURL.Substring(12);
+                var url = proyecto.ImgURL.Split("\\");
+                string URL = url[url.Length - 1];
                 proyecto.ImgURL = URL;
 
                 _context.Proyecto.Add(proyecto);
@@ -158,7 +152,7 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-            var file = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Recursos/" + proyecto.ImgURL);
+            var file = Path.Combine("C:/Users/Acer/Desktop/UserBRICKFrontend/src/assets", "Recursos/" + proyecto.ImgURL);
             if (System.IO.File.Exists(file))
                 System.IO.File.Delete(file);
             _context.Proyecto.Remove(proyecto);

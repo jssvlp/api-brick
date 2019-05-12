@@ -42,6 +42,47 @@ namespace api_brick.Migrations
                     b.ToTable("blogs");
                 });
 
+            modelBuilder.Entity("api_brick.Models.Caracteristica", b =>
+                {
+                    b.Property<int>("CaracteristicaID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CarDescripcion");
+
+                    b.Property<string>("CarNombre");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("TipoCarProyecto");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("CaracteristicaID");
+
+                    b.ToTable("caracteristicas");
+                });
+
+            modelBuilder.Entity("api_brick.Models.CaracteristicaProyecto", b =>
+                {
+                    b.Property<int>("CaracteristicaID");
+
+                    b.Property<int>("ProyectoID");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime>("UpdateAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("CaracteristicaID", "ProyectoID");
+
+                    b.HasIndex("ProyectoID");
+
+                    b.ToTable("caracteristicas_proyectos");
+                });
+
             modelBuilder.Entity("api_brick.Models.ComentarioForo", b =>
                 {
                     b.Property<int>("ComentarioID")
@@ -124,13 +165,6 @@ namespace api_brick.Migrations
                             EstadoID = 6,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EstadoNombre = "Rechazada",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            EstadoID = 7,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstadoNombre = "Cancelado",
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -446,7 +480,7 @@ namespace api_brick.Migrations
                             Contraseña = "1234567",
                             CorreoUsuario = "admin@admin.com",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNacimiento = new DateTime(2019, 5, 7, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaNacimiento = new DateTime(2019, 5, 11, 0, 0, 0, 0, DateTimeKind.Local),
                             NombreUsuario = "Admin",
                             RoleId = 1,
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -495,6 +529,19 @@ namespace api_brick.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("api_brick.Models.CaracteristicaProyecto", b =>
+                {
+                    b.HasOne("api_brick.Models.Caracteristica", "Caracteristica")
+                        .WithMany("CaracteristicasProyectos")
+                        .HasForeignKey("CaracteristicaID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("api_brick.Models.Proyecto", "Proyecto")
+                        .WithMany("CaracteristicasProyectos")
+                        .HasForeignKey("ProyectoID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("api_brick.Models.ComentarioForo", b =>
                 {
                     b.HasOne("api_brick.Models.PublicacionForo", "Publicacion")
@@ -534,14 +581,6 @@ namespace api_brick.Migrations
                     b.HasOne("api_brick.Models.Solicitud", "Solicitud")
                         .WithMany()
                         .HasForeignKey("SolicitudID")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("api_brick.Models.Proyecto", b =>
-                {
-                    b.HasOne("api_brick.Models.Ubicacion", "Ubicacion")
-                        .WithMany()
-                        .HasForeignKey("UbicacionID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

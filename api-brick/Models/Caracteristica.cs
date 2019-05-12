@@ -16,7 +16,6 @@ namespace api_brick.Models
         public string CarNombre { get; set; }
         public string CarDescripcion { get; set; }
         public string TipoCarProyecto { get; set; }
-        //public string TipoCarInmueble { get; set; }
 
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]

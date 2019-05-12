@@ -31,18 +31,16 @@ namespace api_brick.Controllers
         [HttpGet("GetCaracteristicaProyecto")]
         public async Task<ActionResult<IEnumerable<Caracteristica>>> GetCaracteristicaProyecto()
         {
-            var distribucion = await _context.Caracteristica.Where( i => i.TipoCarProyecto == "Distribucion").ToListAsync();
+            var distribucion = await _context.Caracteristica.Where(i => i.TipoCarProyecto == "Distribucion").ToListAsync();
             var amenidades = await _context.Caracteristica.Where(i => i.TipoCarProyecto == "Amenidades").ToListAsync();
             var seguridad = await _context.Caracteristica.Where(i => i.TipoCarProyecto == "Seguridad").ToListAsync();
-            var descripcionG = await _context.Caracteristica.Where(i =>  i.TipoCarProyecto == "DescripcionG").ToListAsync();
+            var descripcionG = await _context.Caracteristica.Where(i => i.TipoCarProyecto == "DescripcionG").ToListAsync();
             var descripcionA = await _context.Caracteristica.Where(i => i.TipoCarProyecto == "DescripcionA").ToListAsync();
             var otros = await _context.Caracteristica.Where(i => i.TipoCarProyecto == "Otros").ToListAsync();
 
             return Json(new { distribucion, amenidades, seguridad, descripcionG, descripcionA, otros });
         }
 
-
-       
 
         //GET: api/Caracteristica/byProyecto/2
         [HttpGet("GetByProyecto/{id}", Name = "GetByProyecto")]
@@ -108,8 +106,6 @@ namespace api_brick.Controllers
         }
 
 
-
-
         //POST: for Entidad asociativa caracteristicasinmuebles
         [HttpPost("CaracteristicaProyecto")]
         public async Task<ActionResult<Caracteristica>> PostCaracteristicaProyecto(CaracteristicaProyecto caracteristicaproyecto)
@@ -165,19 +161,16 @@ namespace api_brick.Controllers
             return caracteristica;
         }
 
-       
 
         [HttpDelete("DeleteCaracterisiticaByProyecto/{ProyectoId}")]
         public async Task<ActionResult<Caracteristica>> DeletaCaracteristicaByProyecto(int ProyectoId)
         {
 
             _context.CaracteristicaProyectos.Where(p => p.ProyectoID == ProyectoId)
-                 .ToList().ForEach(p => _context.CaracteristicaProyectos.Remove(p));
+                .ToList().ForEach(p => _context.CaracteristicaProyectos.Remove(p));
             _context.SaveChanges();
             return Json(new { isSuccess = true, message = "Registros borrado satisfactoriamente." });
         }
-
-       
 
 
         private bool CaracteristicaExists(int id)
