@@ -96,7 +96,7 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dir = Path.Combine("C:/Users/Acer/Desktop/UserBRICKFrontend/src/assets", "Servicio/");
+                        var dir = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Servicio/");
 
                         if (!Directory.Exists(dir))
                         {
@@ -149,7 +149,7 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-            var file = Path.Combine("C:/Users/Acer/Desktop/UserBRICKFrontend/src/assets", "Servicio/" + servicio.ImgURL);
+            var file = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Servicio/" + servicio.ImgURL);
             if (System.IO.File.Exists(file))
                 System.IO.File.Delete(file);
             _context.Servicios.Remove(servicio);
