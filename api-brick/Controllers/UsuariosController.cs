@@ -180,11 +180,14 @@ namespace api_brick.Controllers
         public Usuario ValidateCredentials(string correo, string password)
         {
             Usuario _usuario = (Usuario) _context.Usuarios.FirstOrDefault(x => x.CorreoUsuario == correo);
-
-            if (VerifyPassword(_usuario.Contraseña, password))
+            if (_usuario != null)
             {
-                return _usuario;
+                if (VerifyPassword(_usuario.Contraseña, password))
+                {
+                    return _usuario;
+                }
             }
+            
 
             return null;
         }
