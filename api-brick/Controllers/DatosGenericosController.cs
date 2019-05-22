@@ -28,6 +28,21 @@ namespace api_brick.Controllers
             return await _context.DatosGenericos.ToListAsync();
         }
 
+        // GET: api/DatosGenericos/{key}
+        [HttpGet("key/{key}", Name = "GetDatoGenericoByKey")]
+        public async Task<ActionResult<DatoGenerico>> GetDatoGenericoByKey(string key)
+        {
+            var datoGenerico = _context.DatosGenericos.Where(d => d.Key == key).First();
+
+            if (datoGenerico == null)
+            {
+                return NotFound();
+            }
+
+            return datoGenerico;
+        }
+
+
         // GET: api/DatosGenericos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DatoGenerico>> GetDatoGenerico(int id)
