@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using api_brick.Data;
@@ -33,7 +34,7 @@ namespace api_brick.Controllers
         public async Task<ActionResult<PublicacionForo>> GetPublicacion(int id)
         {
 
-            var publicacion = await _context.PublicacionesForos.FindAsync(id);
+            var publicacion = await _context.PublicacionesForos.Include(x => x.Usuario).Include(x => x.CometariosForos).SingleOrDefaultAsync(x => x.PublicacionID == id);
 
             if (publicacion == null)
             {
@@ -43,6 +44,22 @@ namespace api_brick.Controllers
             return publicacion;
         }
 
+        [Route("GetTemas/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<PublicacionForo>>> GetPublicacionC(int id)
+        {
+
+            var publicacion = await _context.PublicacionesForos.Where(x => x.TemaID == id).Include(x => x.Usuario).ToListAsync();
+
+            if (publicacion == null)
+            {
+                return NotFound();
+            }
+
+            return publicacion;
+        }
+
+
         // PUT: api/PublicacionForo/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPublicacion(int id, PublicacionForo publicacion)
@@ -51,6 +68,18 @@ namespace api_brick.Controllers
             {
                 return BadRequest();
             }
+
+            string URL = "";
+            var url = publicacion.URLImagen.Split("\\");
+            if (url != null)
+            {
+                URL = url[url.Length - 1];
+            }
+            else
+            {
+                URL = publicacion.URLImagen;
+            }
+            publicacion.URLImagen = URL;
 
             _context.Entry(publicacion).State = EntityState.Modified;
 
@@ -73,10 +102,54 @@ namespace api_brick.Controllers
             return NoContent();
         }
 
+        [Route("SaveFile")]
+        [HttpPost()]
+        public async Task<IActionResult> SaveFile(string fileName)
+        {
+            try
+            {
+
+                foreach (var file2 in Request.Form.Files.ToList())
+                {
+
+                    if (!string.IsNullOrEmpty(file2?.FileName))
+                    {
+                        var dir = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Foro/");
+
+                        if (!Directory.Exists(dir))
+                        {
+                            Directory.CreateDirectory(dir);
+                        }
+
+                        var path = Path.Combine(dir, file2.FileName);
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await file2.CopyToAsync(fileStream);
+                        }
+
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return Ok();
+
+        }
+
         // POST: api/PublicacionForo
         [HttpPost]
         public async Task<ActionResult<PublicacionForo>> PostPublicacion(PublicacionForo publicacion)
         {
+            if (publicacion.URLImagen != null)
+            {
+                var url = publicacion.URLImagen.Split("\\");
+                string URL = url[url.Length - 1];
+                publicacion.URLImagen = URL;
+            }
             _context.PublicacionesForos.Add(publicacion);
             await _context.SaveChangesAsync();
 
@@ -93,6 +166,9 @@ namespace api_brick.Controllers
                 return NotFound();
             }
 
+            var file = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Post/" + publicacion.URLImagen);
+            if (System.IO.File.Exists(file))
+                System.IO.File.Delete(file);
             _context.PublicacionesForos.Remove(publicacion);
             await _context.SaveChangesAsync();
 

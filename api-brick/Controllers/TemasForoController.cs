@@ -48,11 +48,8 @@ namespace api_brick.Controllers
             if (id != temasForo.TemaID)
             {
                 return BadRequest();
-
             }
-
             _context.Entry(temasForo).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -69,17 +66,23 @@ namespace api_brick.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
+
+
         }
 
         // POST: api/TemasForo
         [HttpPost]
         public async Task<ActionResult<TemasForo>> PostTemasForo(TemasForo temasForo)
         {
-            _context.TemasForos.Add(temasForo);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetTemasForo", new { id = temasForo.TemaID }, temasForo);
+            var _categoria = _context.TemasForos.FirstOrDefault(c => c.NombreTema == temasForo.NombreTema);
+            if (_categoria == null)
+            {
+                _context.TemasForos.Add(temasForo);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction("GetTemasForo", new { id = temasForo.TemaID }, temasForo);
+            }
+            return null;
         }
 
         // DELETE: api/TemasForo/5

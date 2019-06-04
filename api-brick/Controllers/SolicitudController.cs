@@ -65,7 +65,7 @@ namespace api_brick.Controllers
         public async Task<ActionResult<ServicioSolicitud>> GetServ(int id)
         {
 
-            var Serv = await _context.ServicioSolicituds.Include(x => x.Estado).Include(y => y.Servicio).Include(z => z.Solicitud).ThenInclude(z => z.Usuario).FirstOrDefaultAsync(x => x.SolicitudID == id);
+            var Serv = await _context.ServicioSolicituds.Include(x => x.Estado).Include(y => y.Servicio).Include(z => z.Solicitud).ThenInclude(z => z.Usuario).Include(z => z.Solicitud).ThenInclude(z => z.VisitaAgendadas).FirstOrDefaultAsync(x => x.SolicitudID == id);
 
             if (Serv == null)
             {
