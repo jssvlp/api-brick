@@ -62,6 +62,8 @@
     <Compile Remove="Migrations\20190512021319_Eliminando_TipoCar.Designer.cs" />
     <Compile Remove="Migrations\20190512021509_Eliminando_TipoCar.cs" />
     <Compile Remove="Migrations\20190512021509_Eliminando_TipoCar.Designer.cs" />
+    <Compile Remove="Migrations\20190530180054_IMAGENES-PROYECTOS.cs" />
+    <Compile Remove="Migrations\20190530180054_IMAGENES-PROYECTOS.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
