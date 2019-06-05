@@ -128,7 +128,7 @@ namespace api_brick.Controllers
         public async Task<ActionResult<Proyecto>> PostProyecto(Proyecto proyecto)
         {
             var _proyecto = _context.Proyecto.FirstOrDefault(c => c.NombreProyecto == proyecto.NombreProyecto);
-
+            var _images = proyecto.Imagenes;
             if (_proyecto == null)
             {
                 var url = proyecto.ImgURL.Split("\\");
