@@ -22,14 +22,21 @@ namespace api_brick
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; set; } 
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
-            //EmailSender es = new EmailSender();
-          // es.SendEmailAsync("j.velazquez@concentra.com.do","Email for test","");
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional:false, reloadOnChange:false)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json",optional: true)
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
+
+            var enviroment = Configuration["ApplicationSettings:Environment"];
         }
 
-        public IConfiguration Configuration { get; }
+       
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -54,6 +61,7 @@ namespace api_brick
             });
 
             //container = services.BuildServiceProvider(); //container is a global variable。
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         public void ConfigureJson(MvcJsonOptions obj)
