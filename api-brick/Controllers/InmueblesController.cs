@@ -76,7 +76,7 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<ActionResult<Inmueble>> PostInmueble(Inmueble inmueble)
         {
-            var _inmueble = _context.Inmueble.FirstOrDefault( i => i.DescripcionInmueble == inmueble.DescripcionInmueble && i.ProyectoID == inmueble.ProyectoID);
+            var _inmueble = _context.Inmueble.FirstOrDefault( i => i.NombreInmueble == inmueble.NombreInmueble && i.ProyectoID == inmueble.ProyectoID);
             if (_inmueble == null)
             {
                 _context.Inmueble.Add(inmueble);
