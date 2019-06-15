@@ -28,7 +28,7 @@ namespace api_brick.Data
         public DbSet<CaracteristicaProyecto> CaracteristicaProyectos { get; set; }
         public DbSet<DatoGenerico> DatosGenericos { get; set; }
         public DbSet<ImagenProyecto> ImagenesProyectos { get; set; }
-
+        public DbSet<Tasacion> Tasacions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder

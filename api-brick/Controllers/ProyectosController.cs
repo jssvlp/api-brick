@@ -10,6 +10,7 @@ using api_brick.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace api_brick.Controllers
 {
@@ -18,24 +19,26 @@ namespace api_brick.Controllers
     public class ProyectosController : Controller
     {
         private readonly BrickDbContext _context;
+        string pathForPictures;
 
-        public ProyectosController(BrickDbContext context)
+        public ProyectosController(BrickDbContext context, IConfiguration configuration)
         {
             _context = context;
+            this.pathForPictures = configuration["ApplicationSettings:PathForPictures"];
         }
 
         // GET: api/Proyectos
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Proyecto>>> GetProyecto()
         {
-            return await _context.Proyecto.ToListAsync();
+            return await _context.Proyecto.Include(i =>i.Imagenes).ToListAsync();
         }
 
         // GET: api/Proyectos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Proyecto>> GetProyecto(int id)
         {
-            var proyecto = await _context.Proyecto.Include(x => x.Inmuebles).FirstOrDefaultAsync(x => x.ProyectoID == id);
+            var proyecto = await _context.Proyecto.Include(i =>i.Imagenes).Include(x => x.Inmuebles).FirstOrDefaultAsync(x => x.ProyectoID == id);
 
             if (proyecto == null)
             {
@@ -98,7 +101,8 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dir = Path.Combine("C:/Users/Acer/Documents/UserBRICKFrontend/src/assets", "Recursos/");
+                        
+                        var dir = Path.Combine(this.pathForPictures, "Recursos/");
 
                         if (!Directory.Exists(dir))
                         {
@@ -128,7 +132,7 @@ namespace api_brick.Controllers
         public async Task<ActionResult<Proyecto>> PostProyecto(Proyecto proyecto)
         {
             var _proyecto = _context.Proyecto.FirstOrDefault(c => c.NombreProyecto == proyecto.NombreProyecto);
-
+            var _images = proyecto.Imagenes;
             if (_proyecto == null)
             {
                 var url = proyecto.ImgURL.Split("\\");
