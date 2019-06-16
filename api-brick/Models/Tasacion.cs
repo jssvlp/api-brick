@@ -141,6 +141,35 @@ namespace api_brick.Models
         public string Estilo { get; set; }
         public int ValorAjustado { get; set; }
 
+        //Descripcion 2
+        public string Direccion2 { get; set; }
+        public DateTime FechaVenta2 { get; set; }
+        public int PrecioVenta2 { get; set; }
+        public int Tamaño2 { get; set; }
+        public int PrecioMetro2 { get; set; }
+        public string Condicion2 { get; set; }
+        public string Estilo2 { get; set; }
+        public int NoBaños2 { get; set; }
+        public int NoHabitacion2 { get; set; }
+        public int NoParqueos2 { get; set; }
+        public string CondificionFisica2 { get; set; }
+        public int ValorAjustado2 { get; set; }
+
+        //Descripcion 3
+        public string Direccion3 { get; set; }
+        public DateTime FechaVenta3 { get; set; }
+        public int PrecioVenta3 { get; set; }
+        public int Tamaño3 { get; set; }
+        public int PrecioMetro3 { get; set; }
+        public string Condicion3 { get; set; }
+        public string Estilo3 { get; set; }
+        public int NoBaños3 { get; set; }
+        public int NoHabitacion3 { get; set; }
+        public int NoParqueos3 { get; set; }
+        public string CondificionFisica3 { get; set; }
+        public int ValorAjustado3 { get; set; }
+
+
 
         //Conclusiones
         public string Conclusiones { get; set; }

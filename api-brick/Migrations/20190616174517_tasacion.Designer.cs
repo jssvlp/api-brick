@@ -9,7 +9,7 @@ using api_brick.Data;
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    [Migration("20190615205429_tasacion")]
+    [Migration("20190616174517_tasacion")]
     partial class tasacion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -514,9 +514,17 @@ namespace api_brick.Migrations
 
                     b.Property<string>("Condicion");
 
+                    b.Property<string>("Condicion2");
+
+                    b.Property<string>("Condicion3");
+
                     b.Property<string>("CondicionExterna");
 
                     b.Property<string>("CondicionesRestrictivas");
+
+                    b.Property<string>("CondificionFisica2");
+
+                    b.Property<string>("CondificionFisica3");
 
                     b.Property<string>("Configuracion");
 
@@ -535,6 +543,10 @@ namespace api_brick.Migrations
                     b.Property<string>("DeseabilidadPropiedad");
 
                     b.Property<string>("Direccion");
+
+                    b.Property<string>("Direccion2");
+
+                    b.Property<string>("Direccion3");
 
                     b.Property<string>("DireccionConstructora");
 
@@ -556,6 +568,10 @@ namespace api_brick.Migrations
 
                     b.Property<string>("Estilo");
 
+                    b.Property<string>("Estilo2");
+
+                    b.Property<string>("Estilo3");
+
                     b.Property<string>("Estructura");
 
                     b.Property<DateTime>("Fecha");
@@ -565,6 +581,10 @@ namespace api_brick.Migrations
                     b.Property<DateTime>("FechaInspeccion");
 
                     b.Property<DateTime>("FechaVenta");
+
+                    b.Property<DateTime>("FechaVenta2");
+
+                    b.Property<DateTime>("FechaVenta3");
 
                     b.Property<string>("Fuente");
 
@@ -594,9 +614,21 @@ namespace api_brick.Migrations
 
                     b.Property<int>("NoBaños");
 
+                    b.Property<int>("NoBaños2");
+
+                    b.Property<int>("NoBaños3");
+
                     b.Property<string>("NoCatastral");
 
+                    b.Property<int>("NoHabitacion2");
+
+                    b.Property<int>("NoHabitacion3");
+
                     b.Property<int>("NoParqueos");
+
+                    b.Property<int>("NoParqueos2");
+
+                    b.Property<int>("NoParqueos3");
 
                     b.Property<int>("NumeroRegistro");
 
@@ -622,9 +654,17 @@ namespace api_brick.Migrations
 
                     b.Property<int>("Precio");
 
+                    b.Property<int>("PrecioMetro2");
+
+                    b.Property<int>("PrecioMetro3");
+
                     b.Property<int>("PrecioPorM2");
 
                     b.Property<int>("PrecioVenta");
+
+                    b.Property<int>("PrecioVenta2");
+
+                    b.Property<int>("PrecioVenta3");
 
                     b.Property<string>("Propietario");
 
@@ -643,6 +683,10 @@ namespace api_brick.Migrations
                     b.Property<string>("SuplementoInformativo");
 
                     b.Property<int>("Tamaño");
+
+                    b.Property<int>("Tamaño2");
+
+                    b.Property<int>("Tamaño3");
 
                     b.Property<string>("TasadorNombre");
 
@@ -673,6 +717,10 @@ namespace api_brick.Migrations
                     b.Property<int>("UtilidadInmueble");
 
                     b.Property<int>("ValorAjustado");
+
+                    b.Property<int>("ValorAjustado2");
+
+                    b.Property<int>("ValorAjustado3");
 
                     b.Property<int>("ValorDelMismo");
 
@@ -758,7 +806,7 @@ namespace api_brick.Migrations
                             Contraseña = "1234567",
                             CorreoUsuario = "admin@admin.com",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNacimiento = new DateTime(2019, 6, 15, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaNacimiento = new DateTime(2019, 6, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             NombreUsuario = "Admin",
                             RoleId = 1,
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
