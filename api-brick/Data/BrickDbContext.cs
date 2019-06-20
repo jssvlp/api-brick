@@ -1,4 +1,5 @@
 ﻿using api_brick.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace api_brick.Data
 {
-    public class BrickDbContext : DbContext
+    public class BrickDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Caracteristica> Caracteristica { get; set; }
         public DbSet<Proyecto> Proyecto { get; set; }
@@ -30,13 +31,22 @@ namespace api_brick.Data
         public DbSet<ImagenProyecto> ImagenesProyectos { get; set; }
         public DbSet<Tasacion> Tasacions { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder
-            .UseMySql(@"Server=localhost;database=brick;user=root;pwd=;");
 
+
+        public BrickDbContext(DbContextOptions<BrickDbContext> options): base(options)
+        {
+
+        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //    => optionsBuilder
+        //    .UseMySql(@"Server=localhost;database=brick;user=root;pwd=;");
+
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            base.OnModelCreating(modelBuilder);
             //SEEDS
             modelBuilder.Entity<Estado>().HasData(new Estado {EstadoID = 1, EstadoNombre = "Activo" },new Estado {EstadoID = 2, EstadoNombre = "Pendiente" }, new Estado { EstadoID= 3, EstadoNombre = "Finalizado"}, new Estado {EstadoID = 4, EstadoNombre = "Inactivo" }, new Estado {EstadoID = 5, EstadoNombre = "Aprobada" },
                  new Estado { EstadoID = 6, EstadoNombre = "Rechazada" });

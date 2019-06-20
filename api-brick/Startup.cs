@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -42,9 +44,14 @@ namespace api_brick
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(ConfigureJson);
-      
-        
-            services.AddDbContext<BrickDbContext>();
+
+            services.AddDbContext<BrickDbContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<BrickDbContext>()
+                .AddDefaultTokenProviders();
+
+          
             services.AddCors(o => o.AddPolicy("api-policy", builder =>
             {
                 builder.AllowAnyOrigin()
@@ -83,7 +90,7 @@ namespace api_brick
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            //SeedDatabase.Initialize(app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider);
             app.UseHttpsRedirection();
             app.UseCors("api-policy");
             app.UseMvc(routes =>
