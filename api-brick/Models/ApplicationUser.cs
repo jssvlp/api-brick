@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api_brick.Data
+namespace api_brick.Models
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser: IdentityUser
     {
     }
 }

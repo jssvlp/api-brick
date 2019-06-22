@@ -132,7 +132,17 @@ namespace api_brick.Controllers
                     throw;
 
                 }
-                return _user;
+                return Ok(new {
+                    UsuarioID = _user.UsuarioID,
+                    NombreUsuario = _user.NombreUsuario,
+                    ApellidosUsuario = _user.ApellidosUsuario,
+                    CorreoUsuaio = _user.CorreoUsuario,
+                    FechaNacimiento = _user.FechaNacimiento,
+                    AuthToken = _user.AuthToken,
+                    RoleId = _user.RoleId,
+                    Role = _user.Role
+              
+                });
             }
             else
                 //return Json(new { isSuccess = false, message = "Revise sus credenciales e intente nuevamente." });

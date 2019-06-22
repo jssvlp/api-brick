@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace api_brick.Models
 {
-    [Table("usuarios")]
-    public class Usuario
+    [Table("clientes")]
+    public class Cliente
     {
         public int UsuarioID { get; set; }
         public string NombreUsuario { get; set; }
@@ -19,12 +19,12 @@ namespace api_brick.Models
         public DateTime FechaNacimiento { get; set; }
         public string Contraseña { get; set; }
 
-        public string FirebaseCode { get; set; }
-        public string AuthToken { get; set; }
+        //public string FirebaseCode { get; set; }
+        //public string AuthToken { get; set; }
 
-        [ForeignKey("Role")]
-        public int RoleId { get; set; }
-        public Rol Role { get; set; }
+        //[ForeignKey("Role")]
+        //public int RoleId { get; set; }
+        //public Rol Role { get; set; }
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
@@ -34,17 +34,17 @@ namespace api_brick.Models
 
         public virtual ICollection<Solicitud> Solicitud{ get; set; }
 
-        public Usuario() {
+        public Cliente() {
             Solicitud = new Collection<Solicitud>();
         }
 
-        public void SetAccessToken()
-        {
-            string token = TokenGenerator.Generate(50);
-            this.AuthToken = token;
-        }
-        public void DestroyAccesToken() {
-            this.AuthToken = string.Empty;
-        }
+        //public void SetAccessToken()
+        //{
+        //    string token = TokenGenerator.Generate(50);
+        //    this.AuthToken = token;
+        //}
+        //public void DestroyAccesToken() {
+        //    this.AuthToken = string.Empty;
+        //}
     }
 }
