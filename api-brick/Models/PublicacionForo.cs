@@ -22,7 +22,7 @@ namespace api_brick.Models
         public string URLImagen { get; set; }
 
         public int UsuarioID { get; set; }
-        public  Usuario Usuario { get; set; }
+        public  Cliente Usuario { get; set; }
 
         public int TemaID { get; set; }
         public  TemasForo TemasForo { get; set; }

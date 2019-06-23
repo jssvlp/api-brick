@@ -16,6 +16,6 @@ namespace api_brick.Models
         public string RoleNombre { get; set; }
         public string Descripcion { get; set; }
 
-        public ICollection<Usuario> Usuarios { get; set; }
+        public ICollection<Cliente> Usuarios { get; set; }
     }
 }

@@ -130,6 +130,30 @@ namespace api_brick.Controllers
             return Ok();
 
         }
+        //POST: api/Proyectos/imagenes
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult> ImagenesProyecto(Proyecto proyecto)
+        {
+            Proyecto _proyecto = await  _context.Proyecto.FindAsync(proyecto.ProyectoID);
+
+            if (_proyecto != null)
+            {
+                _proyecto.Imagenes = proyecto.Imagenes;
+                _context.Entry(_proyecto).State = EntityState.Modified;
+      
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+                return Ok(_proyecto.Imagenes);
+            }
+            return BadRequest();
+        }
         // POST: api/Proyectos
         [HttpPost]
         public async Task<ActionResult<Proyecto>> PostProyecto(Proyecto proyecto)
@@ -159,7 +183,7 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-            var file = Path.Combine("C:/Users/Acer/Documents/UserBRICKFrontend/src/assets", "Recursos/" + proyecto.ImgURL);
+            var file = Path.Combine(this.pathForPictures, "Recursos/" + proyecto.ImgURL);
             if (System.IO.File.Exists(file))
                 System.IO.File.Delete(file);
             _context.Proyecto.Remove(proyecto);

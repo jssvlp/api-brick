@@ -13,7 +13,7 @@ namespace api_brick.Data
         public DbSet<Caracteristica> Caracteristica { get; set; }
         public DbSet<Proyecto> Proyecto { get; set; }
         public DbSet<Inmueble> Inmueble { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Servicio> Servicios { get; set; }
         public DbSet<ServicioSolicitud> ServicioSolicituds { get; set; }
         public DbSet<Solicitud> Solicitud { get; set; }
@@ -37,9 +37,7 @@ namespace api_brick.Data
         {
 
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //    => optionsBuilder
-        //    .UseMySql(@"Server=localhost;database=brick;user=root;pwd=;");
+       
 
        
 

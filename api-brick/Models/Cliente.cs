@@ -12,12 +12,12 @@ namespace api_brick.Models
     [Table("clientes")]
     public class Cliente
     {
-        public int UsuarioID { get; set; }
-        public string NombreUsuario { get; set; }
-        public string ApellidosUsuario { get; set; }
-        public string CorreoUsuario { get; set; }
+        public int ClienteID { get; set; }
+        public string Nombre { get; set; }
+        public string Apellidos { get; set; }
+        public string Email { get; set; }
         public DateTime FechaNacimiento { get; set; }
-        public string Contraseña { get; set; }
+      
 
         //public string FirebaseCode { get; set; }
         //public string AuthToken { get; set; }

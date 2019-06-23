@@ -57,18 +57,23 @@ namespace api_brick
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
-                 options.TokenValidationParameters = new TokenValidationParameters
-                 {
-                     ValidateIssuer = true,
-                     ValidateAudience = true,
-                     ValidateLifetime = true,
-                     ValidateIssuerSigningKey = true,
-                     ValidIssuer = "https://constructoramejiapolanco.com",
-                     ValidAudience = "https://constructoramejiapolanco.com",
-                     IssuerSigningKey = new SymmetricSecurityKey(
-                     Encoding.UTF8.GetBytes(Configuration["SECRET_API_KEY"])),
-                     ClockSkew = TimeSpan.Zero
-                 });
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = "https://constructoramejiapolanco.com",
+                        ValidAudience = "https://constructoramejiapolanco.com",
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(Configuration["SECRET_API_KEY"])),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                } 
+                );
+
+                
           
             services.AddCors(o => o.AddPolicy("api-policy", builder =>
             {
@@ -110,6 +115,9 @@ namespace api_brick
             }
 
             app.UseAuthentication();
+ 
+
+
             SeedRoles.InitializeAsync(app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider);
             app.UseHttpsRedirection();
             app.UseCors("api-policy");

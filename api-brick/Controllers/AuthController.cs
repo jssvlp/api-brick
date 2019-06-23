@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using api_brick.Data;
 using api_brick.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -21,15 +22,15 @@ namespace api_brick.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly BrickDbContext _context;
 
-        public AuthController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            IConfiguration configuration)
+        public AuthController(UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager,IConfiguration configuration,BrickDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             this._configuration = configuration;
+            _context = context;
+
         }
 
         [Route("Create")]
@@ -40,13 +41,15 @@ namespace api_brick.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
-                if (model.Type == "Client")
-                {
 
+                if (model.Type == "Admin")
+                {
+                    await _userManager.AddToRoleAsync(user, "Admin");
                 }
+                
                 if (result.Succeeded)
                 {
-                    return BuildToken(model);
+                    return  await BuildTokenAsync(model);
                 }
                 else
                 {
@@ -69,7 +72,7 @@ namespace api_brick.Controllers
                 var result = await _signInManager.PasswordSignInAsync(userInfo.Email, userInfo.Password, isPersistent: false, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    return BuildToken(userInfo);
+                    return await BuildTokenAsync(userInfo);
                 }
                 else
                 {
@@ -83,7 +86,7 @@ namespace api_brick.Controllers
             }
         }
 
-        private IActionResult BuildToken(UserInfo userInfo)
+        private async Task<IActionResult> BuildTokenAsync(UserInfo userInfo)
         {
             var claims = new[]
             {
@@ -105,11 +108,48 @@ namespace api_brick.Controllers
                 signingCredentials: creds 
                 );
 
-            return Ok(new
+
+            var user = await _userManager.FindByEmailAsync(userInfo.Email);
+            var roles = await _userManager.GetRolesAsync(user);
+            if (userInfo.Type == "Client")
             {
-                token = new JwtSecurityTokenHandler().WriteToken(token),
-                expiration = expiration
-            });
+                Cliente _cliente = (Cliente)_context.Clientes.Where(c => c.Email == userInfo.Email);
+               
+
+                return Ok(new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    expiration = expiration,
+                    user_info = new
+                    {
+                        NombreUsuario = _cliente.Nombre,
+                        ApellidosUsuario = _cliente.Apellidos,
+                        Email = _cliente.Email,
+                        FechaNacimiento = _cliente.FechaNacimiento,
+                        Roles = roles
+                    }
+                });
+            }
+            else
+            {
+                return Ok(new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    expiration = expiration,
+                    user_info = new
+                    {
+                        NombreUsuario = "admin",
+                        ApellidosUsuario = "admin",
+                        Email = userInfo.Email,
+                        FechaNacimiento = "",
+                        Roles = roles
+                    }
+
+                });
+            }
+           
+
+           
         }
 
 
