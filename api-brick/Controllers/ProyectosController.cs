@@ -11,11 +11,14 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.IO;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace api_brick.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ProyectosController : Controller
     {
         private readonly BrickDbContext _context;
@@ -180,7 +183,31 @@ namespace api_brick.Controllers
             }
 
             return Ok();
+                }
 
+        //POST: api/Proyectos/imagenes
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult> ImagenesProyecto(Proyecto proyecto)
+        {
+            Proyecto _proyecto = await  _context.Proyecto.FindAsync(proyecto.ProyectoID);
+
+            if (_proyecto != null)
+            {
+                _proyecto.Imagenes = proyecto.Imagenes;
+                _context.Entry(_proyecto).State = EntityState.Modified;
+      
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+                return Ok(_proyecto.Imagenes);
+            }
+            return BadRequest();
         }
         // POST: api/Proyectos
         [HttpPost]

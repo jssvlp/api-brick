@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api_brick.Data;
 
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    partial class BrickDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190620234444_user_for_jwt_system")]
+    partial class user_for_jwt_system
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,34 +240,6 @@ namespace api_brick.Migrations
                     b.HasIndex("ProyectoID");
 
                     b.ToTable("caracteristicas_proyectos");
-                });
-
-            modelBuilder.Entity("api_brick.Models.Cliente", b =>
-                {
-                    b.Property<int>("ClienteID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Apellidos");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<string>("Email");
-
-                    b.Property<DateTime>("FechaNacimiento");
-
-                    b.Property<string>("Nombre");
-
-                    b.Property<int?>("RoleId");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .ValueGeneratedOnAddOrUpdate();
-
-                    b.HasKey("ClienteID");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("clientes");
                 });
 
             modelBuilder.Entity("api_brick.Models.ComentarioForo", b =>
@@ -557,6 +531,18 @@ namespace api_brick.Migrations
                     b.HasKey("RoleId");
 
                     b.ToTable("roles");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            RoleNombre = "Admin"
+                        },
+                        new
+                        {
+                            RoleId = 2,
+                            RoleNombre = "Usuarios"
+                        });
                 });
 
             modelBuilder.Entity("api_brick.Models.Servicio", b =>
@@ -637,17 +623,11 @@ namespace api_brick.Migrations
 
                     b.Property<string>("Amenidades");
 
-                    b.Property<DateTime>("AnoEstimado");
-
                     b.Property<int>("AntiguedadPromedio");
 
                     b.Property<int>("Area");
 
                     b.Property<int>("AreaConstruida");
-
-                    b.Property<int>("AreaPiso");
-
-                    b.Property<int>("AreaTotalSotano");
 
                     b.Property<string>("AreaVerde");
 
@@ -657,19 +637,19 @@ namespace api_brick.Migrations
 
                     b.Property<string>("AsesorNombre");
 
+                    b.Property<DateTime>("AñoEstimado");
+
                     b.Property<string>("Banco");
 
-                    b.Property<int>("BanoCompleto");
+                    b.Property<int>("BañoCompleto");
 
-                    b.Property<int>("BanoParcial");
+                    b.Property<int>("BañoParcial");
 
-                    b.Property<string>("Banos");
+                    b.Property<string>("Baños");
 
                     b.Property<string>("CalentadorAgua");
 
                     b.Property<int>("CantidadPiso");
-
-                    b.Property<int>("CapacidadCalentador");
 
                     b.Property<string>("Ciudad");
 
@@ -697,31 +677,23 @@ namespace api_brick.Migrations
 
                     b.Property<string>("CondicionExterna");
 
-                    b.Property<string>("CondicionFisica2");
-
-                    b.Property<string>("CondicionFisica3");
-
                     b.Property<string>("CondicionesRestrictivas");
+
+                    b.Property<string>("CondificionFisica2");
+
+                    b.Property<string>("CondificionFisica3");
 
                     b.Property<string>("Configuracion");
 
                     b.Property<string>("ConstruccionTerminada");
 
-                    b.Property<string>("CorreoCompania");
-
-                    b.Property<int>("CostoMetroInmueble");
-
-                    b.Property<int>("CostoMetroTerraza");
+                    b.Property<string>("CorreoCompañia");
 
                     b.Property<int>("CuartoServicio");
 
                     b.Property<string>("Demanda");
 
                     b.Property<string>("DerechoPropiedad");
-
-                    b.Property<string>("Descripcion2");
-
-                    b.Property<string>("Descripcion3");
 
                     b.Property<string>("DescripcionInmueble");
 
@@ -793,15 +765,11 @@ namespace api_brick.Migrations
 
                     b.Property<string>("Matricula");
 
-                    b.Property<int>("MetroInmueble");
-
-                    b.Property<int>("MetroTerraza");
-
                     b.Property<string>("MurosCimientos");
 
                     b.Property<int>("NivelesCasa");
 
-                    b.Property<int>("NoBanos");
+                    b.Property<int>("NoBaños");
 
                     b.Property<int>("NoBaños2");
 
@@ -818,8 +786,6 @@ namespace api_brick.Migrations
                     b.Property<int>("NoParqueos2");
 
                     b.Property<int>("NoParqueos3");
-
-                    b.Property<int>("NumeroPiso");
 
                     b.Property<int>("NumeroRegistro");
 
@@ -956,6 +922,54 @@ namespace api_brick.Migrations
                     b.ToTable("temas_foros");
                 });
 
+            modelBuilder.Entity("api_brick.Models.Usuario", b =>
+                {
+                    b.Property<int>("UsuarioID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApellidosUsuario");
+
+                    b.Property<string>("AuthToken");
+
+                    b.Property<string>("Contraseña");
+
+                    b.Property<string>("CorreoUsuario");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime>("FechaNacimiento");
+
+                    b.Property<string>("FirebaseCode");
+
+                    b.Property<string>("NombreUsuario");
+
+                    b.Property<int>("RoleId");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("UsuarioID");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            UsuarioID = 1,
+                            ApellidosUsuario = "Admin",
+                            Contraseña = "1234567",
+                            CorreoUsuario = "admin@admin.com",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FechaNacimiento = new DateTime(2019, 6, 20, 0, 0, 0, 0, DateTimeKind.Local),
+                            NombreUsuario = "Admin",
+                            RoleId = 1,
+                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
             modelBuilder.Entity("api_brick.Models.VisitaAgendada", b =>
                 {
                     b.Property<int>("VisitaID")
@@ -1037,7 +1051,7 @@ namespace api_brick.Migrations
 
             modelBuilder.Entity("api_brick.Models.Blog", b =>
                 {
-                    b.HasOne("api_brick.Models.Cliente", "Usuario")
+                    b.HasOne("api_brick.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioID")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -1056,13 +1070,6 @@ namespace api_brick.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("api_brick.Models.Cliente", b =>
-                {
-                    b.HasOne("api_brick.Models.Rol")
-                        .WithMany("Usuarios")
-                        .HasForeignKey("RoleId");
-                });
-
             modelBuilder.Entity("api_brick.Models.ComentarioForo", b =>
                 {
                     b.HasOne("api_brick.Models.PublicacionForo", "Publicacion")
@@ -1070,7 +1077,7 @@ namespace api_brick.Migrations
                         .HasForeignKey("PublicacionID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("api_brick.Models.Cliente", "Usuario")
+                    b.HasOne("api_brick.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioID")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -1099,7 +1106,7 @@ namespace api_brick.Migrations
                         .HasForeignKey("PublicacionID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("api_brick.Models.Cliente", "Usuario")
+                    b.HasOne("api_brick.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioID")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -1120,7 +1127,7 @@ namespace api_brick.Migrations
                         .HasForeignKey("TemaID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("api_brick.Models.Cliente", "Usuario")
+                    b.HasOne("api_brick.Models.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioID")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -1146,9 +1153,17 @@ namespace api_brick.Migrations
 
             modelBuilder.Entity("api_brick.Models.Solicitud", b =>
                 {
-                    b.HasOne("api_brick.Models.Cliente", "Usuario")
+                    b.HasOne("api_brick.Models.Usuario", "Usuario")
                         .WithMany("Solicitud")
                         .HasForeignKey("UsuarioID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("api_brick.Models.Usuario", b =>
+                {
+                    b.HasOne("api_brick.Models.Rol", "Role")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

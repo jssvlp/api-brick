@@ -18,7 +18,7 @@ namespace api_brick.Models
         public DateTime TimeStampComment { get; set; }
         public string URLImagen { get; set; }
 
-        public Usuario Usuario { get; set; }
+        public Cliente Usuario { get; set; }
         public PublicacionForo Publicacion { get; set; }
     }
 }

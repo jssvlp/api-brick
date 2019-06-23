@@ -22,7 +22,7 @@ namespace api_brick.Models
 
         public string Comentario { get; set; }
 
-        public Usuario Usuario { get; set; }
+        public Cliente Usuario { get; set; }
 
         
 

@@ -21,6 +21,6 @@ namespace api_brick.Models
         public DateTime UpdateAt { get; set; }
 
         
-        public  Usuario Usuario { get; set; }
+        public  Cliente Usuario { get; set; }
     }
 }

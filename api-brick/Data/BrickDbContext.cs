@@ -13,7 +13,7 @@ namespace api_brick.Data
         public DbSet<Caracteristica> Caracteristica { get; set; }
         public DbSet<Proyecto> Proyecto { get; set; }
         public DbSet<Inmueble> Inmueble { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Servicio> Servicios { get; set; }
         public DbSet<ServicioSolicitud> ServicioSolicituds { get; set; }
         public DbSet<Solicitud> Solicitud { get; set; }
@@ -37,9 +37,7 @@ namespace api_brick.Data
         {
 
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //    => optionsBuilder
-        //    .UseMySql(@"Server=localhost;database=brick;user=root;pwd=;");
+       
 
        
 
@@ -47,11 +45,14 @@ namespace api_brick.Data
         {
 
             base.OnModelCreating(modelBuilder);
+
             //SEEDS
             modelBuilder.Entity<Estado>().HasData(new Estado {EstadoID = 1, EstadoNombre = "Activo" },new Estado {EstadoID = 2, EstadoNombre = "Pendiente" }, new Estado { EstadoID= 3, EstadoNombre = "Finalizado"}, new Estado {EstadoID = 4, EstadoNombre = "Inactivo" }, new Estado {EstadoID = 5, EstadoNombre = "Aprobada" },
                  new Estado { EstadoID = 6, EstadoNombre = "Rechazada" });
-            modelBuilder.Entity<Rol>().HasData(new Rol {RoleId = 1, RoleNombre = "Admin" }, new Rol { RoleId = 2, RoleNombre = "Usuarios" });
-            modelBuilder.Entity<Usuario>().HasData(new Usuario {UsuarioID =1, NombreUsuario = "Admin", ApellidosUsuario = "Admin", CorreoUsuario = "admin@admin.com", RoleId = 1 , FechaNacimiento = DateTime.Today, Contraseña = "1234567"});
+
+
+            //modelBuilder.Entity<Rol>().HasData(new Rol {RoleId = 1, RoleNombre = "Admin" }, new Rol { RoleId = 2, RoleNombre = "Usuarios" });
+            //modelBuilder.Entity<Usuario>().HasData(new Usuario {UsuarioID =1, NombreUsuario = "Admin", ApellidosUsuario = "Admin", CorreoUsuario = "admin@admin.com", RoleId = 1 , FechaNacimiento = DateTime.Today, Contraseña = "1234567"});
 
             //Much to much relationship for servicios and solicitudes
             modelBuilder.Entity<ServicioSolicitud>()
