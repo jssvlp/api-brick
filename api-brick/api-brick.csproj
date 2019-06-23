@@ -68,6 +68,8 @@
     <Compile Remove="Migrations\20190615195019_tasacion.Designer.cs" />
     <Compile Remove="Migrations\20190615205429_tasacion.cs" />
     <Compile Remove="Migrations\20190615205429_tasacion.Designer.cs" />
+    <Compile Remove="Migrations\20190616174517_tasacion.cs" />
+    <Compile Remove="Migrations\20190616174517_tasacion.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

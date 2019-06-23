@@ -9,8 +9,8 @@ using api_brick.Data;
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    [Migration("20190616174517_tasacion")]
-    partial class tasacion
+    [Migration("20190623011259_Tasacion")]
+    partial class Tasacion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,6 +18,163 @@ namespace api_brick.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("ProviderKey");
+
+                    b.Property<string>("ProviderDisplayName");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("RoleId");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("api_brick.Data.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers");
+                });
 
             modelBuilder.Entity("api_brick.Models.Blog", b =>
                 {
@@ -466,11 +623,17 @@ namespace api_brick.Migrations
 
                     b.Property<string>("Amenidades");
 
+                    b.Property<DateTime>("AnoEstimado");
+
                     b.Property<int>("AntiguedadPromedio");
 
                     b.Property<int>("Area");
 
                     b.Property<int>("AreaConstruida");
+
+                    b.Property<int>("AreaPiso");
+
+                    b.Property<int>("AreaTotalSotano");
 
                     b.Property<string>("AreaVerde");
 
@@ -480,19 +643,19 @@ namespace api_brick.Migrations
 
                     b.Property<string>("AsesorNombre");
 
-                    b.Property<DateTime>("AñoEstimado");
-
                     b.Property<string>("Banco");
 
-                    b.Property<int>("BañoCompleto");
+                    b.Property<int>("BanoCompleto");
 
-                    b.Property<int>("BañoParcial");
+                    b.Property<int>("BanoParcial");
 
-                    b.Property<string>("Baños");
+                    b.Property<string>("Banos");
 
                     b.Property<string>("CalentadorAgua");
 
                     b.Property<int>("CantidadPiso");
+
+                    b.Property<int>("CapacidadCalentador");
 
                     b.Property<string>("Ciudad");
 
@@ -520,23 +683,31 @@ namespace api_brick.Migrations
 
                     b.Property<string>("CondicionExterna");
 
+                    b.Property<string>("CondicionFisica2");
+
+                    b.Property<string>("CondicionFisica3");
+
                     b.Property<string>("CondicionesRestrictivas");
-
-                    b.Property<string>("CondificionFisica2");
-
-                    b.Property<string>("CondificionFisica3");
 
                     b.Property<string>("Configuracion");
 
                     b.Property<string>("ConstruccionTerminada");
 
-                    b.Property<string>("CorreoCompañia");
+                    b.Property<string>("CorreoCompania");
+
+                    b.Property<int>("CostoMetroInmueble");
+
+                    b.Property<int>("CostoMetroTerraza");
 
                     b.Property<int>("CuartoServicio");
 
                     b.Property<string>("Demanda");
 
                     b.Property<string>("DerechoPropiedad");
+
+                    b.Property<string>("Descripcion2");
+
+                    b.Property<string>("Descripcion3");
 
                     b.Property<string>("DescripcionInmueble");
 
@@ -608,11 +779,15 @@ namespace api_brick.Migrations
 
                     b.Property<string>("Matricula");
 
+                    b.Property<int>("MetroInmueble");
+
+                    b.Property<int>("MetroTerraza");
+
                     b.Property<string>("MurosCimientos");
 
                     b.Property<int>("NivelesCasa");
 
-                    b.Property<int>("NoBaños");
+                    b.Property<int>("NoBanos");
 
                     b.Property<int>("NoBaños2");
 
@@ -629,6 +804,8 @@ namespace api_brick.Migrations
                     b.Property<int>("NoParqueos2");
 
                     b.Property<int>("NoParqueos3");
+
+                    b.Property<int>("NumeroPiso");
 
                     b.Property<int>("NumeroRegistro");
 
@@ -806,7 +983,7 @@ namespace api_brick.Migrations
                             Contraseña = "1234567",
                             CorreoUsuario = "admin@admin.com",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FechaNacimiento = new DateTime(2019, 6, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaNacimiento = new DateTime(2019, 6, 22, 0, 0, 0, 0, DateTimeKind.Local),
                             NombreUsuario = "Admin",
                             RoleId = 1,
                             UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -845,6 +1022,51 @@ namespace api_brick.Migrations
                     b.HasIndex("SolicitudID");
 
                     b.ToTable("visitas_agendadas");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("api_brick.Data.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("api_brick.Data.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("api_brick.Data.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("api_brick.Data.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("api_brick.Models.Blog", b =>

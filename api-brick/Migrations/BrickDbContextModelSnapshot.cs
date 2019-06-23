@@ -637,11 +637,17 @@ namespace api_brick.Migrations
 
                     b.Property<string>("Amenidades");
 
+                    b.Property<DateTime>("AnoEstimado");
+
                     b.Property<int>("AntiguedadPromedio");
 
                     b.Property<int>("Area");
 
                     b.Property<int>("AreaConstruida");
+
+                    b.Property<int>("AreaPiso");
+
+                    b.Property<int>("AreaTotalSotano");
 
                     b.Property<string>("AreaVerde");
 
@@ -651,19 +657,19 @@ namespace api_brick.Migrations
 
                     b.Property<string>("AsesorNombre");
 
-                    b.Property<DateTime>("AñoEstimado");
-
                     b.Property<string>("Banco");
 
-                    b.Property<int>("BañoCompleto");
+                    b.Property<int>("BanoCompleto");
 
-                    b.Property<int>("BañoParcial");
+                    b.Property<int>("BanoParcial");
 
-                    b.Property<string>("Baños");
+                    b.Property<string>("Banos");
 
                     b.Property<string>("CalentadorAgua");
 
                     b.Property<int>("CantidadPiso");
+
+                    b.Property<int>("CapacidadCalentador");
 
                     b.Property<string>("Ciudad");
 
@@ -691,23 +697,31 @@ namespace api_brick.Migrations
 
                     b.Property<string>("CondicionExterna");
 
+                    b.Property<string>("CondicionFisica2");
+
+                    b.Property<string>("CondicionFisica3");
+
                     b.Property<string>("CondicionesRestrictivas");
-
-                    b.Property<string>("CondificionFisica2");
-
-                    b.Property<string>("CondificionFisica3");
 
                     b.Property<string>("Configuracion");
 
                     b.Property<string>("ConstruccionTerminada");
 
-                    b.Property<string>("CorreoCompañia");
+                    b.Property<string>("CorreoCompania");
+
+                    b.Property<int>("CostoMetroInmueble");
+
+                    b.Property<int>("CostoMetroTerraza");
 
                     b.Property<int>("CuartoServicio");
 
                     b.Property<string>("Demanda");
 
                     b.Property<string>("DerechoPropiedad");
+
+                    b.Property<string>("Descripcion2");
+
+                    b.Property<string>("Descripcion3");
 
                     b.Property<string>("DescripcionInmueble");
 
@@ -779,11 +793,15 @@ namespace api_brick.Migrations
 
                     b.Property<string>("Matricula");
 
+                    b.Property<int>("MetroInmueble");
+
+                    b.Property<int>("MetroTerraza");
+
                     b.Property<string>("MurosCimientos");
 
                     b.Property<int>("NivelesCasa");
 
-                    b.Property<int>("NoBaños");
+                    b.Property<int>("NoBanos");
 
                     b.Property<int>("NoBaños2");
 
@@ -800,6 +818,8 @@ namespace api_brick.Migrations
                     b.Property<int>("NoParqueos2");
 
                     b.Property<int>("NoParqueos3");
+
+                    b.Property<int>("NumeroPiso");
 
                     b.Property<int>("NumeroRegistro");
 

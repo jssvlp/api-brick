@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using api_brick.Data;
 using api_brick.Models;
 using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace api_brick.Controllers
 {
@@ -16,10 +17,12 @@ namespace api_brick.Controllers
     public class ServiciosController : ControllerBase
     {
         private readonly BrickDbContext _context;
+        string pathForPictures;
 
-        public ServiciosController(BrickDbContext context)
+        public ServiciosController(BrickDbContext context, IConfiguration configuration)
         {
             _context = context;
+            this.pathForPictures = configuration["ApplicationSettings:PathForPictures"];
         }
 
         // GET: api/Servicios
@@ -96,7 +99,7 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dir = Path.Combine("C:/Users/Acer/Documents/UserBRICKFrontend/src/assets", "Servicio/");
+                        var dir = Path.Combine(this.pathForPictures, "Servicio/");
 
                         if (!Directory.Exists(dir))
                         {
@@ -149,7 +152,7 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-            var file = Path.Combine("C:/Users/Acer/Documents/UserBRICKFrontend/src/assets", "Servicio/" + servicio.ImgURL);
+            var file = Path.Combine(this.pathForPictures, "Servicio/" + servicio.ImgURL);
             if (System.IO.File.Exists(file))
                 System.IO.File.Delete(file);
             _context.Servicios.Remove(servicio);
