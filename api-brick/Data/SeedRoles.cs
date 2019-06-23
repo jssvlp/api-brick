@@ -28,16 +28,16 @@ namespace api_brick.Data
                     roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
                 }
             }
-            var text = Configuration.GetSection("UserSettings");
+            
 
             var poweruser = new ApplicationUser
             {
-                UserName = Configuration.GetSection("UserSettings")["UserEmail"],
-                Email = Configuration.GetSection("UserSettings")["UserEmail"]
+                UserName ="admin@admin.com",
+                Email = "admin@admin.com"
             };
 
-            string UserPassword = Configuration.GetSection("UserSettings")["UserPassword"];
-            var _user = await UserManager.FindByEmailAsync(Configuration.GetSection("UserSettings")["UserEmail"]);
+            string UserPassword = "Abcd@123";
+            var _user = await UserManager.FindByEmailAsync(poweruser.Email);
 
             if (_user == null)
             {
