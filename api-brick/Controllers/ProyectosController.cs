@@ -156,7 +156,7 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-            var file = Path.Combine("C:/Users/Acer/Documents/UserBRICKFrontend/src/assets", "Recursos/" + proyecto.ImgURL);
+            var file = Path.Combine(this.pathForPictures, "Recursos/" + proyecto.ImgURL);
             if (System.IO.File.Exists(file))
                 System.IO.File.Delete(file);
             _context.Proyecto.Remove(proyecto);

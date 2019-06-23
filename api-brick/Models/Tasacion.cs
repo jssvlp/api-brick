@@ -16,7 +16,7 @@ namespace api_brick.Models
         public string TecnicoNombre { get; set; }
         public string DireccionConstructora { get; set; }
         public string TelefonoConstructora { get; set; }
-        public string CorreoCompañia { get; set; }
+        public string CorreoCompania { get; set; }
         public string ClienteNombre { get; set; }
         public DateTime Fecha { get; set; }
         public string Ciudad { get; set; }
@@ -77,9 +77,11 @@ namespace api_brick.Models
 
         //Descripcion de las mejoras
         public string ConstruccionTerminada { get; set; }
-        public DateTime AñoEstimado { get; set; }
+        public DateTime AnoEstimado { get; set; }
         public int Xtotal { get; set; }
         public string VentanaMarco { get; set; }
+        public int AreaPiso { get; set; }
+        public int AreaTotalSotano { get; set; }
         public string Sotano { get; set; }
         public string TipoInmueble { get; set; }
         public string Estructura { get; set; }
@@ -94,8 +96,8 @@ namespace api_brick.Models
         public string DistribucionArq { get; set; }
         public string Armarios { get; set; }
         public string Dormitorios { get; set; }
-        public string Baños { get; set; }
-        public int NoBaños { get; set; }
+        public string Banos { get; set; }
+        public int NoBanos { get; set; }
         public string CodicionInterna { get; set; }
         public string ParedesMaterial { get; set; }
         public string Techos { get; set; }
@@ -109,9 +111,11 @@ namespace api_brick.Models
         public int NoParqueos { get; set; }
         public string OtrasMejoras { get; set; }
         public string Comentarios { get; set; }
+        public int CapacidadCalentador { get; set; }
 
         //Distribucion Habitaciones
 
+        public int NumeroPiso { get; set; }
         public int NivelesCasa { get; set; }
         public int CantidadPiso { get; set; }
         public int Habitaciones { get; set; }
@@ -119,8 +123,8 @@ namespace api_brick.Models
         public int SalaEstar { get; set; }
         public int Cocina { get; set; }
         public int Comedor { get; set; }
-        public int BañoCompleto { get; set; }
-        public int BañoParcial { get; set; }
+        public int BanoCompleto { get; set; }
+        public int BanoParcial { get; set; }
         public int Terraza { get; set; }
         public int Lavanderia { get; set; }
         public int CuartoServicio { get; set; }
@@ -130,6 +134,10 @@ namespace api_brick.Models
 
         public string FuenteManualCosto { get; set; }
         public int ValorTerreno { get; set; }
+        public int MetroInmueble { get; set; }
+        public int MetroTerraza { get; set; }
+        public int CostoMetroInmueble { get; set; }
+        public int CostoMetroTerraza { get; set; }
 
         //Enfoque de venta comparables
 
@@ -142,6 +150,8 @@ namespace api_brick.Models
         public int ValorAjustado { get; set; }
 
         //Descripcion 2
+
+        public string Descripcion2 { get; set; }
         public string Direccion2 { get; set; }
         public DateTime FechaVenta2 { get; set; }
         public int PrecioVenta2 { get; set; }
@@ -152,10 +162,12 @@ namespace api_brick.Models
         public int NoBaños2 { get; set; }
         public int NoHabitacion2 { get; set; }
         public int NoParqueos2 { get; set; }
-        public string CondificionFisica2 { get; set; }
+        public string CondicionFisica2 { get; set; }
         public int ValorAjustado2 { get; set; }
 
         //Descripcion 3
+
+        public string Descripcion3 { get; set; }
         public string Direccion3 { get; set; }
         public DateTime FechaVenta3 { get; set; }
         public int PrecioVenta3 { get; set; }
@@ -166,7 +178,7 @@ namespace api_brick.Models
         public int NoBaños3 { get; set; }
         public int NoHabitacion3 { get; set; }
         public int NoParqueos3 { get; set; }
-        public string CondificionFisica3 { get; set; }
+        public string CondicionFisica3 { get; set; }
         public int ValorAjustado3 { get; set; }
 
 

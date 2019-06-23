@@ -7,6 +7,7 @@ using api_brick.Data;
 using api_brick.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,10 +19,12 @@ namespace api_brick.Controllers
     public class BlogController : Controller
     {
         private readonly BrickDbContext _context;
+        string pathForPictures;
 
-        public BlogController(BrickDbContext context) {
+        public BlogController(BrickDbContext context, IConfiguration configuration) {
             _context = context;
-            
+            this.pathForPictures = configuration["ApplicationSettings:PathForPictures"];
+
         }
 
         // GET: api/Blog
@@ -111,7 +114,7 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dir = Path.Combine("C:/Users/Acer/Documents/UserBRICKFrontend/src/assets", "Blog/");
+                        var dir = Path.Combine(this.pathForPictures, "Blog/");
 
                         if (!Directory.Exists(dir))
                         {
@@ -146,7 +149,7 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-            var file = Path.Combine("C:/Users/Acer/Documents/UserBRICKFrontend/src/assets", "Blog/" + Blog.ImgURL);
+            var file = Path.Combine(this.pathForPictures, "Blog/" + Blog.ImgURL);
             if (System.IO.File.Exists(file))
                 System.IO.File.Delete(file);
             _context.Blogs.Remove(Blog);
