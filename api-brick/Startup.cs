@@ -115,10 +115,11 @@ namespace api_brick
             }
 
             app.UseAuthentication();
- 
 
 
-            SeedRoles.InitializeAsync(app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider);
+
+            SeedRoles seed = new SeedRoles();
+            seed.InitializeAsync(app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider);
             app.UseHttpsRedirection();
             app.UseCors("api-policy");
             app.UseMvc(routes =>

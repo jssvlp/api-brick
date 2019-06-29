@@ -18,7 +18,7 @@ namespace api_brick.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    
     public class ProyectosController : Controller
     {
         private readonly BrickDbContext _context;
@@ -53,6 +53,7 @@ namespace api_brick.Controllers
 
         // PUT: api/Proyectos/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutProyecto(int id, Proyecto proyecto, string img)
         {
             if (id != proyecto.ProyectoID)
@@ -94,6 +95,7 @@ namespace api_brick.Controllers
 
         [Route("SaveFile")]
         [HttpPost()]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> SaveFile(string fileName)
         {
             try
@@ -133,6 +135,7 @@ namespace api_brick.Controllers
         //POST: api/Proyectos/imagenes
         [HttpPost]
         [Route("[action]")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> ImagenesProyecto(Proyecto proyecto)
         {
             Proyecto _proyecto = await  _context.Proyecto.FindAsync(proyecto.ProyectoID);
@@ -156,6 +159,7 @@ namespace api_brick.Controllers
         }
         // POST: api/Proyectos
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Proyecto>> PostProyecto(Proyecto proyecto)
         {
             var _proyecto = _context.Proyecto.FirstOrDefault(c => c.NombreProyecto == proyecto.NombreProyecto);
@@ -176,6 +180,7 @@ namespace api_brick.Controllers
 
         // DELETE: api/Proyectos/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Proyecto>> DeleteProyecto(int id)
         {
             var proyecto = await _context.Proyecto.FindAsync(id);

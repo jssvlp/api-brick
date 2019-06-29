@@ -96,10 +96,19 @@ namespace api_brick.Controllers
 
 
                 await _context.SaveChangesAsync();
-                return CreatedAtAction("GetCliente", new { id = cliente.ClienteID }, cliente);
+                return Ok(new
+                {
+                    status = "success",
+                    message = "Registro insertado correctamente",
+                    cliente = cliente
+                });
             }
 
-            return null;
+            return Ok(new
+            {
+                status = "error",
+                message = "Ya existe un cliente registrado con esta dirección de correo."
+            });
 
             
         }

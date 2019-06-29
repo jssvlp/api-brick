@@ -12,13 +12,15 @@ namespace api_brick.Data
     public class SeedRoles
     {
         public static IConfiguration Configuration { get; set; }
-        public static async Task InitializeAsync(IServiceProvider serviceProvider)
+        public BrickDbContext _context;
+        public async Task InitializeAsync(IServiceProvider serviceProvider)
         {
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             string[] roleNames = { "Admin", "Manager", "Client" };
             IdentityResult roleResult;
 
+            _context = serviceProvider.GetRequiredService<BrickDbContext>();
             foreach (var roleName in roleNames)
             {
                 //creating the roles and seeding them to the database
@@ -38,6 +40,17 @@ namespace api_brick.Data
 
             string UserPassword = "Abcd@123";
             var _user = await UserManager.FindByEmailAsync(poweruser.Email);
+            Cliente _cliente = new Cliente()
+            {
+                Nombre = "admin",
+                Apellidos = "admin",
+                Email = poweruser.UserName,
+                FechaNacimiento = DateTime.UtcNow
+
+            };
+
+            _context.Clientes.Add(_cliente);
+            await _context.SaveChangesAsync();
 
             if (_user == null)
             {

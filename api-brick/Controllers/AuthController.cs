@@ -46,6 +46,10 @@ namespace api_brick.Controllers
                 {
                     await _userManager.AddToRoleAsync(user, "Admin");
                 }
+                else
+                {
+                    await _userManager.AddToRoleAsync(user, "Client");
+                }
                 
                 if (result.Succeeded)
                 {
@@ -53,16 +57,33 @@ namespace api_brick.Controllers
                 }
                 else
                 {
-                    return BadRequest("Username or password invalid");
+                    return Ok(new {
+                        status = "error",
+                        message = "Usuario o contraseña inválidos",
+                        errors = result.Errors,
+                        model = model
+                    });
                 }
             }
             else
             {
-                return BadRequest(ModelState);
+                return Ok(new
+                {
+                    status = "error",
+                    message = "Datos inválidos",
+                    errors = ""
+                });
             }
 
         }
 
+
+        [HttpPost]
+        [Route("Logout")]
+        public async Task<IActionResult> Logout([FromBody] string token)
+        {
+            return Ok();
+        }
         [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] UserInfo userInfo)
@@ -76,13 +97,20 @@ namespace api_brick.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return BadRequest(ModelState);
+                    return Ok(new
+                    {
+                        status = "error",
+                        message = "Usuario o contraseña incorrectos"
+                    });
                 }
             }
             else
             {
-                return BadRequest(ModelState);
+                return Ok(new
+                {
+                    status = "error",
+                    message = "Usuario o contraseña incorrectos"
+                });
             }
         }
 
@@ -98,7 +126,7 @@ namespace api_brick.Controllers
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
 
-            var expiration = DateTime.UtcNow.AddDays(10);
+            var expiration = DateTime.UtcNow.AddHours(2);
             
             JwtSecurityToken token = new JwtSecurityToken(
                 issuer: "https://constructoramejiapolanco.com",
@@ -110,22 +138,27 @@ namespace api_brick.Controllers
 
 
             var user = await _userManager.FindByEmailAsync(userInfo.Email);
-            var roles = await _userManager.GetRolesAsync(user);
-            if (userInfo.Type == "Client")
-            {
-                Cliente _cliente = (Cliente)_context.Clientes.Where(c => c.Email == userInfo.Email);
-               
+            IList<string> roles = await _userManager.GetRolesAsync(user);
 
+
+            var role = roles.First();
+            Cliente _cliente = (Cliente)_context.Clientes.Where(c => c.Email == userInfo.Email).FirstOrDefault();
+
+            if (role != "Admin")
+            {
                 return Ok(new
                 {
+                    status = "success",
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = expiration,
                     user_info = new
                     {
+                        usuarioID = _cliente.ClienteID,
                         NombreUsuario = _cliente.Nombre,
                         ApellidosUsuario = _cliente.Apellidos,
                         Email = _cliente.Email,
                         FechaNacimiento = _cliente.FechaNacimiento,
+                        roleId = 2,
                         Roles = roles
                     }
                 });
@@ -134,14 +167,17 @@ namespace api_brick.Controllers
             {
                 return Ok(new
                 {
+                    status = "success",
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = expiration,
                     user_info = new
                     {
-                        NombreUsuario = "admin",
-                        ApellidosUsuario = "admin",
-                        Email = userInfo.Email,
-                        FechaNacimiento = "",
+                        usuarioID = _cliente.ClienteID,
+                        NombreUsuario = _cliente.Nombre,
+                        ApellidosUsuario = _cliente.Apellidos,
+                        Email =_cliente.Email,
+                        FechaNacimiento = _cliente.FechaNacimiento,
+                        roleId = 1,
                         Roles = roles
                     }
 
