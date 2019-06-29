@@ -61,6 +61,8 @@ namespace api_brick.Controllers
                 return BadRequest();
             }
 
+            //IMG
+
             string URL = "";
             var url = proyecto.ImgURL.Split("\\");
             if (url != null)
@@ -72,6 +74,20 @@ namespace api_brick.Controllers
                 URL = proyecto.ImgURL;
             }
             proyecto.ImgURL = URL;
+
+            //PDF
+            string PDF = "";
+            var pdf = proyecto.DocumentoResumenPdf.Split("\\");
+            if (pdf != null)
+            {
+                PDF = pdf[pdf.Length - 1];
+            }
+            else
+            {
+                PDF = proyecto.DocumentoResumenPdf;
+            }
+            proyecto.DocumentoResumenPdf = PDF;
+
             _context.Entry(proyecto).State = EntityState.Modified;
 
             try
@@ -132,6 +148,45 @@ namespace api_brick.Controllers
             return Ok();
 
         }
+
+        [Route("SaveFilePDF")]
+        [HttpPost()]
+        public async Task<IActionResult> SaveFile2(string fileName)
+        {
+            try
+            {
+
+                foreach (var file2 in Request.Form.Files.ToList())
+                {
+
+                    if (!string.IsNullOrEmpty(file2?.FileName))
+                    {
+
+                        var dir = Path.Combine(this.pathForPictures, "PDF/");
+
+                        if (!Directory.Exists(dir))
+                        {
+                            Directory.CreateDirectory(dir);
+                        }
+
+                        var path = Path.Combine(dir, file2.FileName);
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await file2.CopyToAsync(fileStream);
+                        }
+
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return Ok();
+                }
+
         //POST: api/Proyectos/imagenes
         [HttpPost]
         [Route("[action]")]
@@ -170,6 +225,10 @@ namespace api_brick.Controllers
                 string URL = url[url.Length - 1];
                 proyecto.ImgURL = URL;
 
+                var urlPdf = proyecto.DocumentoResumenPdf.Split("\\");
+                string URLpdf = urlPdf[urlPdf.Length - 1];
+                proyecto.DocumentoResumenPdf = URLpdf;
+
                 _context.Proyecto.Add(proyecto);
                 await _context.SaveChangesAsync();
 
@@ -191,6 +250,11 @@ namespace api_brick.Controllers
             var file = Path.Combine(this.pathForPictures, "Recursos/" + proyecto.ImgURL);
             if (System.IO.File.Exists(file))
                 System.IO.File.Delete(file);
+
+            var file2 = Path.Combine(this.pathForPictures, "PDF/" + proyecto.DocumentoResumenPdf);
+            if(System.IO.File.Exists(file2))
+                System.IO.File.Delete(file2);
+
             _context.Proyecto.Remove(proyecto);
             await _context.SaveChangesAsync();
 

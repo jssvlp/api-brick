@@ -8,7 +8,7 @@ namespace api_brick.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
+           /* migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -45,7 +45,7 @@ namespace api_brick.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
+                });*/
 
             migrationBuilder.CreateTable(
                 name: "Tasacions",
@@ -207,7 +207,7 @@ namespace api_brick.Migrations
                     table.PrimaryKey("PK_Tasacions", x => x.TasacionID);
                 });
 
-            migrationBuilder.CreateTable(
+          /*  migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -355,12 +355,12 @@ namespace api_brick.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true);
+                unique: true);*/
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+           /* migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -382,7 +382,7 @@ namespace api_brick.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "AspNetUsers");*/
 
             migrationBuilder.UpdateData(
                 table: "usuarios",
