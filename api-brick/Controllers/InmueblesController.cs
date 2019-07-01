@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using api_brick.Data;
 using api_brick.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace api_brick.Controllers
 {
@@ -44,6 +46,7 @@ namespace api_brick.Controllers
 
         // PUT: api/Inmuebles/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutInmueble(int id, Inmueble inmueble)
         {
             if (id != inmueble.InmuebleID)
@@ -74,6 +77,7 @@ namespace api_brick.Controllers
 
         // POST: api/Inmuebles
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Inmueble>> PostInmueble(Inmueble inmueble)
         {
             var _inmueble = _context.Inmueble.FirstOrDefault( i => i.NombreInmueble == inmueble.NombreInmueble && i.ProyectoID == inmueble.ProyectoID);
@@ -91,6 +95,7 @@ namespace api_brick.Controllers
 
         // DELETE: api/Inmuebles/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Inmueble>> DeleteInmueble(int id)
         {
             var inmueble = await _context.Inmueble.FindAsync(id);

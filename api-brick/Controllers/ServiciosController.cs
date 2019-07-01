@@ -9,6 +9,8 @@ using api_brick.Data;
 using api_brick.Models;
 using System.IO;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace api_brick.Controllers
 {
@@ -48,6 +50,7 @@ namespace api_brick.Controllers
 
         // PUT: api/Servicios/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutServicio(int id, Servicio servicio)
         {
             if (id != servicio.ServicioID)
@@ -89,6 +92,7 @@ namespace api_brick.Controllers
 
         [Route("SaveFile")]
         [HttpPost()]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> SaveFile(string fileName)
         {
             try
@@ -127,6 +131,7 @@ namespace api_brick.Controllers
 
         // POST: api/Servicios
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Servicio>> PostServicio(Servicio servicio)
         {
             var _servicio = _context.Servicios.FirstOrDefault(c => c.NombreServicio == servicio.NombreServicio);
@@ -145,6 +150,7 @@ namespace api_brick.Controllers
 
         // DELETE: api/Servicios/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Servicio>> DeleteServicio(int id)
         {
             var servicio = await _context.Servicios.FindAsync(id);

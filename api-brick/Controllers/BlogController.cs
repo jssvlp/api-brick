@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using api_brick.Data;
 using api_brick.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -51,6 +53,7 @@ namespace api_brick.Controllers
 
         // PUT: api/Blog/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutBlog(int id, Blog blog)
         {
             if (id != blog.BlogID)
@@ -91,6 +94,7 @@ namespace api_brick.Controllers
 
         // POST: api/Blog
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Blog>> PostBlog(Blog blog)
         {
             var url = blog.ImgURL.Split("\\");
@@ -104,6 +108,7 @@ namespace api_brick.Controllers
 
         [Route("SaveFile")]
         [HttpPost()]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> SaveFile(string fileName)
         {
             try
@@ -142,6 +147,7 @@ namespace api_brick.Controllers
 
         // DELETE: api/Blog/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Blog>> DeleteBlog(int id)
         {
             var Blog = await _context.Blogs.FindAsync(id);

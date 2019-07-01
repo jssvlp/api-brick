@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using api_brick.Data;
 using api_brick.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,6 +50,7 @@ namespace api_brick.Controllers
 
         // PUT: api/ComentariosForo/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutComentario(int id, ComentarioForo comentario)
         {
             if (id != comentario.ComentarioID)
@@ -78,6 +81,7 @@ namespace api_brick.Controllers
 
         // POST: api/ComentariosForo
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<ComentarioForo>> PostComentario(ComentarioForo comentario)
         {
             _context.CometarioForos.Add(comentario);

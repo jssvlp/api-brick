@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using api_brick.Data;
 using api_brick.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace api_brick.Controllers
 {
@@ -59,6 +61,7 @@ namespace api_brick.Controllers
 
         // PUT: api/DatosGenericos/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutDatoGenerico(int id, DatoGenerico datoGenerico)
         {
             if (id != datoGenerico.Id)
@@ -89,6 +92,7 @@ namespace api_brick.Controllers
 
         // POST: api/DatosGenericos
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<DatoGenerico>> PostDatoGenerico(DatoGenerico datoGenerico)
         {
             _context.DatosGenericos.Add(datoGenerico);
@@ -99,6 +103,7 @@ namespace api_brick.Controllers
 
         // DELETE: api/DatosGenericos/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<DatoGenerico>> DeleteDatoGenerico(int id)
         {
             var datoGenerico = await _context.DatosGenericos.FindAsync(id);

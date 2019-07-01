@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using api_brick.Data;
 using api_brick.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -62,6 +64,7 @@ namespace api_brick.Controllers
 
         // PUT: api/PublicacionForo/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutPublicacion(int id, PublicacionForo publicacion)
         {
             if (id != publicacion.PublicacionID)
@@ -104,6 +107,7 @@ namespace api_brick.Controllers
 
         [Route("SaveFile")]
         [HttpPost()]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> SaveFile(string fileName)
         {
             try
@@ -142,6 +146,7 @@ namespace api_brick.Controllers
 
         // POST: api/PublicacionForo
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<PublicacionForo>> PostPublicacion(PublicacionForo publicacion)
         {
             if (publicacion.URLImagen != null)
@@ -158,6 +163,7 @@ namespace api_brick.Controllers
 
         // DELETE: api/PublicacionForo/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<PublicacionForo>> DeletePublicacion(int id)
         {
             var publicacion = await _context.PublicacionesForos.FindAsync(id);

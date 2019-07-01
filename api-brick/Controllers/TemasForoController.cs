@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using api_brick.Data;
 using api_brick.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,6 +45,7 @@ namespace api_brick.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutTemasForo(int id, TemasForo temasForo)
         {
             if (id != temasForo.TemaID)
@@ -73,6 +76,7 @@ namespace api_brick.Controllers
 
         // POST: api/TemasForo
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<TemasForo>> PostTemasForo(TemasForo temasForo)
         {
             var _categoria = _context.TemasForos.FirstOrDefault(c => c.NombreTema == temasForo.NombreTema);
@@ -87,6 +91,7 @@ namespace api_brick.Controllers
 
         // DELETE: api/TemasForo/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] 
         public async Task<ActionResult<TemasForo>> DeleteTemasForo(int id)
         {
             var tema = await _context.TemasForos.FindAsync(id);
