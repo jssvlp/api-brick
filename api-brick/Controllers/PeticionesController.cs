@@ -57,11 +57,14 @@ namespace api_brick.Controllers
 
             if (_peticion == null)
             {
-              
-                _context.Peticiones.Add(peticion);
-                await _context.SaveChangesAsync();
+                var _visita = _context.VisitasAgendadas.FirstOrDefault(c => c.SolicitudID == peticion.SolicitudID && c.Estado != "Finalizado");
+                if (_visita == null)
+                {
+                    _context.Peticiones.Add(peticion);
+                    await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetPeticion", new { id = peticion.PeticionID }, peticion);
+                    return CreatedAtAction("GetPeticion", new { id = peticion.PeticionID }, peticion);
+                }
             }
             return null;
         }
