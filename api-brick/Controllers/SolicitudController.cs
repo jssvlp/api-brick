@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using api_brick.Data;
 using api_brick.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -78,6 +80,7 @@ namespace api_brick.Controllers
         // PUT: api/ServicioSolicitud/5
         [Route("ServicioSolicitud/{id}")]
         [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutServSol(int id, ServicioSolicitud serv)
         {
             if (id != serv.SolicitudID)
@@ -109,6 +112,7 @@ namespace api_brick.Controllers
 
         // PUT: api/Solicitud/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutSolicitud(int id, Solicitud solicitud)
         {
             if (id != solicitud.SolicitudID)
@@ -140,6 +144,7 @@ namespace api_brick.Controllers
         //POST: for Entidad asociativa ServicioSolicitud
         [Route("ServicioSolicitud")]
         [HttpPost()]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Solicitud>> PostCaracteristicaInmuelbe(ServicioSolicitud serv)
         {
             
@@ -162,6 +167,7 @@ namespace api_brick.Controllers
 
         // POST: api/Solicitud
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Solicitud>> PostSolicitud(Solicitud solicitud)
         {
             _context.Solicitud.Add(solicitud);
@@ -172,6 +178,7 @@ namespace api_brick.Controllers
 
         // DELETE: api/Solicitud/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Solicitud>> DeleteSolicitud(int id)
         {
             var Solicitud = await _context.Solicitud.FindAsync(id);

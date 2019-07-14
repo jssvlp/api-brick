@@ -8,11 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using api_brick.Data;
 using api_brick.Models;
 using CryptoHelper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace api_brick.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ClientesController : Controller
     {
         private readonly BrickDbContext _context;

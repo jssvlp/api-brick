@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using api_brick.Data;
 using api_brick.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace api_brick.Controllers
 {
@@ -44,6 +46,7 @@ namespace api_brick.Controllers
 
         // PUT: api/Tasaciones/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutTasacion(int id, Tasacion tasacion)
         {
             if (id != tasacion.TasacionID)
@@ -74,6 +77,7 @@ namespace api_brick.Controllers
 
         // POST: api/Tasaciones
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Tasacion>> PostTasacion(Tasacion tasacion)
         {
             _context.Tasacions.Add(tasacion);
@@ -84,6 +88,7 @@ namespace api_brick.Controllers
 
         // DELETE: api/Tasaciones/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Tasacion>> DeleteTasacion(int id)
         {
             var tasacion = await _context.Tasacions.FindAsync(id);

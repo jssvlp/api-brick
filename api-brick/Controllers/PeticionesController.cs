@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using api_brick.Data;
 using api_brick.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +53,7 @@ namespace api_brick.Controllers
 
         // POST: api/Peticion
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Peticion>> PostPeticion(Peticion peticion)
         {
             var _peticion = _context.Peticiones.FirstOrDefault(c => c.SolicitudID == peticion.SolicitudID &&  c.Estado == peticion.Estado);
@@ -71,6 +74,7 @@ namespace api_brick.Controllers
 
         // PUT: api/Peticiones/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutPeticion(int id, Peticion peticion)
         {
             if (id != peticion.PeticionID)
