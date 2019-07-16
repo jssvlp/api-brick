@@ -13,6 +13,8 @@ using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using api_brick.Tools;
+using Microsoft.AspNetCore.Hosting;
 
 namespace api_brick.Controllers
 {
@@ -23,11 +25,16 @@ namespace api_brick.Controllers
     {
         private readonly BrickDbContext _context;
         string pathForPictures;
+        IConfiguration _configuration;
+        IHostingEnvironment _env;
 
-        public ProyectosController(BrickDbContext context, IConfiguration configuration)
+        public ProyectosController(BrickDbContext context, IConfiguration configuration, IHostingEnvironment env)
         {
             _context = context;
+            _env = env;
+            _configuration = configuration;
             this.pathForPictures = configuration["ApplicationSettings:PathForPictures"];
+
         }
 
         // GET: api/Proyectos
@@ -122,8 +129,10 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        
-                        var dir = Path.Combine(this.pathForPictures, "Recursos/");
+
+                        var dirLocal = _env.ContentRootPath;
+
+                        var dir = Path.Combine(dirLocal, @"Resources\Ftpfiles");
 
                         if (!Directory.Exists(dir))
                         {
@@ -135,6 +144,11 @@ namespace api_brick.Controllers
                         {
                             await file2.CopyToAsync(fileStream);
                         }
+
+
+                        var dirFtp = "Recursos/";
+                        FtpUploader ftp = new FtpUploader(_configuration);
+                        ftp.UploadFile(dirFtp, path, file2.FileName);
 
                     }
 
@@ -161,8 +175,9 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
+                        var dirLocal = _env.ContentRootPath;
 
-                        var dir = Path.Combine(this.pathForPictures, "PDF/");
+                        var dir = Path.Combine(dirLocal, @"Resources\Ftpfiles");
 
                         if (!Directory.Exists(dir))
                         {
@@ -174,6 +189,11 @@ namespace api_brick.Controllers
                         {
                             await file2.CopyToAsync(fileStream);
                         }
+
+
+                        var dirFtp = "PDF/";
+                        FtpUploader ftp = new FtpUploader(_configuration);
+                        ftp.UploadFile(dirFtp, path, file2.FileName);
 
                     }
 

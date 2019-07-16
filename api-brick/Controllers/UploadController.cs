@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using api_brick.Tools;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -16,10 +18,15 @@ namespace api_brick.Controllers
     public class UploadController : ControllerBase
     {
         string pathForPictures;
+        IConfiguration _configuration;
+        IHostingEnvironment _env;
 
-        public UploadController(IConfiguration configuration) {
+        public UploadController(IConfiguration configuration, IHostingEnvironment env) {
 
             this.pathForPictures = configuration["ApplicationSettings:PathForPictures"];
+            _configuration = configuration;
+            _env = env;
+
         }
         [HttpPost, DisableRequestSizeLimit]
         public async Task<IActionResult> UploadAsync(string fileName)
@@ -62,7 +69,10 @@ namespace api_brick.Controllers
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
 
-                        var dir = Path.Combine(this.pathForPictures, "Recursos/Imagenes");
+
+                        var dirLocal = _env.ContentRootPath;
+
+                        var dir = Path.Combine(dirLocal, @"Resources\Ftpfiles");
 
                         if (!Directory.Exists(dir))
                         {
@@ -74,6 +84,11 @@ namespace api_brick.Controllers
                         {
                             await file2.CopyToAsync(fileStream);
                         }
+
+
+                        var dirFtp = "Recursos/Imagenes";
+                        FtpUploader ftp = new FtpUploader(_configuration);
+                        ftp.UploadFile(dirFtp, path, file2.FileName);
 
                     }
 
