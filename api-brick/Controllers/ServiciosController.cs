@@ -11,6 +11,8 @@ using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
+using api_brick.Tools;
 
 namespace api_brick.Controllers
 {
@@ -20,10 +22,14 @@ namespace api_brick.Controllers
     {
         private readonly BrickDbContext _context;
         string pathForPictures;
+        IConfiguration _configuration;
+        IHostingEnvironment _env;
 
-        public ServiciosController(BrickDbContext context, IConfiguration configuration)
+        public ServiciosController(BrickDbContext context, IConfiguration configuration, IHostingEnvironment env)
         {
             _context = context;
+            _configuration = configuration;
+            _env = env;
             this.pathForPictures = configuration["ApplicationSettings:PathForPictures"];
         }
 
@@ -103,7 +109,10 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dir = Path.Combine(this.pathForPictures, "Servicio/");
+
+                        var dirLocal = _env.ContentRootPath;
+
+                        var dir = Path.Combine(dirLocal, @"Resources\Ftpfiles");
 
                         if (!Directory.Exists(dir))
                         {
@@ -115,6 +124,11 @@ namespace api_brick.Controllers
                         {
                             await file2.CopyToAsync(fileStream);
                         }
+
+
+                        var dirFtp = "Servicio/";
+                        FtpUploader ftp = new FtpUploader(_configuration);
+                        ftp.UploadFile(dirFtp, path, file2.FileName);
 
                     }
 

@@ -73,8 +73,19 @@ namespace api_brick
                 } 
                 );
 
-                
-          
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+            });
+
+
+
             services.AddCors(o => o.AddPolicy("api-policy", builder =>
             {
                 builder.AllowAnyOrigin()

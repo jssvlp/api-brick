@@ -15,7 +15,7 @@ namespace api_brick.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    
     public class ClientesController : Controller
     {
         private readonly BrickDbContext _context;
@@ -27,6 +27,7 @@ namespace api_brick.Controllers
 
         // GET: api/Usuarios
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
             return await _context.Clientes.ToListAsync();
@@ -34,6 +35,7 @@ namespace api_brick.Controllers
 
         // GET: api/Usuarios/5
         [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Cliente>> GetUsuario(int id)
         {
             var usuario = await _context.Clientes.
@@ -56,6 +58,7 @@ namespace api_brick.Controllers
 
         // PUT: api/Usuarios/5
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutCliente(int id, Cliente cliente)
         {
             if (id != cliente.ClienteID)
@@ -123,6 +126,7 @@ namespace api_brick.Controllers
         }
         // DELETE: api/Clientes/5
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Cliente>> DeleteUsuario(int id)
         {
             var cliente = await _context.Clientes.FindAsync(id);
