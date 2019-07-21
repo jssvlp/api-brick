@@ -34,8 +34,8 @@ namespace api_brick.Data
 
             var poweruser = new ApplicationUser
             {
-                UserName ="admin@admin.com",
-                Email = "admin@admin.com"
+                UserName ="admin@constructoramejiapolanco.com",
+                Email = "admin@constructoramejiapolanco.com"
             };
 
             string UserPassword = "Abcd@123";
