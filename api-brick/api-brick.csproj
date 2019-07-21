@@ -74,6 +74,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CoreFtp" Version="1.4.0" />
     <PackageReference Include="CryptoHelper" Version="3.0.2" />
     <PackageReference Include="MailKit" Version="2.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -88,6 +89,10 @@
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Ftpfiles\" />
   </ItemGroup>
 
 </Project>

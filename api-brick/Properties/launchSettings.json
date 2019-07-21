@@ -14,8 +14,11 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
+        "FTP_SERVER": "ftp://waws-prod-dm1-095.ftp.azurewebsites.windows.net/site/wwwroot/assets",
         "SECRET_API_KEY": "TPEbFcHQvKxiuJHkgUXnqkTzSyDAngfnUdvxQCewJQCgrmypgWRTUkwWKkvB",
+        "FTP_PWD": "wYvWuXbqPYR3fdFB2E38i3M89lKscem2eFZ9i6821K4SDeQQ3eKyHepfn2mr",
         "ProjectPath": "C:\\Users\\pjms_\\OneDrive\\Documentos\\Proyecto\\api-brick\\api-brick",
+        "FTP_USER": "constructoramejiapolanco\\$constructoramejiapolanco",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },

@@ -34,30 +34,36 @@ namespace api_brick.Data
 
             var poweruser = new ApplicationUser
             {
-                UserName ="admin@admin.com",
-                Email = "admin@admin.com"
+                UserName ="admin@constructoramejiapolanco.com",
+                Email = "admin@constructoramejiapolanco.com"
             };
 
             string UserPassword = "Abcd@123";
             var _user = await UserManager.FindByEmailAsync(poweruser.Email);
-            Cliente _cliente = new Cliente()
+            var client = _context.Clientes.Where(c => c.Email == poweruser.UserName).FirstOrDefault();
+
+            if (client is null)
             {
-                Nombre = "admin",
-                Apellidos = "admin",
-                Email = poweruser.UserName,
-                FechaNacimiento = DateTime.UtcNow
-
-            };
-
-            _context.Clientes.Add(_cliente);
-            await _context.SaveChangesAsync();
-
-            if (_user == null)
-            {
-                var createPowerUser = await UserManager.CreateAsync(poweruser, UserPassword);
-                if (createPowerUser.Succeeded)
+                Cliente _cliente = new Cliente()
                 {
-                    await UserManager.AddToRoleAsync(poweruser, "Admin");
+                    Nombre = "admin",
+                    Apellidos = "admin",
+                    Email = poweruser.UserName,
+                    FechaNacimiento = DateTime.UtcNow
+
+                };
+
+                _context.Clientes.Add(_cliente);
+                await _context.SaveChangesAsync();
+
+                if (_user == null)
+                {
+                    var createPowerUser = await UserManager.CreateAsync(poweruser, UserPassword);
+                    if (createPowerUser.Succeeded)
+                    {
+                        await UserManager.AddToRoleAsync(poweruser, "Admin");
+                    }
+
                 }
             }
         }

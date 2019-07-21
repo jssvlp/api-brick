@@ -5,10 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using api_brick.Data;
 using api_brick.Models;
+using api_brick.Tools;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace api_brick.Controllers
 {
@@ -18,9 +21,13 @@ namespace api_brick.Controllers
     public class PublicacionForoController : Controller
     {
         private readonly BrickDbContext _context;
-        public PublicacionForoController(BrickDbContext context)
+        IConfiguration _configuration;
+        IHostingEnvironment _env;
+        public PublicacionForoController(BrickDbContext context, IConfiguration configuration, IHostingEnvironment env)
         {
             _context = context;
+            _configuration = configuration;
+            _env = env;
         }
 
         // GET: api/PublicacionForo
@@ -118,7 +125,9 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dir = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Foro/");
+                        var dirLocal = _env.ContentRootPath;
+
+                        var dir = Path.Combine(dirLocal, @"Resources\Ftpfiles");
 
                         if (!Directory.Exists(dir))
                         {
@@ -130,6 +139,11 @@ namespace api_brick.Controllers
                         {
                             await file2.CopyToAsync(fileStream);
                         }
+
+
+                        var dirFtp = "Foro/";
+                        FtpUploader ftp = new FtpUploader(_configuration);
+                        ftp.UploadFile(dirFtp, path, file2.FileName);
 
                     }
 
@@ -171,10 +185,10 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-
-            var file = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Post/" + publicacion.URLImagen);
-            if (System.IO.File.Exists(file))
-                System.IO.File.Delete(file);
+            //var dir = _env.co
+            //var file = Path.Combine("C:/Users/pjms_/OneDrive/Desktop/UserBRICKFrontend/src/assets", "Post/" + publicacion.URLImagen);
+            //if (System.IO.File.Exists(file))
+            //    System.IO.File.Delete(file);
             _context.PublicacionesForos.Remove(publicacion);
             await _context.SaveChangesAsync();
 

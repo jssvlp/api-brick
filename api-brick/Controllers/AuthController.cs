@@ -143,7 +143,18 @@ namespace api_brick.Controllers
 
             var role = roles.First();
             Cliente _cliente = (Cliente)_context.Clientes.Where(c => c.Email == userInfo.Email).FirstOrDefault();
+            if (_cliente == null)
+            {
+                _cliente = new Cliente();
+                _cliente.Nombre = userInfo.Username;
+                _cliente.Email = userInfo.Email;
+                _cliente.FechaNacimiento = DateTime.UtcNow;
+                _cliente.Nombre = userInfo.Username;
 
+                _context.Clientes.Add(_cliente);
+
+                _context.SaveChanges();
+            }
             if (role != "Admin")
             {
                 return Ok(new
