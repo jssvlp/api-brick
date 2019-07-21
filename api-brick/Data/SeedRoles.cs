@@ -40,9 +40,9 @@ namespace api_brick.Data
 
             string UserPassword = "Abcd@123";
             var _user = await UserManager.FindByEmailAsync(poweruser.Email);
-            var client = _context.Clientes.Where(c => c.Email == poweruser.UserName);
+            var client = _context.Clientes.Where(c => c.Email == poweruser.UserName).FirstOrDefault();
 
-            if (client == null)
+            if (client is null)
             {
                 Cliente _cliente = new Cliente()
                 {
