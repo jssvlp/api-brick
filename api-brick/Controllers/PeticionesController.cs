@@ -68,6 +68,7 @@ namespace api_brick.Controllers
 
                     return CreatedAtAction("GetPeticion", new { id = peticion.PeticionID }, peticion);
                 }
+                return null;
             }
             return null;
         }
