@@ -6,6 +6,8 @@
     <RootNamespace>api_brick</RootNamespace>
     <StartupObject>api_brick.Program</StartupObject>
     <UserSecretsId>b38322e5-0e83-4577-98e9-8dde20a0ceec</UserSecretsId>
+	<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
   </PropertyGroup>
 
   <ItemGroup>
