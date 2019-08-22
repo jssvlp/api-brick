@@ -20,23 +20,10 @@ namespace api_brick
            CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
 
-            var host = WebHost.CreateDefaultBuilder(args)
-         .UseStartup<Startup>()
-         .Build();
 
-            using (var scope = host.Services.CreateScope())
-            {
-                var db = scope.ServiceProvider.GetService<BrickDbContext>();
-                db.Database.Migrate();
-            }
-
-            return host;
-
-        }
-     
-            
     }
 }
