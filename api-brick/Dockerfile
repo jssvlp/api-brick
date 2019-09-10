@@ -13,4 +13,7 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
 WORKDIR /app
 COPY --from=build-env /app/out .
+
+ENV SECRET_API_KEY vYGEpxjzfBVlMlqwhvWXRUxmEhTYrwyoeYmXrwwlSKZdJulHXG
+
 ENTRYPOINT ["dotnet", "api-brick.dll"]
