@@ -84,16 +84,21 @@ namespace api_brick.Controllers
 
             //PDF
             string PDF = "";
-            var pdf = proyecto.DocumentoResumenPdf.Split("\\");
-            if (pdf != null)
+
+            if (proyecto.DocumentoResumenPdf != null)
             {
-                PDF = pdf[pdf.Length - 1];
+                var pdf = proyecto.DocumentoResumenPdf.Split("\\");
+                if (pdf != null)
+                {
+                    PDF = pdf[pdf.Length - 1];
+                }
+                else
+                {
+                    PDF = proyecto.DocumentoResumenPdf;
+                }
+                proyecto.DocumentoResumenPdf = PDF;
             }
-            else
-            {
-                PDF = proyecto.DocumentoResumenPdf;
-            }
-            proyecto.DocumentoResumenPdf = PDF;
+            
 
             _context.Entry(proyecto).State = EntityState.Modified;
 
@@ -113,7 +118,7 @@ namespace api_brick.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         [Route("SaveFile")]
@@ -245,9 +250,13 @@ namespace api_brick.Controllers
                 string URL = url[url.Length - 1];
                 proyecto.ImgURL = URL;
 
-                var urlPdf = proyecto.DocumentoResumenPdf.Split("\\");
-                string URLpdf = urlPdf[urlPdf.Length - 1];
-                proyecto.DocumentoResumenPdf = URLpdf;
+                if (proyecto.DocumentoResumenPdf != null)
+                {
+                    var urlPdf = proyecto.DocumentoResumenPdf.Split("\\");
+                    string URLpdf = urlPdf[urlPdf.Length - 1];
+                    proyecto.DocumentoResumenPdf = URLpdf;
+                }
+               
 
                 _context.Proyecto.Add(proyecto);
                 await _context.SaveChangesAsync();
