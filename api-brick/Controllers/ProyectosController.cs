@@ -135,9 +135,9 @@ namespace api_brick.Controllers
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
 
-                        var dirLocal = _env.ContentRootPath;
+                        var dirLocal = this.pathForPictures;
 
-                        var dir = Path.Combine(dirLocal, @"Resources\Ftpfiles");
+                        var dir = Path.Combine(dirLocal, @"Recursos");
 
                         if (!Directory.Exists(dir))
                         {
@@ -150,10 +150,6 @@ namespace api_brick.Controllers
                             await file2.CopyToAsync(fileStream);
                         }
 
-
-                        var dirFtp = "Recursos/";
-                        FtpUploader ftp = new FtpUploader(_configuration);
-                        ftp.UploadFile(dirFtp, path, file2.FileName);
 
                     }
 
@@ -180,9 +176,9 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dirLocal = _env.ContentRootPath;
+                        var dirLocal = this.pathForPictures;
 
-                        var dir = Path.Combine(dirLocal, @"Resources\Ftpfiles");
+                        var dir = Path.Combine(dirLocal, @"PDF");
 
                         if (!Directory.Exists(dir))
                         {
@@ -194,11 +190,6 @@ namespace api_brick.Controllers
                         {
                             await file2.CopyToAsync(fileStream);
                         }
-
-
-                        var dirFtp = "PDF/";
-                        FtpUploader ftp = new FtpUploader(_configuration);
-                        ftp.UploadFile(dirFtp, path, file2.FileName);
 
                     }
 
