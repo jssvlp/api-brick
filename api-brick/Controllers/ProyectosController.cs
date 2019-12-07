@@ -135,9 +135,7 @@ namespace api_brick.Controllers
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
 
-                        var dirLocal = this.pathForPictures;
-
-                        var dir = Path.Combine(dirLocal, @"Recursos");
+                        var dir = this.pathForPictures +"/Recursos";
 
                         if (!Directory.Exists(dir))
                         {
@@ -157,10 +155,10 @@ namespace api_brick.Controllers
             }
             catch (Exception e)
             {
-
+                return Ok(new { statusCode = 500,status = "failure", message = e.Message});
             }
 
-            return Ok();
+            return Ok(new { statusCode = 200, status = "success", message ="archivo subido correctamente"});
 
         }
 
@@ -176,9 +174,8 @@ namespace api_brick.Controllers
 
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
-                        var dirLocal = this.pathForPictures;
+                        var dir = this.pathForPictures+"/PDF";
 
-                        var dir = Path.Combine(dirLocal, @"PDF");
 
                         if (!Directory.Exists(dir))
                         {
@@ -197,11 +194,12 @@ namespace api_brick.Controllers
             }
             catch (Exception e)
             {
-
+                return Ok(new { statusCode = 500, status = "failure", message = e.Message });
             }
 
-            return Ok();
-                }
+            return Ok(new { statusCode = 200, status = "success", message = "archivo subido correctamente" });
+
+        }
 
         //POST: api/Proyectos/imagenes
         [HttpPost]
