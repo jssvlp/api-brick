@@ -126,8 +126,6 @@ namespace api_brick.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> SaveFile(string fileName)
         {
-            var dir = this.pathForPictures + "Recursos";
-            return Ok(new { statusCode = 500, status = "failure", message = dir });
             try
             {
 
@@ -137,7 +135,7 @@ namespace api_brick.Controllers
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
 
-                        //var dir = this.pathForPictures +"Recursos";
+                        var dir = this.pathForPictures +"Recursos";
 
                         if (!Directory.Exists(dir))
                         {
