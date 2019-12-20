@@ -34,40 +34,30 @@ namespace api_brick.Controllers
         {
             try
             {
-
-                foreach (var file2 in Request.Form.Files.ToList())
+                var file = Request.Form.Files[0];
+                string folderName = "Upload";
+                string webRootPath = _env.WebRootPath;
+                string newPath = Path.Combine(webRootPath, folderName);
+                if (!Directory.Exists(newPath))
                 {
-
-                    if (!string.IsNullOrEmpty(file2?.FileName))
-                    {
-
-                        var dir = Path.Combine(this.pathForPictures, "Recursos");
-
-                        if (!Directory.Exists(dir))
-                        {
-                            Directory.CreateDirectory(dir);
-                        }
-
-                        var path = Path.Combine(dir, file2.FileName);
-                        using (var fileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await file2.CopyToAsync(fileStream);
-                        }
-
-
-            
-
-                    }
-
+                    Directory.CreateDirectory(newPath);
                 }
+                if (file.Length > 0)
+                {
+                    string filename = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    string fullPath = Path.Combine(newPath, filename);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }
+                return Ok(new { statusCode = 200, status = "success", message = "archivo subido correctamente" });
+
             }
-            catch (Exception e)
+            catch (System.Exception ex)
             {
-                return StatusCode(500, "Internal server error."+e.Message);
+                return StatusCode(500, "Internal server error: "+ex.Message);
             }
-
-            return Ok(new { statusCode = 200, status = "success", message = "archivo subido correctamente" });
-
         }
     }
 }
