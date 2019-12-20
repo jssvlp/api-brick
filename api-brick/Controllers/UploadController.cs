@@ -28,38 +28,10 @@ namespace api_brick.Controllers
             _env = env;
 
         }
+
         [HttpPost, DisableRequestSizeLimit]
         public async Task<IActionResult> UploadAsync(string fileName)
         {
-            /* try
-             {
-                 var file = Request.Form.Files[0];
-                 var folderName = Path.Combine("Resources", "Images");
-                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
-
-                 if (file.Length > 0)
-                 {
-                     var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                     var fullPath = Path.Combine(pathToSave, fileName);
-                     var dbPath = Path.Combine(folderName, fileName);
-
-                     using (var stream = new FileStream(fullPath, FileMode.Create))
-                     {
-                         file.CopyTo(stream);
-                     }
-
-                     return Ok(new { dbPath });
-                 }
-                 else
-                 {
-                     return BadRequest();
-                 }
-             }
-             catch (Exception ex)
-             {
-                 return StatusCode(500, "Internal server error");
-             }*/
-
             try
             {
 
@@ -69,10 +41,7 @@ namespace api_brick.Controllers
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
 
-
-                        var dirLocal = _env.ContentRootPath;
-
-                        var dir = Path.Combine(dirLocal, @"Resources\Ftpfiles");
+                        var dir = Path.Combine(this.pathForPictures, "Recursos");
 
                         if (!Directory.Exists(dir))
                         {
@@ -86,9 +55,7 @@ namespace api_brick.Controllers
                         }
 
 
-                        var dirFtp = "Recursos/Imagenes";
-                        FtpUploader ftp = new FtpUploader(_configuration);
-                        ftp.UploadFile(dirFtp, path, file2.FileName);
+            
 
                     }
 
@@ -96,10 +63,11 @@ namespace api_brick.Controllers
             }
             catch (Exception e)
             {
-
+                return StatusCode(500, "Internal server error."+e.Message);
             }
 
-            return Ok();
+            return Ok(new { statusCode = 200, status = "success", message = "archivo subido correctamente" });
+
         }
     }
 }
