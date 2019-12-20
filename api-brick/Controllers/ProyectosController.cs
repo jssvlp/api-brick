@@ -143,6 +143,7 @@ namespace api_brick.Controllers
                         }
 
                         var path = Path.Combine(dir, file2.FileName);
+                        return Ok(new { statusCode = 500, status = "failure", message = path });
                         using (var fileStream = new FileStream(path, FileMode.Create))
                         {
                             await file2.CopyToAsync(fileStream);
