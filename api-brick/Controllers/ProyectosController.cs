@@ -142,13 +142,12 @@ namespace api_brick.Controllers
                             Directory.CreateDirectory(dir);
                         }
 
-                        var path = Path.Combine(dir, file2.FileName);
-                        return Ok(new { statusCode = 500, status = "failure", message = path });
-                        using (var fileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await file2.CopyToAsync(fileStream);
-                        }
+                        var filePath = Path.Combine(dir, file2.FileName);
 
+                        using (var stream = System.IO.File.Create(filePath))
+                        {
+                            await file2.CopyToAsync(stream);
+                        }
 
                     }
 
