@@ -135,7 +135,7 @@ namespace api_brick.Controllers
                     if (!string.IsNullOrEmpty(file2?.FileName))
                     {
 
-                        var dir = this.pathForPictures +"/Recursos";
+                        var dir = this.pathForPictures +"Recursos";
 
                         if (!Directory.Exists(dir))
                         {
@@ -265,11 +265,11 @@ namespace api_brick.Controllers
             {
                 return NotFound();
             }
-            var file = Path.Combine(this.pathForPictures, "Recursos/" + proyecto.ImgURL);
+            var file = Path.Combine(this.pathForPictures, "Recursos\\" + proyecto.ImgURL);
             if (System.IO.File.Exists(file))
                 System.IO.File.Delete(file);
 
-            var file2 = Path.Combine(this.pathForPictures, "PDF/" + proyecto.DocumentoResumenPdf);
+            var file2 = Path.Combine(this.pathForPictures, "PDF\\" + proyecto.DocumentoResumenPdf);
             if(System.IO.File.Exists(file2))
                 System.IO.File.Delete(file2);
 
