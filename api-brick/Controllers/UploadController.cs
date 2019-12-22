@@ -23,13 +23,13 @@ namespace api_brick.Controllers
             try
             {
                 var file = Request.Form.Files[0];
-            
-                var pathToSave = Path.Combine("/home/constructora-cluster/nodeapps/build-client/assets/", "Recursos");
-              
+
+                var pathToSave = @"\home\constructora-cluster\nodeapps\build-client\assets\Recursos";
+                var fullPath = "";
                 if (file.Length > 0)
                 {
                     var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    var fullPath = Path.Combine(pathToSave, "rojo.png");
+                    fullPath = Path.Combine(pathToSave, fileName);
            
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
@@ -45,7 +45,7 @@ namespace api_brick.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Internal server error: " +ex.Message);
+                return StatusCode(500, new { message = "Internal server error: " + ex.Message, path = fullPath });
             }
         }
     }
