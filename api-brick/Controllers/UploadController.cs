@@ -17,64 +17,43 @@ namespace api_brick.Controllers
     [ApiController]
     public class UploadController : ControllerBase
     {
-        string pathForPictures;
-        IConfiguration _configuration;
-        IHostingEnvironment _env;
+        private IHostingEnvironment _hostingEnvironment;
+        private IConfiguration _configuration;
 
-        public UploadController(IConfiguration configuration, IHostingEnvironment env) {
-
-            this.pathForPictures = configuration["ApplicationSettings:PathForPictures"];
-            _configuration = configuration;
-            _env = env;
-
-        }
-        [HttpPost()]
-        public async Task<IActionResult> UploadAsync(string fileName)
+        public UploadController(IHostingEnvironment hostingEnvironment, IConfiguration configuration)
         {
-            //return Ok(new { file = fileName });
+            _hostingEnvironment = hostingEnvironment;
+            _configuration = configuration;
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        public ActionResult UploadFile(string fileName)
+        {
             try
             {
-
-                foreach (var file2 in Request.Form.Files.ToList())
+                var file = Request.Form.Files[0];
+                string folderName = "Recursos";
+                string rootPath = _configuration["ApplicationSettings:PathForPictures"];
+                string newPath = Path.Combine(rootPath, folderName);
+                if (!Directory.Exists(newPath))
                 {
-
-                    if (!string.IsNullOrEmpty(file2?.FileName))
-                    {
-
-
-                        var dirLocal = _env.ContentRootPath;
-
-                        var dir = Path.Combine(dirLocal, @"Resources\Ftpfiles");
-
-                        if (!Directory.Exists(dir))
-                        {
-                            Directory.CreateDirectory(dir);
-                        }
-
-                        var path = Path.Combine(dir, file2.FileName);
-                        using (var fileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await file2.CopyToAsync(fileStream);
-                        }
-
-
-                        //var dirFtp = "Recursos/Imagenes";
-                        //FtpUploader ftp = new FtpUploader(_configuration);
-                        //ftp.UploadFile(dirFtp, path, file2.FileName);
-
-                    }
-                    else {
-
-                    }
-
+                    Directory.CreateDirectory(newPath);
                 }
+                if (file.Length > 0)
+                {
+                    string file_name = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    string fullPath = Path.Combine(newPath, file_name);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }
+                return Ok(new {success = true, message ="Upload success" });
             }
-            catch (Exception e)
+            catch (System.Exception ex)
             {
-                return StatusCode(500,new {status = "failure", message = e.Message });
+                return Ok(new { success = false, message = "Upload Failed: " + ex.Message });
             }
-
-            return Ok(new { statusCode = 200, status = "success", message = "archivo subido correctamente" });
         }
     }
 }
