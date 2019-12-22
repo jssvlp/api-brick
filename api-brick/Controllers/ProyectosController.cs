@@ -255,6 +255,8 @@ namespace api_brick.Controllers
             return null;
         }
 
+
+
         // DELETE: api/Proyectos/5
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
