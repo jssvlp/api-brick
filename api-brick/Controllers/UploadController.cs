@@ -24,12 +24,12 @@ namespace api_brick.Controllers
             {
                 var file = Request.Form.Files[0];
 
-                var pathToSave = @"\home\constructora-cluster\nodeapps\build-client\assets\Recursos";
+                var pathToSave = @"\home\constructora-cluster\nodeapps\build-client\assets\Recursos\";
               
                 if (file.Length > 0)
                 {
                     var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var fullPath = pathToSave + fileName;
            
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
