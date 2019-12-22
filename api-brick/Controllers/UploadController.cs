@@ -31,7 +31,7 @@ namespace api_brick.Controllers
         [HttpPost, DisableRequestSizeLimit]
         public async Task<IActionResult> UploadAsync(string fileName)
         {
-    
+            return Ok(new { file = fileName });
             try
             {
 
@@ -46,7 +46,7 @@ namespace api_brick.Controllers
 
                         var dir = Path.Combine(dirLocal, @"Resources\Ftpfiles");
 
-                        return Ok(new {  path = dir });
+                        return Ok(new { path = dir });
                         if (!Directory.Exists(dir))
                         {
                             Directory.CreateDirectory(dir);
@@ -62,6 +62,9 @@ namespace api_brick.Controllers
                         //var dirFtp = "Recursos/Imagenes";
                         //FtpUploader ftp = new FtpUploader(_configuration);
                         //ftp.UploadFile(dirFtp, path, file2.FileName);
+
+                    }
+                    else {
 
                     }
 
