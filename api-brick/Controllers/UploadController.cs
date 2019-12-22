@@ -46,6 +46,7 @@ namespace api_brick.Controllers
 
                         var dir = Path.Combine(dirLocal, @"Resources\Ftpfiles");
 
+                        return Ok(new {  path = dir });
                         if (!Directory.Exists(dir))
                         {
                             Directory.CreateDirectory(dir);
