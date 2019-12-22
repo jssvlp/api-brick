@@ -29,7 +29,7 @@ namespace api_brick.Controllers
                 if (file.Length > 0)
                 {
                     var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var fullPath = Path.Combine(pathToSave, "rojo.png");
            
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
