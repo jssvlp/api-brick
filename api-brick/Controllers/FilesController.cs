@@ -47,7 +47,7 @@ namespace api_brick.Controllers
                 await filesData.CopyToAsync(stream);
             }
           
-            return Ok();
+            return Ok(new { status = "success" });
         }
 
 
