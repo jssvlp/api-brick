@@ -17,42 +17,36 @@ namespace api_brick.Controllers
     [ApiController]
     public class UploadController : ControllerBase
     {
-        private IHostingEnvironment _hostingEnvironment;
-        private IConfiguration _configuration;
-
-        public UploadController(IHostingEnvironment hostingEnvironment, IConfiguration configuration)
-        {
-            _hostingEnvironment = hostingEnvironment;
-            _configuration = configuration;
-        }
-
         [HttpPost, DisableRequestSizeLimit]
-        public ActionResult UploadFile(string fileName)
+        public IActionResult Upload()
         {
             try
             {
                 var file = Request.Form.Files[0];
-                string folderName = "Recursos";
-                string rootPath = _configuration["ApplicationSettings:PathForPictures"];
-                string newPath = Path.Combine(rootPath, folderName);
-                if (!Directory.Exists(newPath))
-                {
-                    Directory.CreateDirectory(newPath);
-                }
+                var folderName = Path.Combine("Resources", "Images");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
                 if (file.Length > 0)
                 {
-                    string file_name = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    string fullPath = Path.Combine(newPath, file_name);
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+
                     using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
                         file.CopyTo(stream);
                     }
+
+                    return Ok(new { dbPath });
                 }
-                return Ok(new {success = true, message ="Upload success" });
+                else
+                {
+                    return BadRequest();
+                }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                return Ok(new { success = false, message = "Upload Failed: " + ex.Message });
+                return StatusCode(500, "Internal server error");
             }
         }
     }
