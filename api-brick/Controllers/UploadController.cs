@@ -17,36 +17,29 @@ namespace api_brick.Controllers
     [ApiController]
     public class UploadController : ControllerBase
     {
-        [HttpPost, DisableRequestSizeLimit]
-        public IActionResult Upload()
+
+        private IHostingEnvironment _environment;
+        public UploadController(IHostingEnvironment environment)
         {
-            try
+            _environment = environment;
+        }
+        [HttpPost()]
+        public async Task<string> Upload([FromForm] IFormFile file)
+        {
+            string fName = file.FileName;
+            string path = Path.Combine(_environment.ContentRootPath, "Images");
+            if (!Directory.Exists(path))
             {
-                var file = Request.Form.Files[0];
+                Directory.CreateDirectory(path);
+            }
+            string fullPath = Path.Combine(path, file.FileName);
 
-                var pathToSave = @"\home\constructora-cluster\nodeapps\build-client\assets\Recursos\";
-              
-                if (file.Length > 0)
-                {
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    var fullPath = pathToSave + fileName;
            
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
-                    {
-                        file.CopyTo(stream);
-                    }
-
-                    return Ok(new { fullPath });
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (Exception ex)
+            using (var stream = new FileStream(fullPath, FileMode.Create))
             {
-                return StatusCode(500, new { message = "Internal server error: " + ex.Message});
+                await file.CopyToAsync(stream);
             }
+            return file.FileName;
         }
     }
 }
