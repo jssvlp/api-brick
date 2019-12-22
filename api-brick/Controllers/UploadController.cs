@@ -28,7 +28,7 @@ namespace api_brick.Controllers
             _env = env;
 
         }
-        [HttpPost, DisableRequestSizeLimit]
+        [HttpPost()]
         public async Task<IActionResult> UploadAsync(string fileName)
         {
             //return Ok(new { file = fileName });
