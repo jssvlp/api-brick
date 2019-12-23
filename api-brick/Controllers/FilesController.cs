@@ -24,30 +24,37 @@ namespace api_brick.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload(IFormFile filesData)
         {
-            if (filesData == null) return BadRequest("Null File");
-            if (filesData.Length == 0)
+            try
             {
-                return BadRequest("Empty File");
+                if (filesData == null) return BadRequest("Null File");
+                if (filesData.Length == 0)
+                {
+                    return BadRequest("Empty File");
+                }
+
+                if (filesData.Length > 10 * 1024 * 1024) return BadRequest("Max file size exceeded.");
+
+                if (!ACCEPTED_FILE_TYPES.Any(s => s == Path.GetExtension(filesData.FileName).ToLower())) return BadRequest("Invalid file type.");
+
+                var uploadFilesPath = Path.Combine(host.WebRootPath, "uploads");
+
+                if (!Directory.Exists(uploadFilesPath))
+                    Directory.CreateDirectory(uploadFilesPath);
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(filesData.FileName);
+                var filePath = Path.Combine(uploadFilesPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await filesData.CopyToAsync(stream);
+                }
+
+                return Ok(new { status = "success" });
             }
-
-            if (filesData.Length > 10 * 1024 * 1024) return BadRequest("Max file size exceeded.");
-
-            if (!ACCEPTED_FILE_TYPES.Any(s => s == Path.GetExtension(filesData.FileName).ToLower())) return BadRequest("Invalid file type.");
-
-            var uploadFilesPath = Path.Combine(host.WebRootPath, "uploads");
-
-            if (!Directory.Exists(uploadFilesPath))
-                Directory.CreateDirectory(uploadFilesPath);
-
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(filesData.FileName);
-            var filePath = Path.Combine(uploadFilesPath, fileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            catch (Exception ex)
             {
-                await filesData.CopyToAsync(stream);
+                return Ok(new { status = "failure" ,message = ex.Message.ToString()});
             }
-          
-            return Ok(new { status = "success" });
         }
 
 
