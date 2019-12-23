@@ -26,20 +26,28 @@ namespace api_brick.Controllers
         [HttpPost()]
         public async Task<string> Upload([FromForm] IFormFile file)
         {
-            string fName = file.FileName;
-            string path = Path.Combine(_environment.ContentRootPath, "Images");
-            if (!Directory.Exists(path))
+            try
             {
-                Directory.CreateDirectory(path);
-            }
-            string fullPath = Path.Combine(path, file.FileName);
+                string fName = file.FileName;
+                string path = Path.Combine(_environment.ContentRootPath, "Images");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                string fullPath = Path.Combine(path, file.FileName);
 
-           
-            using (var stream = new FileStream(fullPath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
+
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                return file.FileName;
             }
-            return file.FileName;
+            catch (Exception ex)
+            {
+
+                return ex.Message.ToString();
+            }
         }
     }
 }
