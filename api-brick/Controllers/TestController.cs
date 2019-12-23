@@ -20,17 +20,25 @@ namespace api_brick.Controllers
             _environment = environment;
         }
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<string> Get()
         {
-            string path = Path.Combine(_environment.ContentRootPath, "wwwroot"); //logfile.txt
-            path = Path.Combine(path, "uploads");
-            path = Path.Combine(path, "logfile.txt");
-            using (StreamWriter writer = System.IO.File.AppendText(path))
+            try
             {
-                writer.WriteLine("log message");
-            }
+                string path = Path.Combine(_environment.ContentRootPath, "wwwroot"); //logfile.txt
+                path = Path.Combine(path, "uploads");
+                path = Path.Combine(path, "logfile.txt");
+                using (StreamWriter writer = System.IO.File.AppendText(path))
+                {
+                    writer.WriteLine("log message");
+                }
 
-            return new string[] { "value1", "value2", "value3" };
+                return path;
+            }
+            catch (Exception ex)
+            {
+
+                return ex.Message.ToString();
+            }
         }
     }
 }
