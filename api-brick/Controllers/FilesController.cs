@@ -36,7 +36,7 @@ namespace api_brick.Controllers
 
                 if (!ACCEPTED_FILE_TYPES.Any(s => s == Path.GetExtension(filesData.FileName).ToLower())) return BadRequest("Invalid file type.");
 
-                var uploadFilesPath = Path.Combine(host.WebRootPath, "uploads");
+                var uploadFilesPath = Path.Combine(host.ContentRootPath, "uploads");
 
                 if (!Directory.Exists(uploadFilesPath))
                     Directory.CreateDirectory(uploadFilesPath);
