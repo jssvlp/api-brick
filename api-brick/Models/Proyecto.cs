@@ -1,4 +1,5 @@
-﻿using System;
+﻿using api_brick.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace api_brick.Models
 {
     [Table("proyectos")]
-    public class Proyecto
+    public class Proyecto 
     {
         public int ProyectoID { get; set; }
         public string NombreProyecto { get; set; }
@@ -39,5 +40,6 @@ namespace api_brick.Models
             CaracteristicasProyectos = new Collection<CaracteristicaProyecto>();
             Imagenes = new Collection<ImagenProyecto>();
         }
+
     }
 }

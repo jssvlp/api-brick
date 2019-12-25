@@ -24,6 +24,7 @@ namespace api_brick.Controllers
     public class ProyectosController : Controller
     {
         private readonly BrickDbContext _context;
+        private readonly string[] ACCEPTED_FILE_TYPES = new[] { ".jpg", ".jpeg", ".png" };
         string pathForPictures;
         IConfiguration _configuration;
         IHostingEnvironment _env;
@@ -121,46 +122,71 @@ namespace api_brick.Controllers
             return Ok();
         }
 
-        [Route("SaveFile")]
+
+
         [HttpPost()]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> SaveFile(string fileName)
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Route("uploadfiles/{projectId}/{uploadType}")]
+        public async Task<IActionResult> Upload(IFormFile filesData, int projectId, string uploadType)
         {
             try
             {
-
-                foreach (var file2 in Request.Form.Files.ToList())
+                if (filesData == null) return BadRequest("Null File");
+                if (filesData.Length == 0)
                 {
-
-                    if (!string.IsNullOrEmpty(file2?.FileName))
-                    {
-
-                        var dir = this.pathForPictures +"Recursos";
-
-                        if (!Directory.Exists(dir))
-                        {
-                            Directory.CreateDirectory(dir);
-                        }
-
-                        var filePath = Path.Combine(dir, file2.FileName);
-
-                        using (var stream = System.IO.File.Create(filePath))
-                        {
-                            await file2.CopyToAsync(stream);
-                        }
-
-                    }
-
+                    return BadRequest("Empty File");
                 }
+
+                if (filesData.Length > 10 * 1024 * 1024) return BadRequest("Max file size exceeded.");
+
+                if (!ACCEPTED_FILE_TYPES.Any(s => s == Path.GetExtension(filesData.FileName).ToLower())) return BadRequest("Invalid file type.");
+
+                FileCopy copyfile = new FileCopy(_env);
+                string folder;
+
+                switch (uploadType)
+                {
+                    case "picture":
+                        folder = "Recursos";
+                        break;
+                    case "pdf":
+                        folder = "PDF";
+                        break;
+
+                    default:
+                        folder = "Recursos";
+                        break;
+                }
+                Task<FileCopyResponse> response = copyfile.CopyFileToAssetsFolderAsync(filesData,folder);
+
+                if (response.Result.Success == true)
+                {
+                    var project = _context.Proyecto.FirstOrDefault(c => c.ProyectoID == projectId);
+                    if (uploadType == "picture")
+                    {
+                        project.ImgURL = response.Result.FileName;
+                    }
+                    else if (uploadType == "pdf")
+                    {
+                        project.DocumentoResumenPdf = response.Result.FileName;
+                    }
+                   
+                    _context.Entry(project).State = EntityState.Modified;
+
+                    await _context.SaveChangesAsync();
+                }
+
+                
+
+
+                return Ok(new { status = "success" });
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return Ok(new { statusCode = 500,status = "failure", message = e.Message});
+                return Ok(new { status = "failure", message = ex.Message.ToString() });
             }
-
-            return Ok(new { statusCode = 200, status = "success", message ="archivo subido correctamente"});
-
         }
+
 
         [Route("SaveFilePDF")]
         [HttpPost()]
