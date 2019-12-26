@@ -124,7 +124,7 @@ namespace api_brick.Controllers
 
 
 
-        [HttpPost()]
+        [HttpPost, DisableRequestSizeLimit]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("uploadfiles/{projectId}/{uploadType}")]
         public async Task<IActionResult> Upload(IFormFile filesData, int projectId, string uploadType)
