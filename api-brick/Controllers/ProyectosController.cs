@@ -59,6 +59,23 @@ namespace api_brick.Controllers
             return proyecto;
         }
 
+        [HttpPut]
+        [Route("{projectId}/changeStatus/{status}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> ChangeStatus(int projectId, bool status)
+        {
+            if (projectId == 0)
+            {
+                return BadRequest();
+            }
+            Proyecto proyecto = _context.Proyecto.FirstOrDefault(c => c.ProyectoID == projectId);
+            proyecto.Estado = status;
+
+            _context.Entry(proyecto).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
         // PUT: api/Proyectos/5
         [HttpPut("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -122,7 +139,7 @@ namespace api_brick.Controllers
             return Ok();
         }
 
-
+        
 
         [HttpPost, DisableRequestSizeLimit]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
