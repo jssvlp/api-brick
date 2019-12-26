@@ -20,7 +20,7 @@ namespace api_brick.Models
         public string Direccion { get; set; }
         public string ImgURL { get; set; }
         public string DocumentoResumenPdf { get; set; }
-        public int Estado { get; set; }
+        public bool Estado { get; set; }
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
