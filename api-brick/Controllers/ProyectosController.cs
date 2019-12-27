@@ -24,7 +24,7 @@ namespace api_brick.Controllers
     public class ProyectosController : Controller
     {
         private readonly BrickDbContext _context;
-        private readonly string[] ACCEPTED_FILE_TYPES = new[] { ".jpg", ".jpeg", ".png" };
+        private readonly string[] ACCEPTED_FILE_TYPES = new[] { ".jpg", ".jpeg", ".png",".pdf" };
         string pathForPictures;
         IConfiguration _configuration;
         IHostingEnvironment _env;
@@ -85,38 +85,6 @@ namespace api_brick.Controllers
             {
                 return BadRequest();
             }
-
-            //IMG
-
-            string URL = "";
-            var url = proyecto.ImgURL.Split("\\");
-            if (url != null)
-            {
-                URL = url[url.Length - 1];
-            }
-            else
-            {
-                URL = proyecto.ImgURL;
-            }
-            proyecto.ImgURL = URL;
-
-            //PDF
-            string PDF = "";
-
-            if (proyecto.DocumentoResumenPdf != null)
-            {
-                var pdf = proyecto.DocumentoResumenPdf.Split("\\");
-                if (pdf != null)
-                {
-                    PDF = pdf[pdf.Length - 1];
-                }
-                else
-                {
-                    PDF = proyecto.DocumentoResumenPdf;
-                }
-                proyecto.DocumentoResumenPdf = PDF;
-            }
-            
 
             _context.Entry(proyecto).State = EntityState.Modified;
 
