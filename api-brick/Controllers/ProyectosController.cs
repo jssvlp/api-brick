@@ -42,7 +42,15 @@ namespace api_brick.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Proyecto>>> GetProyecto()
         {
-            return await _context.Proyecto.Include(i =>i.Imagenes).ToListAsync();
+            
+            return await _context.Proyecto.Include(i => i.Imagenes).Where(p => p.Estado == true).ToListAsync();
+        }
+
+        [HttpGet]
+        [Route("admin")]
+        public async Task<ActionResult<IEnumerable<Proyecto>>> GetProyectos()
+        {
+            return await _context.Proyecto.Include(i => i.Imagenes).ToListAsync();
         }
 
         // GET: api/Proyectos/5
