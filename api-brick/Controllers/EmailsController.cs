@@ -23,7 +23,7 @@ namespace api_brick.Controllers
         {
             var apiKey = "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";
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("brick.developers@gmail.com", "Constructora Mejia Polanco");
+            var from = new EmailAddress("info@constructoramejiapolanco.com", "Constructora Mejia Polanco");
             var to = new EmailAddress(email.Correo, email.Nombre) ;
             var plainTextContent = "Saludos";
             var subject = email.Subject;
