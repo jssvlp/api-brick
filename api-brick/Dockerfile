@@ -15,5 +15,9 @@ WORKDIR /app
 COPY --from=build-env /app/out .
 
 ENV SECRET_API_KEY vYGEpxjzfBVlMlqwhvWXRUxmEhTYrwyoeYmXrwwlSKZdJulHXG
+ENV NOTIFICATION_MAIL jossias.vel@gmail.com
+ENV SENDGRID_API_KEY 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
+ENV RESET_PASSWORD_TEMPLATE d-f4a9b10a299c463692333d7fb4dfb5c8
+ENV DOMAIN https://constructoramejiapolanco.com
 
 ENTRYPOINT ["dotnet", "api-brick.dll"]

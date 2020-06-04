@@ -30,6 +30,7 @@ namespace api_brick.Data
         public DbSet<DatoGenerico> DatosGenericos { get; set; }
         public DbSet<ImagenProyecto> ImagenesProyectos { get; set; }
         public DbSet<Tasacion> Tasacions { get; set; }
+        public DbSet<PasswordReset> PasswordRests { get; set; }
 
 
 
