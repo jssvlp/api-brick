@@ -73,6 +73,10 @@
     <Compile Remove="Migrations\20190615205429_tasacion.Designer.cs" />
     <Compile Remove="Migrations\20190616174517_tasacion.cs" />
     <Compile Remove="Migrations\20190616174517_tasacion.Designer.cs" />
+    <Compile Remove="Migrations\20200609162847_COMPANY_DATA.cs" />
+    <Compile Remove="Migrations\20200609162847_COMPANY_DATA.Designer.cs" />
+    <Compile Remove="Migrations\20200611021852_FAMILIA_PROYECTO.cs" />
+    <Compile Remove="Migrations\20200611021852_FAMILIA_PROYECTO.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

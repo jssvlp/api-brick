@@ -8,15 +8,11 @@ using System.Threading.Tasks;
 
 namespace api_brick.Models
 {
-    [Table("caracteristicas")]
-    public class Caracteristica
+    [Table("familias_proyectos")]
+    public class FamiliaProyecto
     {
-        public int CaracteristicaID { get; set; }
-        public string CarNombre { get; set; }
-        public string CarDescripcion { get; set; }
-        public string TipoCarProyecto { get; set; }
-        public string Imagen { get; set; }
-
+        public int Id { get; set; }
+        public string Nombre { get; set; }
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
@@ -24,12 +20,11 @@ namespace api_brick.Models
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UpdateAt { get; set; }
 
-        
-        public ICollection<CaracteristicaProyecto> CaracteristicasProyectos { get; set; }
+        public ICollection<Proyecto> Proyectos { get; set; }
 
-        public Caracteristica()
+        public FamiliaProyecto()
         {
-            CaracteristicasProyectos = new Collection<CaracteristicaProyecto>();
+            Proyectos = new Collection<Proyecto>();
         }
     }
 }

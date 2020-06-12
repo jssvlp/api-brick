@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api_brick.Data;
 
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    partial class BrickDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200611022305_FAMILIA_PROYECTO")]
+    partial class FAMILIA_PROYECTO
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -210,8 +212,6 @@ namespace api_brick.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<string>("Imagen");
 
                     b.Property<string>("TipoCarProyecto");
 
@@ -538,7 +538,7 @@ namespace api_brick.Migrations
 
                     b.Property<bool>("Estado");
 
-                    b.Property<int?>("FamiliaID");
+                    b.Property<int>("FamiliaID");
 
                     b.Property<DateTime>("FechaTerminacion");
 
@@ -1165,7 +1165,8 @@ namespace api_brick.Migrations
                 {
                     b.HasOne("api_brick.Models.FamiliaProyecto", "Familia")
                         .WithMany("Proyectos")
-                        .HasForeignKey("FamiliaID");
+                        .HasForeignKey("FamiliaID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("api_brick.Models.PublicacionForo", b =>

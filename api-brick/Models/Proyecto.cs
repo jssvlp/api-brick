@@ -14,13 +14,21 @@ namespace api_brick.Models
     {
         public int ProyectoID { get; set; }
         public string NombreProyecto { get; set; }
+        public string Descripcion { get; set; }
         public DateTime FechaTerminacion { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public string Direccion { get; set; }
         public string ImgURL { get; set; }
         public string DocumentoResumenPdf { get; set; }
+        public int? NumeroProyectoFamilia { get; set; }
         public bool Estado { get; set; }
+
+        [ForeignKey("Familia")]
+        public int? FamiliaID { get; set; }
+        public FamiliaProyecto Familia { get; set; }
+
+
 
         [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }

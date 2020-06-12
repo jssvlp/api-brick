@@ -9,8 +9,8 @@ using api_brick.Data;
 namespace api_brick.Migrations
 {
     [DbContext(typeof(BrickDbContext))]
-    [Migration("20200529133501_RESETPASSWORDS_CREATE_TABLE")]
-    partial class RESETPASSWORDS_CREATE_TABLE
+    [Migration("20200612214700_UPDATE_CARACTERISTICAS")]
+    partial class UPDATE_CARACTERISTICAS
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -213,6 +213,8 @@ namespace api_brick.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate();
 
+                    b.Property<string>("Imagen");
+
                     b.Property<string>("TipoCarProyecto");
 
                     b.Property<DateTime>("UpdateAt")
@@ -374,6 +376,24 @@ namespace api_brick.Migrations
                         });
                 });
 
+            modelBuilder.Entity("api_brick.Models.FamiliaProyecto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("Nombre");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("familias_proyectos");
+                });
+
             modelBuilder.Entity("api_brick.Models.ImagenProyecto", b =>
                 {
                     b.Property<int>("Id")
@@ -454,6 +474,24 @@ namespace api_brick.Migrations
                     b.ToTable("likes");
                 });
 
+            modelBuilder.Entity("api_brick.Models.PasswordReset", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("RecoveryToken");
+
+                    b.Property<DateTime>("RequestDateTime");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("UserRecoveryToken");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("passwords_resets");
+                });
+
             modelBuilder.Entity("api_brick.Models.Peticion", b =>
                 {
                     b.Property<int>("PeticionID")
@@ -494,11 +532,15 @@ namespace api_brick.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate();
 
+                    b.Property<string>("Descripcion");
+
                     b.Property<string>("Direccion");
 
                     b.Property<string>("DocumentoResumenPdf");
 
                     b.Property<bool>("Estado");
+
+                    b.Property<int?>("FamiliaID");
 
                     b.Property<DateTime>("FechaTerminacion");
 
@@ -510,10 +552,14 @@ namespace api_brick.Migrations
 
                     b.Property<string>("NombreProyecto");
 
+                    b.Property<int?>("NumeroProyectoFamilia");
+
                     b.Property<DateTime>("UpdateAt")
                         .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("ProyectoID");
+
+                    b.HasIndex("FamiliaID");
 
                     b.ToTable("proyectos");
                 });
@@ -1115,6 +1161,13 @@ namespace api_brick.Migrations
                         .WithMany()
                         .HasForeignKey("SolicitudID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("api_brick.Models.Proyecto", b =>
+                {
+                    b.HasOne("api_brick.Models.FamiliaProyecto", "Familia")
+                        .WithMany("Proyectos")
+                        .HasForeignKey("FamiliaID");
                 });
 
             modelBuilder.Entity("api_brick.Models.PublicacionForo", b =>
